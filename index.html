@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teknik Penarikan Sampel Metode Segmen Terpadu</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f0fe 0%, #d4e4f7 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a3a6b;
+            font-size: 28px;
+            margin-bottom: 4px;
+            border-bottom: 3px solid #1a3a6b;
+            padding-bottom: 15px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #4a6a8b;
+            font-size: 16px;
+            margin-bottom: 5px;
+            font-style: italic;
+        }
+
+        .author {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .input-section {
+            background: #f0f5ff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .input-item {
+            flex: 1 1 180px;
+            min-width: 150px;
+        }
+
+        .input-item label {
+            display: block;
+            font-weight: 600;
+            color: #1a3a6b;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .input-item input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #c5d5e8;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-item input:focus {
+            border-color: #1a3a6b;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 58, 107, 0.15);
+        }
+
+        .btn {
+            background: #1a3a6b;
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #0f2a4f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 58, 107, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #6c7a89;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5a6a;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .btn-print {
+            background: #28a745;
+        }
+
+        .btn-print:hover {
+            background: #1e7e34;
+        }
+
+        .result-section {
+            background: #fafcff;
+            border: 2px solid #d4e4f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .result-section h2 {
+            color: #1a3a6b;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #d4e4f7;
+            padding-bottom: 10px;
+        }
+
+        .info-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #eef5ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-item .label {
+            font-size: 11px;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-item .value {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a3a6b;
+        }
+
+        .formula-box {
+            background: #f8f9fa;
+            border-left: 4px solid #1a3a6b;
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border-radius: 0 8px 8px 0;
+            overflow-x: auto;
+        }
+
+        .formula-box .formula-title {
+            font-weight: 700;
+            color: #1a3a6b;
+            font-size: 15px;
+            margin-bottom: 6px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .formula-box .formula-line {
+            padding: 2px 0;
+            color: #333;
+        }
+
+        .formula-box .formula-line .highlight-formula {
+            color: #c0392b;
+            font-weight: 700;
+        }
+
+        .formula-detail {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: #eef5ff;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .sample-sementara-wrapper {
+            background: #f8faff;
+            border: 2px solid #d4e4f7;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .sample-sementara-wrapper h3 {
+            color: #1a3a6b;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .sample-sementara-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 8px 0;
+            min-height: 40px;
+        }
+
+        .sample-sementara-item {
+            background: #1a3a6b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            min-width: 36px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .sample-sementara-item:hover {
+            transform: scale(1.1);
+        }
+
+        .sample-sementara-item.duplicate {
+            background: #f0c040;
+            color: #1a3a6b;
+        }
+
+        .sample-sementara-item.unique {
+            background: #28a745;
+            color: white;
+        }
+
+        .sample-sementara-label {
+            font-size: 12px;
+            color: #888;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .sample-sementara-label .legend-item {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            margin: 0 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .legend-normal {
+            background: #1a3a6b;
+            color: white;
+        }
+
+        .legend-duplicate {
+            background: #f0c040;
+            color: #1a3a6b;
+        }
+
+        .legend-unique {
+            background: #28a745;
+            color: white;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .sample-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .sample-table th {
+            background: #1a3a6b;
+            color: white;
+            padding: 10px 12px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .sample-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #e8ecf0;
+        }
+
+        .sample-table tr:hover td {
+            background: #f0f5ff;
+        }
+
+        .sample-table .highlight-row td {
+            background: #fff9e6;
+            border-bottom: 2px solid #f0c040;
+        }
+
+        .sample-table .highlight-row:hover td {
+            background: #fff3cd;
+        }
+
+        .frequency-tag {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .freq-3 {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .freq-2 {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .freq-1 {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .representative-note {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #2e7d32;
+        }
+
+        .representative-note h4 {
+            color: #1e5a24;
+            margin-bottom: 8px;
+        }
+
+        .representative-note ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .representative-note ul li {
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .representative-note ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #dc3545;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid #1a3a6b;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 2px dashed #d4e4f7;
+            margin: 20px 0;
+        }
+
+        .no-print {
+            display: initial;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .input-item {
+                flex: 1 1 auto;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .info-box {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+                padding: 10px;
+            }
+
+            .info-item .value {
+                font-size: 18px;
+            }
+
+            .sample-table {
+                font-size: 12px;
+            }
+
+            .sample-table th,
+            .sample-table td {
+                padding: 5px 8px;
+            }
+
+            .sample-sementara-item {
+                font-size: 12px;
+                padding: 3px 8px;
+                min-width: 30px;
+            }
+
+            .formula-box {
+                font-size: 12px;
+                padding: 12px 15px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 10px;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 15px;
+                border: 1px solid #ddd;
+            }
+
+            .btn-group {
+                display: none !important;
+            }
+
+            .input-section {
+                background: #f5f5f5;
+                border: 1px solid #ddd;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .sample-sementara-item {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .sample-sementara-item.duplicate {
+                background: #f0c040 !important;
+                color: #1a3a6b !important;
+            }
+
+            .sample-sementara-item.unique {
+                background: #28a745 !important;
+                color: white !important;
+            }
+
+            .frequency-tag {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .freq-3 {
+                background: #d4edda !important;
+                color: #155724 !important;
+            }
+
+            .freq-2 {
+                background: #fff3cd !important;
+                color: #856404 !important;
+            }
+
+            .freq-1 {
+                background: #f8d7da !important;
+                color: #721c24 !important;
+            }
+
+            .representative-note {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .info-box {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .sample-table .highlight-row td {
+                background: #fff9e6 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .sample-table tr:hover td {
+                background: transparent !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <h1>📊 TEKNIK PENARIKAN SAMPEL</h1>
+        <div class="subtitle">Metode Segmen Terpadu — Semua Untuk Satu</div>
+        <div class="author">✍️ SR. Pakpahan, SST</div>
+
+        <!-- INPUT SECTION -->
+        <div class="input-section">
+            <div class="input-group">
+                <div class="input-item">
+                    <label for="populasi">Jumlah Populasi (P)</label>
+                    <input type="number" id="populasi" value="87" min="2" step="1">
+                </div>
+                <div class="input-item">
+                    <label for="sampel">Jumlah Sampel Tetap (S)</label>
+                    <input type="number" id="sampel" value="12" min="2" step="1">
+                </div>
+                <div class="input-item" style="flex: 0 0 auto;">
+                    <button class="btn" onclick="hitungSampel()">🚀 Hitung Sampel</button>
+                </div>
+            </div>
+            <div class="btn-group no-print">
+                <button class="btn btn-secondary" onclick="resetForm()">↺ Reset</button>
+                <button class="btn btn-print" onclick="window.print()">🖨️ Cetak</button>
+            </div>
+        </div>
+
+        <!-- LOADING -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top:12px; color:#666;">Menghitung sampel...</p>
+        </div>
+
+        <!-- RESULTS -->
+        <div id="results" style="display: none;">
+            <div class="result-section">
+
+                <!-- INFO BOX -->
+                <h2>📋 Ringkasan Perhitungan</h2>
+                <div class="info-box" id="infoBox">
+                    <div class="info-item">
+                        <div class="label">Populasi (P)</div>
+                        <div class="value" id="displayP">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">Sampel Tetap (S)</div>
+                        <div class="value" id="displayS">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">Sampel Sementara (Ss)</div>
+                        <div class="value" id="displaySs">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">Interval (Int)</div>
+                        <div class="value" id="displayInt">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">R₁ (Sampel Pertama)</div>
+                        <div class="value" id="displayR1">-</div>
+                    </div>
+                </div>
+
+                <!-- FORMULA BOX -->
+                <div class="formula-box" id="formulaBox">
+                    <div class="formula-title">📐 Rumus Baku Penarikan Sampel</div>
+                    <div class="formula-line"><strong>Rs₁</strong> = P − (Ss − S)</div>
+                    <div class="formula-line"><strong>Rsᵢ</strong> = Rsᵢ₋₁ + (k × Int) &nbsp; untuk i = 2,3,4,5,... dan k = 1,2,3,4 sesuai urutan</div>
+                    <div class="formula-line"><strong>Rs₅ⱼ₊₁</strong> = Rs₁ − (j × Int) &nbsp; untuk j = 1,2,3,...</div>
+                    <div class="formula-line" style="margin-top:6px; color:#555; font-size:13px; border-top:1px solid #ddd; padding-top:6px;">
+                        Pola perguliran: setiap 5 sampel, Rs₅ⱼ₊₁ = Rs₁ − (j × Int)
+                    </div>
+                    <div class="formula-detail" id="formulaDetail">
+                        <strong>Perhitungan:</strong> <span id="formulaCalc">-</span>
+                    </div>
+                </div>
+
+                <!-- DAFTAR SAMPEL SEMENTARA -->
+                <div class="sample-sementara-wrapper" id="sampleSementaraWrapper">
+                    <h3>📌 Daftar Sampel Sementara (Ss = 2(S−1) = <span id="ssValue">-</span> sampel)</h3>
+                    <div class="sample-sementara-grid" id="sampleSementaraGrid">
+                        <!-- diisi JavaScript -->
+                    </div>
+                    <div class="sample-sementara-label">
+                        <span class="legend-item legend-normal">Normal</span>
+                        <span class="legend-item legend-duplicate">Duplikat (muncul > 1x)</span>
+                        <span class="legend-item legend-unique">Unik (pertama kali muncul)</span>
+                    </div>
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- TABEL SAMPEL TETAP -->
+                <h2>📋 Daftar Sampel Tetap Terpilih</h2>
+                <p style="color:#666; font-size:14px; margin-bottom:10px;">
+                    Sampel tetap adalah <strong>nomor unik</strong> yang muncul dari daftar sampel sementara.
+                    Total: <span id="totalSampelTetap">-</span> unit.
+                </p>
+                <div class="table-wrapper">
+                    <table class="sample-table" id="sampleTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Kode Sampel</th>
+                                <th>Nomor Urut</th>
+                                <th>Frekuensi Muncul</th>
+                                <th>Tingkat Representatif</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- diisi JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- CATATAN REPRESENTATIF -->
+                <div class="representative-note" id="repNote">
+                    <h4>⭐ Tingkat Kerepresentatifan</h4>
+                    <ul id="repList">
+                        <!-- diisi JavaScript -->
+                    </ul>
+                </div>
+
+                <!-- PESAN -->
+                <div id="messageContainer"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  TEKNIK PENARIKAN SAMPEL METODE SEGMEN TERPADU
+        //  SR. Pakpahan, SST
+        // ================================================================
+
+        // --- Fungsi Normalisasi ---
+        function normalize(val, P) {
+            let v = val;
+            while (v < 1) v += P;
+            while (v > P) v -= P;
+            return Math.round(v);
+        }
+
+        // --- Fungsi Utama Penarikan Sampel ---
+        function prosesPenarikanSampel(P, S) {
+            // 1. Hitung Interval
+            const Int = P / S;
+
+            // 2. Hitung Sampel Sementara (Ss)
+            const Ss = 2 * (S - 1);
+
+            // 3. Hitung R₁
+            const R1 = P - (Ss - S);
+
+            // 4. Generate semua sampel sementara dengan pola perputaran yang benar
+            const daftarSampelSementara = [];
+
+            // Hitung berapa putaran yang diperlukan
+            // Setiap putaran menghasilkan 5 sampel
+            const maxJ = Math.ceil(Ss / 5) + 1;
+
+            for (let j = 0; j < maxJ; j++) {
+                // Rs(5j+1) = R1 - (j * Int)
+                const startVal = R1 - (j * Int);
+                const startNorm = normalize(startVal, P);
+
+                if (daftarSampelSementara.length < Ss) {
+                    daftarSampelSementara.push(startNorm);
+                }
+
+                // Tambahkan 4 sampel berikutnya: +Int, +2Int, +3Int, +4Int
+                const multipliers = [1, 2, 3, 4];
+                for (const k of multipliers) {
+                    if (daftarSampelSementara.length >= Ss) break;
+                    const nextVal = startVal + (k * Int);
+                    const nextNorm = normalize(nextVal, P);
+                    daftarSampelSementara.push(nextNorm);
+                }
+            }
+
+            // Potong jika kelebihan (harus persis Ss)
+            while (daftarSampelSementara.length > Ss) {
+                daftarSampelSementara.pop();
+            }
+
+            // 5. Hitung frekuensi setiap nomor
+            const freqMap = {};
+            for (const val of daftarSampelSementara) {
+                freqMap[val] = (freqMap[val] || 0) + 1;
+            }
+
+            // 6. Ambil sampel unik (sampel tetap) — urutkan berdasarkan kemunculan pertama
+            const uniqueInOrder = [];
+            const seen = new Set();
+            for (const val of daftarSampelSementara) {
+                if (!seen.has(val)) {
+                    seen.add(val);
+                    uniqueInOrder.push(val);
+                }
+            }
+
+            // 7. Tentukan tingkat kerepresentatifan
+            const maxFreq = Math.max(...Object.values(freqMap));
+            const minFreq = Math.min(...Object.values(freqMap));
+
+            const sampleDetails = uniqueInOrder.map((nomor, index) => {
+                const freq = freqMap[nomor] || 0;
+                let level;
+                if (freq === maxFreq && maxFreq > 1) {
+                    level = 1;
+                } else if (freq > minFreq) {
+                    level = 2;
+                } else {
+                    level = 3;
+                }
+                if (maxFreq === minFreq) level = 1;
+
+                return {
+                    urutan: index + 1,
+                    nomor: nomor,
+                    frekuensi: freq,
+                    tingkat: level,
+                    labelTingkat: level === 1 ? '⭐ Sangat Representatif' :
+                        level === 2 ? '✦ Representatif' :
+                        '• Cukup Representatif'
+                };
+            });
+
+            // 8. Hasil
+            return {
+                P: P,
+                S: S,
+                Ss: Ss,
+                Int: Int,
+                R1: R1,
+                sampelSementara: daftarSampelSementara,
+                sampelTerpilih: uniqueInOrder,
+                sampleDetails: sampleDetails,
+                freqMap: freqMap,
+                maxFreq: maxFreq,
+                minFreq: minFreq
+            };
+        }
+
+        // --- Fungsi Tampilkan Hasil ---
+        function tampilkanHasil(result) {
+            // INFO BOX
+            document.getElementById('displayP').textContent = result.P;
+            document.getElementById('displayS').textContent = result.S;
+            document.getElementById('displaySs').textContent = result.Ss;
+            document.getElementById('displayInt').textContent = result.Int.toFixed(2);
+            document.getElementById('displayR1').textContent = Math.round(result.R1);
+
+            // FORMULA DETAIL
+            document.getElementById('formulaCalc').innerHTML =
+                `Ss = 2(${result.S} − 1) = ${result.Ss} &nbsp;|&nbsp; ` +
+                `Int = ${result.P} / ${result.S} = ${result.Int.toFixed(2)} &nbsp;|&nbsp; ` +
+                `Rs₁ = ${result.P} − (${result.Ss} − ${result.S}) = ${Math.round(result.R1)}`;
+
+            // SAMPEL SEMENTARA
+            document.getElementById('ssValue').textContent = result.Ss;
+            const grid = document.getElementById('sampleSementaraGrid');
+            grid.innerHTML = '';
+
+            const freqMap = result.freqMap;
+
+            result.sampelSementara.forEach((val, index) => {
+                const span = document.createElement('span');
+                span.className = 'sample-sementara-item';
+
+                const freq = freqMap[val] || 0;
+                if (freq > 1) {
+                    span.classList.add('duplicate');
+                }
+
+                const firstIndex = result.sampelSementara.indexOf(val);
+                if (firstIndex === index) {
+                    span.classList.add('unique');
+                }
+
+                span.textContent = val;
+                span.title = `Muncul ${freq}x (urutan ke-${index + 1})`;
+                grid.appendChild(span);
+            });
+
+            // TABEL SAMPEL TETAP
+            document.getElementById('totalSampelTetap').textContent = result.sampelTerpilih.length;
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            result.sampleDetails.forEach((item) => {
+                const tr = document.createElement('tr');
+
+                if (item.frekuensi === result.maxFreq && result.maxFreq > 1) {
+                    tr.className = 'highlight-row';
+                }
+
+                const tdUrutan = document.createElement('td');
+                tdUrutan.textContent = item.urutan;
+                tr.appendChild(tdUrutan);
+
+                const tdKode = document.createElement('td');
+                tdKode.textContent = `R${item.urutan}`;
+                tdKode.style.fontWeight = '600';
+                tr.appendChild(tdKode);
+
+                const tdNomor = document.createElement('td');
+                tdNomor.textContent = item.nomor;
+                tdNomor.style.fontWeight = 'bold';
+                tdNomor.style.fontSize = '16px';
+                tr.appendChild(tdNomor);
+
+                const tdFreq = document.createElement('td');
+                let freqClass = 'freq-1';
+                if (item.frekuensi >= 3) freqClass = 'freq-3';
+                else if (item.frekuensi === 2) freqClass = 'freq-2';
+                tdFreq.innerHTML = `<span class="frequency-tag ${freqClass}">${item.frekuensi}x</span>`;
+                tr.appendChild(tdFreq);
+
+                const tdLevel = document.createElement('td');
+                tdLevel.textContent = item.labelTingkat;
+                tdLevel.style.fontSize = '13px';
+                tr.appendChild(tdLevel);
+
+                tbody.appendChild(tr);
+            });
+
+            // CATATAN REPRESENTATIF
+            const repList = document.getElementById('repList');
+            repList.innerHTML = '';
+
+            const level1 = result.sampleDetails.filter(d => d.tingkat === 1);
+            const level2 = result.sampleDetails.filter(d => d.tingkat === 2);
+            const level3 = result.sampleDetails.filter(d => d.tingkat === 3);
+
+            if (level1.length > 0) {
+                repList.innerHTML += `
+                    <li><strong>Tingkat 1 (Sangat Representatif):</strong> 
+                    Nomor ${level1.map(d => d.nomor).join(', ')} 
+                    (muncul ${level1[0]?.frekuensi || 0}x)</li>
+                `;
+            }
+            if (level2.length > 0) {
+                repList.innerHTML += `
+                    <li><strong>Tingkat 2 (Representatif):</strong> 
+                    Nomor ${level2.map(d => d.nomor).join(', ')} 
+                    (muncul ${level2[0]?.frekuensi || 0}x)</li>
+                `;
+            }
+            if (level3.length > 0) {
+                repList.innerHTML += `
+                    <li><strong>Tingkat 3 (Cukup Representatif):</strong> 
+                    Nomor ${level3.map(d => d.nomor).join(', ')} 
+                    (muncul ${level3[0]?.frekuensi || 0}x)</li>
+                `;
+            }
+
+            repList.innerHTML += `
+                <li style="margin-top:10px; padding-top:10px; border-top:1px dashed #ccc;">
+                    <strong>Total Sampel Tetap:</strong> ${result.sampelTerpilih.length} unit 
+                    dari ${result.P} populasi (${((result.sampelTerpilih.length / result.P) * 100).toFixed(1)}%)
+                </li>
+                <li>
+                    <strong>Sampel Sementara:</strong> ${result.sampelSementara.length} sampel, 
+                    dengan ${result.sampleDetails.length} nomor unik
+                </li>
+                <li>
+                    <strong>Frekuensi Tertinggi:</strong> ${result.maxFreq}x muncul
+                </li>
+            `;
+        }
+
+        // --- Fungsi Utama ---
+        function hitungSampel() {
+            const P = parseInt(document.getElementById('populasi').value);
+            const S = parseInt(document.getElementById('sampel').value);
+
+            const msgContainer = document.getElementById('messageContainer');
+            msgContainer.innerHTML = '';
+
+            if (isNaN(P) || isNaN(S) || P < 2 || S < 2) {
+                msgContainer.innerHTML = `<div class="error">⚠️ Populasi dan sampel harus berupa angka minimal 2.</div>`;
+                document.getElementById('results').style.display = 'none';
+                return;
+            }
+
+            if (S > P) {
+                msgContainer.innerHTML = `<div class="error">⚠️ Jumlah sampel (${S}) tidak boleh lebih besar dari populasi (${P}).</div>`;
+                document.getElementById('results').style.display = 'none';
+                return;
+            }
+
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('results').style.display = 'none';
+
+            setTimeout(() => {
+                try {
+                    const result = prosesPenarikanSampel(P, S);
+                    tampilkanHasil(result);
+
+                    document.getElementById('loading').classList.remove('active');
+                    document.getElementById('results').style.display = 'block';
+
+                    msgContainer.innerHTML = `
+                        <div class="success">
+                            ✅ Penarikan sampel berhasil! 
+                            Ditemukan <strong>${result.sampelTerpilih.length}</strong> sampel tetap 
+                            dari <strong>${result.sampelSementara.length}</strong> sampel sementara.
+                        </div>
+                    `;
+                } catch (err) {
+                    document.getElementById('loading').classList.remove('active');
+                    msgContainer.innerHTML = `<div class="error">❌ Terjadi kesalahan: ${err.message}</div>`;
+                }
+            }, 400);
+        }
+
+        // --- Reset ---
+        function resetForm() {
+            document.getElementById('populasi').value = '87';
+            document.getElementById('sampel').value = '12';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('loading').classList.remove('active');
+            document.getElementById('messageContainer').innerHTML = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Auto-run saat halaman dimuat ---
+        window.onload = function() {
+            const P = parseInt(document.getElementById('populasi').value);
+            const S = parseInt(document.getElementById('sampel').value);
+            if (P >= 2 && S >= 2 && S <= P) {
+                hitungSampel();
+            }
+        };
+
+        // --- Enter key untuk menghitung ---
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const active = document.activeElement;
+                if (active && (active.id === 'populasi' || active.id === 'sampel')) {
+                    hitungSampel();
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
