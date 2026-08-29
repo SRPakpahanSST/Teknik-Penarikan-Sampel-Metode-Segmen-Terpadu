@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             border-radius: 16px;
@@ -176,6 +176,89 @@
             color: #1a3a6b;
         }
 
+        /* ===== DAFTAR SAMPEL SEMENTARA ===== */
+        .sample-sementara-wrapper {
+            background: #f8faff;
+            border: 2px solid #d4e4f7;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .sample-sementara-wrapper h3 {
+            color: #1a3a6b;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .sample-sementara-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px 0;
+        }
+
+        .sample-sementara-item {
+            background: #1a3a6b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            min-width: 40px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .sample-sementara-item.duplicate {
+            background: #f0c040;
+            color: #1a3a6b;
+        }
+
+        .sample-sementara-item.highlight {
+            background: #28a745;
+            color: white;
+        }
+
+        .sample-sementara-label {
+            font-size: 12px;
+            color: #888;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* ===== FORMULA BOX ===== */
+        .formula-box {
+            background: #f8f9fa;
+            border-left: 4px solid #1a3a6b;
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border-radius: 0 8px 8px 0;
+            overflow-x: auto;
+        }
+
+        .formula-box .formula-title {
+            font-weight: 700;
+            color: #1a3a6b;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .formula-box .formula-line {
+            padding: 2px 0;
+            color: #333;
+        }
+
+        .formula-box .formula-line .highlight-formula {
+            color: #c0392b;
+            font-weight: 700;
+        }
+
+        /* ===== TABEL ===== */
         .sample-table {
             width: 100%;
             border-collapse: collapse;
@@ -233,17 +316,6 @@
         .freq-0 {
             background: #e2e3e5;
             color: #383d41;
-        }
-
-        .formula-box {
-            background: #f8f9fa;
-            border-left: 4px solid #1a3a6b;
-            padding: 15px 20px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            border-radius: 0 8px 8px 0;
-            overflow-x: auto;
         }
 
         .representative-note {
@@ -329,6 +401,12 @@
             background: #1e7e34;
         }
 
+        .section-divider {
+            border: none;
+            border-top: 2px dashed #d4e4f7;
+            margin: 20px 0;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
@@ -362,6 +440,11 @@
             .sample-table td {
                 padding: 6px 8px;
             }
+
+            .sample-sementara-item {
+                font-size: 12px;
+                padding: 3px 8px;
+            }
         }
 
         @media print {
@@ -386,6 +469,43 @@
 
             .no-print {
                 display: none !important;
+            }
+
+            .sample-sementara-item {
+                background: #1a3a6b !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .sample-sementara-item.duplicate {
+                background: #f0c040 !important;
+                color: #1a3a6b !important;
+            }
+
+            .sample-sementara-item.highlight {
+                background: #28a745 !important;
+                color: white !important;
+            }
+
+            .frequency-tag {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .freq-3 {
+                background: #d4edda !important;
+                color: #155724 !important;
+            }
+
+            .freq-2 {
+                background: #fff3cd !important;
+                color: #856404 !important;
+            }
+
+            .freq-1 {
+                background: #f8d7da !important;
+                color: #721c24 !important;
             }
         }
     </style>
@@ -429,6 +549,7 @@
             <div class="result-section">
                 <h2>📋 Hasil Penarikan Sampel</h2>
 
+                <!-- Info Box -->
                 <div class="info-box" id="infoBox">
                     <div class="info-item">
                         <div class="label">Populasi (P)</div>
@@ -452,13 +573,39 @@
                     </div>
                 </div>
 
+                <!-- ===== FORMULA BOX (LENGKAP) ===== -->
                 <div class="formula-box" id="formulaBox">
-                    <strong>Rumus:</strong><br>
-                    Ss = 2(S − 1) &nbsp;|&nbsp; Int = P / S &nbsp;|&nbsp; R₁ = P − (Ss − S)<br>
-                    R₂ = R₁ + Int &nbsp;|&nbsp; R₃ = R₂ + 2·Int &nbsp;|&nbsp; R₄ = R₃ + 3·Int &nbsp;|&nbsp; R₅ = R₄ + 4·Int<br>
-                    R₆ = R₁ − Int &nbsp;|&nbsp; R₇ = R₆ + Int &nbsp;|&nbsp; ... dan seterusnya
+                    <div class="formula-title">📐 Rumus Baku Penarikan Sampel</div>
+                    <div class="formula-line"><strong>Rs₁</strong> = P − (Ss − S)</div>
+                    <div class="formula-line"><strong>Rsᵢ</strong> = Rsᵢ₋₁ + (k × Int), untuk i = 2, 3, 4, 5, ... dan k = 1, 2, 3, 4 sesuai urutan</div>
+                    <div class="formula-line"><strong>Rs₅ⱼ₊₁</strong> = Rs₁ − (j × Int), untuk j = 1, 2, 3, ...</div>
+                    <div class="formula-line" style="margin-top:8px; padding-top:8px; border-top:1px solid #ddd; color:#555; font-size:13px;">
+                        Pola perguliran sampel mengikuti urutan setiap 5 sampel, dengan Rs₅ⱼ₊₁ dimulai dari Rs₁, 
+                        lalu dikurangi kelipatan interval setiap putaran.
+                    </div>
+                    <div style="margin-top:10px; padding:8px 12px; background:#eef5ff; border-radius:6px; font-size:13px;">
+                        <strong>Perhitungan:</strong>
+                        <span id="formulaDetail">-</span>
+                    </div>
                 </div>
 
+                <!-- ===== DAFTAR SAMPEL SEMENTARA ===== -->
+                <div class="sample-sementara-wrapper" id="sampleSementaraWrapper">
+                    <h3>📌 Daftar Sampel Sementara (Ss = 2(S−1) = <span id="ssValue">-</span> sampel)</h3>
+                    <div class="sample-sementara-grid" id="sampleSementaraGrid">
+                        <!-- Diisi oleh JavaScript -->
+                    </div>
+                    <div class="sample-sementara-label">
+                        <span style="background:#1a3a6b; color:white; padding:2px 8px; border-radius:4px; margin:0 4px;">Normal</span>
+                        <span style="background:#f0c040; color:#1a3a6b; padding:2px 8px; border-radius:4px; margin:0 4px;">Duplikat</span>
+                        <span style="background:#28a745; color:white; padding:2px 8px; border-radius:4px; margin:0 4px;">Unik</span>
+                    </div>
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- ===== TABEL SAMPEL TETAP ===== -->
+                <h2 style="margin-top:10px;">📋 Daftar Sampel Tetap Terpilih</h2>
                 <div style="overflow-x: auto;">
                     <table class="sample-table" id="sampleTable">
                         <thead>
@@ -475,6 +622,7 @@
                     </table>
                 </div>
 
+                <!-- Catatan Representatif -->
                 <div class="representative-note" id="repNote">
                     <h4>⭐ Tingkat Kerepresentatifan</h4>
                     <ul id="repList">
@@ -516,7 +664,6 @@
             document.getElementById('loading').classList.add('active');
             document.getElementById('results').style.display = 'none';
 
-            // Simulasi proses (agar animasi loading terlihat)
             setTimeout(() => {
                 try {
                     const result = prosesPenarikanSampel(P, S);
@@ -524,7 +671,7 @@
                     document.getElementById('loading').classList.remove('active');
                     document.getElementById('results').style.display = 'block';
                     document.getElementById('messageContainer').innerHTML =
-                        `<div class="success">✅ Penarikan sampel berhasil! Ditemukan ${result.sampelTerpilih.length} sampel unik.</div>`;
+                        `<div class="success">✅ Penarikan sampel berhasil! Ditemukan ${result.sampelTerpilih.length} sampel unik dari ${result.sampelSementara.length} sampel sementara.</div>`;
                 } catch (err) {
                     document.getElementById('loading').classList.remove('active');
                     document.getElementById('messageContainer').innerHTML =
@@ -540,112 +687,17 @@
             // --- 2. Hitung Sampel Sementara (Ss) ---
             const Ss = 2 * (S - 1);
 
-            // --- 3. Hitung R1 (Sampel Pertama) ---
+            // --- 3. Hitung R1 ---
             const R1 = P - (Ss - S);
 
-            // --- 4. Lakukan penarikan sampel dengan metode segmen terpadu ---
-            // Kita akan menghasilkan daftar sampel sementara (termasuk duplikat)
-            // Kemudian menghitung frekuensi setiap nomor urut
+            // --- 4. Generate semua sampel sementara dengan rumus baku ---
+            // Pola: setiap 5 sampel, R1 dikurangi kelipatan Int
+            // Dalam setiap blok 5: +Int, +2Int, +3Int, +4Int
 
             const daftarSampelSementara = [];
-            let R_prev = R1;
+            const maxIterasi = Math.ceil(Ss / 5) + 1; // cukup untuk menghasilkan Ss sampel
 
-            // Putaran 1: R1 s/d R5
-            // R1 sudah didapat
-            daftarSampelSementara.push(Math.round(R1));
-
-            // R2 = R1 + Int
-            let R2 = R1 + Int;
-            daftarSampelSementara.push(Math.round(R2));
-
-            // R3 = R2 + 2*Int
-            let R3 = R2 + 2 * Int;
-            daftarSampelSementara.push(Math.round(R3));
-
-            // R4 = R3 + 3*Int
-            let R4 = R3 + 3 * Int;
-            daftarSampelSementara.push(Math.round(R4));
-
-            // R5 = R4 + 4*Int
-            let R5 = R4 + 4 * Int;
-            daftarSampelSementara.push(Math.round(R5));
-
-            // Putaran 2: R6 s/d R10
-            // R6 = R1 - Int
-            let R6 = R1 - Int;
-            daftarSampelSementara.push(Math.round(R6));
-
-            // R7 = R6 + Int
-            let R7 = R6 + Int;
-            daftarSampelSementara.push(Math.round(R7));
-
-            // R8 = R7 + 2*Int
-            let R8 = R7 + 2 * Int;
-            daftarSampelSementara.push(Math.round(R8));
-
-            // R9 = R8 + 3*Int
-            let R9 = R8 + 3 * Int;
-            daftarSampelSementara.push(Math.round(R9));
-
-            // R10 = R9 + 4*Int
-            let R10 = R9 + 4 * Int;
-            daftarSampelSementara.push(Math.round(R10));
-
-            // Putaran 3: R11 s/d R15
-            // R11 = R1 - 2*Int
-            let R11 = R1 - 2 * Int;
-            daftarSampelSementara.push(Math.round(R11));
-
-            // R12 = R11 + Int
-            let R12 = R11 + Int;
-            daftarSampelSementara.push(Math.round(R12));
-
-            // R13 = R12 + 2*Int
-            let R13 = R12 + 2 * Int;
-            daftarSampelSementara.push(Math.round(R13));
-
-            // R14 = R13 + 3*Int
-            let R14 = R13 + 3 * Int;
-            daftarSampelSementara.push(Math.round(R14));
-
-            // R15 = R14 + 4*Int
-            let R15 = R14 + 4 * Int;
-            daftarSampelSementara.push(Math.round(R15));
-
-            // Putaran 4: R16 s/d R20
-            let R16 = R1 - 3 * Int;
-            daftarSampelSementara.push(Math.round(R16));
-
-            let R17 = R16 + Int;
-            daftarSampelSementara.push(Math.round(R17));
-
-            let R18 = R17 + 2 * Int;
-            daftarSampelSementara.push(Math.round(R18));
-
-            let R19 = R18 + 3 * Int;
-            daftarSampelSementara.push(Math.round(R19));
-
-            let R20 = R19 + 4 * Int;
-            daftarSampelSementara.push(Math.round(R20));
-
-            // Putaran 5: R21 s/d R25 (jika diperlukan)
-            let R21 = R1 - 4 * Int;
-            daftarSampelSementara.push(Math.round(R21));
-
-            let R22 = R21 + Int;
-            daftarSampelSementara.push(Math.round(R22));
-
-            let R23 = R22 + 2 * Int;
-            daftarSampelSementara.push(Math.round(R23));
-
-            let R24 = R23 + 3 * Int;
-            daftarSampelSementara.push(Math.round(R24));
-
-            let R25 = R24 + 4 * Int;
-            daftarSampelSementara.push(Math.round(R25));
-
-            // --- 5. Normalisasi nilai agar berada dalam rentang 1 s/d P ---
-            // Fungsi untuk memastikan nilai dalam rentang [1, P]
+            // Fungsi normalisasi agar nilai dalam rentang [1, P]
             function normalize(val) {
                 let v = val;
                 while (v < 1) v += P;
@@ -655,31 +707,51 @@
                 return Math.round(v);
             }
 
-            // Normalisasi semua nilai
-            const normalized = daftarSampelSementara.map(v => normalize(v));
+            // Iterasi untuk setiap putaran (j)
+            for (let j = 0; j < maxIterasi; j++) {
+                // Rs(5j+1) = Rs1 - (j * Int)
+                let startVal = R1 - (j * Int);
+                let startNorm = normalize(startVal);
 
-            // --- 6. Hitung frekuensi kemunculan setiap nomor urut ---
+                // Tambahkan Rs(5j+1)
+                if (daftarSampelSementara.length < Ss) {
+                    daftarSampelSementara.push(startNorm);
+                }
+
+                // Tambahkan 4 sampel berikutnya: +Int, +2Int, +3Int, +4Int
+                const multipliers = [1, 2, 3, 4];
+                for (let k of multipliers) {
+                    if (daftarSampelSementara.length >= Ss) break;
+                    let nextVal = startVal + (k * Int);
+                    let nextNorm = normalize(nextVal);
+                    daftarSampelSementara.push(nextNorm);
+                }
+            }
+
+            // Potong sesuai Ss
+            while (daftarSampelSementara.length > Ss) {
+                daftarSampelSementara.pop();
+            }
+
+            // --- 5. Hitung frekuensi kemunculan setiap nomor ---
             const freqMap = {};
-            normalized.forEach(val => {
+            daftarSampelSementara.forEach(val => {
                 freqMap[val] = (freqMap[val] || 0) + 1;
             });
 
-            // --- 7. Ambil sampel unik (sampel tetap) ---
+            // --- 6. Ambil sampel unik (sampel tetap) ---
             const uniqueSamples = Object.keys(freqMap).map(Number).sort((a, b) => a - b);
 
-            // --- 8. Tentukan tingkat kerepresentatifan ---
-            // Tingkat 1: frekuensi tertinggi, Tingkat 2: sedang, Tingkat 3: terendah
+            // --- 7. Tentukan tingkat kerepresentatifan ---
             const maxFreq = Math.max(...Object.values(freqMap));
             const minFreq = Math.min(...Object.values(freqMap));
-            const midFreq = Math.round((maxFreq + minFreq) / 2);
 
             const sampleDetails = uniqueSamples.map(nomor => {
                 const freq = freqMap[nomor] || 0;
                 let level;
-                if (freq === maxFreq) level = 1;
+                if (freq === maxFreq && maxFreq > 1) level = 1;
                 else if (freq > minFreq) level = 2;
                 else level = 3;
-                // Jika semua frekuensi sama, semua level 1
                 if (maxFreq === minFreq) level = 1;
 
                 return {
@@ -692,17 +764,12 @@
                 };
             });
 
-            // Urutkan berdasarkan nomor urut asli
-            sampleDetails.sort((a, b) => a.nomor - b.nomor);
-
-            // --- 9. Siapkan data untuk ditampilkan ---
-            // Buat daftar urutan penarikan (untuk ditampilkan di tabel)
+            // --- 8. Urutan penarikan (untuk tabel) ---
             const urutanPenarikan = [];
             const seen = new Set();
             let urutan = 1;
 
-            // Ambil sampel unik dalam urutan penarikan (pertama kali muncul)
-            for (const val of normalized) {
+            for (const val of daftarSampelSementara) {
                 if (!seen.has(val)) {
                     seen.add(val);
                     const detail = sampleDetails.find(d => d.nomor === val);
@@ -718,14 +785,14 @@
                 }
             }
 
-            // --- 10. Kembalikan hasil ---
+            // --- 9. Kembalikan hasil ---
             return {
                 P: P,
                 S: S,
                 Ss: Ss,
                 Int: Int,
                 R1: Math.round(R1),
-                sampelSementara: normalized,
+                sampelSementara: daftarSampelSementara,
                 sampelTerpilih: uniqueSamples,
                 sampleDetails: sampleDetails,
                 urutanPenarikan: urutanPenarikan,
@@ -744,48 +811,66 @@
             document.getElementById('displayR1').textContent = result.R1;
 
             // --- Formula Box ---
-            document.getElementById('formulaBox').innerHTML = `
-                <strong>Rumus:</strong><br>
-                Ss = 2(S − 1) = 2(${result.S} − 1) = ${result.Ss} &nbsp;|&nbsp;
-                Int = P / S = ${result.P} / ${result.S} = ${result.Int.toFixed(2)} &nbsp;|&nbsp;
-                R₁ = P − (Ss − S) = ${result.P} − (${result.Ss} − ${result.S}) = ${result.R1}<br>
-                <span style="font-size:13px; color:#555;">
-                R₂ = ${Math.round(result.R1 + result.Int)} &nbsp;|&nbsp;
-                R₃ = ${Math.round(result.R1 + result.Int + 2*result.Int)} &nbsp;|&nbsp;
-                R₄ = ${Math.round(result.R1 + result.Int + 2*result.Int + 3*result.Int)} &nbsp;|&nbsp;
-                R₅ = ${Math.round(result.R1 + result.Int + 2*result.Int + 3*result.Int + 4*result.Int)}
-                </span>
+            document.getElementById('formulaDetail').innerHTML = `
+                Ss = 2(${result.S} − 1) = ${result.Ss} &nbsp;|&nbsp;
+                Int = ${result.P} / ${result.S} = ${result.Int.toFixed(2)} &nbsp;|&nbsp;
+                Rs₁ = ${result.P} − (${result.Ss} − ${result.S}) = ${result.R1}
             `;
 
-            // --- Tabel Sampel ---
+            // --- Daftar Sampel Sementara ---
+            document.getElementById('ssValue').textContent = result.Ss;
+
+            const grid = document.getElementById('sampleSementaraGrid');
+            grid.innerHTML = '';
+
+            // Hitung frekuensi untuk setiap nilai
+            const freqMap = result.freqMap;
+
+            result.sampelSementara.forEach((val, index) => {
+                const span = document.createElement('span');
+                span.className = 'sample-sementara-item';
+
+                // Tandai duplikat (muncul > 1 kali)
+                const freq = freqMap[val] || 0;
+                if (freq > 1) {
+                    span.classList.add('duplicate');
+                }
+
+                // Tandai yang unik (pertama kali muncul)
+                const firstIndex = result.sampelSementara.indexOf(val);
+                if (firstIndex === index) {
+                    span.classList.add('highlight');
+                }
+
+                span.textContent = val;
+                span.title = `Muncul ${freq}x`;
+                grid.appendChild(span);
+            });
+
+            // --- Tabel Sampel Tetap ---
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
-            result.urutanPenarikan.forEach((item, index) => {
+            result.urutanPenarikan.forEach((item) => {
                 const tr = document.createElement('tr');
 
-                // Tandai yang memiliki frekuensi tertinggi
                 if (item.frekuensi === result.maxFreq && result.maxFreq > 1) {
                     tr.className = 'highlight';
                 }
 
-                // Kolom urutan
                 const tdUrutan = document.createElement('td');
                 tdUrutan.textContent = item.urutan;
                 tr.appendChild(tdUrutan);
 
-                // Kolom kode sampel
                 const tdKode = document.createElement('td');
                 tdKode.textContent = `R${item.urutan}`;
                 tr.appendChild(tdKode);
 
-                // Kolom nomor urut
                 const tdNomor = document.createElement('td');
                 tdNomor.textContent = item.nomor;
                 tdNomor.style.fontWeight = 'bold';
                 tr.appendChild(tdNomor);
 
-                // Kolom frekuensi
                 const tdFreq = document.createElement('td');
                 let freqClass = 'freq-1';
                 if (item.frekuensi >= 3) freqClass = 'freq-3';
@@ -793,7 +878,6 @@
                 tdFreq.innerHTML = `<span class="frequency-tag ${freqClass}">${item.frekuensi}x</span>`;
                 tr.appendChild(tdFreq);
 
-                // Kolom tingkat representatif
                 const tdLevel = document.createElement('td');
                 tdLevel.textContent = item.labelTingkat;
                 tdLevel.style.fontSize = '13px';
@@ -806,7 +890,6 @@
             const repList = document.getElementById('repList');
             repList.innerHTML = '';
 
-            // Kelompokkan berdasarkan tingkat
             const level1 = result.sampleDetails.filter(d => d.tingkat === 1);
             const level2 = result.sampleDetails.filter(d => d.tingkat === 2);
             const level3 = result.sampleDetails.filter(d => d.tingkat === 3);
@@ -830,14 +913,14 @@
                 `;
             }
 
-            // Tambahkan info total sampel unik
             repList.innerHTML += `
                 <li style="margin-top:8px; padding-top:8px; border-top:1px dashed #ccc;">
                     <strong>Total Sampel Tetap:</strong> ${result.sampelTerpilih.length} unit dari ${result.P} populasi
                     (${((result.sampelTerpilih.length / result.P) * 100).toFixed(1)}%)
                 </li>
                 <li>
-                    <strong>Putaran Penarikan:</strong> ${result.urutanPenarikan.length > 10 ? '5+ putaran' : '2-3 putaran'}
+                    <strong>Sampel Sementara:</strong> ${result.sampelSementara.length} sampel, 
+                    dengan ${Object.keys(result.freqMap).length} nomor unik
                 </li>
             `;
         }
@@ -848,13 +931,11 @@
             document.getElementById('results').style.display = 'none';
             document.getElementById('loading').classList.remove('active');
             document.getElementById('messageContainer').innerHTML = '';
-            // Scroll ke atas
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // --- Jalankan otomatis saat halaman dimuat ---
         window.onload = function() {
-            // Hanya jika ada nilai default, jalankan perhitungan
             const P = parseInt(document.getElementById('populasi').value);
             const S = parseInt(document.getElementById('sampel').value);
             if (P >= 2 && S >= 2 && S <= P) {
@@ -862,7 +943,6 @@
             }
         };
 
-        // --- Tombol Enter untuk menghitung ---
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 const active = document.activeElement;
