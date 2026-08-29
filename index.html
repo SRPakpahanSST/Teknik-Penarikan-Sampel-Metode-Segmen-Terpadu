@@ -208,11 +208,6 @@
             color: #333;
         }
 
-        .formula-box .formula-line .highlight-formula {
-            color: #c0392b;
-            font-weight: 700;
-        }
-
         .formula-detail {
             margin-top: 10px;
             padding: 8px 12px;
@@ -257,6 +252,7 @@
             text-align: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
+            cursor: default;
         }
 
         .sample-sementara-item:hover {
@@ -349,6 +345,11 @@
             font-weight: 600;
         }
 
+        .freq-4 {
+            background: #cce5ff;
+            color: #004085;
+        }
+
         .freq-3 {
             background: #d4edda;
             color: #155724;
@@ -412,6 +413,15 @@
             border-radius: 8px;
             margin: 10px 0;
             border-left: 4px solid #28a745;
+        }
+
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
         }
 
         .loading {
@@ -553,6 +563,11 @@
                 print-color-adjust: exact !important;
             }
 
+            .freq-4 {
+                background: #cce5ff !important;
+                color: #004085 !important;
+            }
+
             .freq-3 {
                 background: #d4edda !important;
                 color: #155724 !important;
@@ -660,7 +675,7 @@
                     <div class="formula-line"><strong>Rsᵢ</strong> = Rsᵢ₋₁ + (k × Int) &nbsp; untuk i = 2,3,4,5,... dan k = 1,2,3,4 sesuai urutan</div>
                     <div class="formula-line"><strong>Rs₅ⱼ₊₁</strong> = Rs₁ − (j × Int) &nbsp; untuk j = 1,2,3,...</div>
                     <div class="formula-line" style="margin-top:6px; color:#555; font-size:13px; border-top:1px solid #ddd; padding-top:6px;">
-                        Pola perguliran: setiap 5 sampel, Rs₅ⱼ₊₁ = Rs₁ − (j × Int)
+                        <strong>Pola Perguliran:</strong> Setiap putaran (j) dimulai dari Rs₁ − (j × Int), lalu ditambah kelipatan Int
                     </div>
                     <div class="formula-detail" id="formulaDetail">
                         <strong>Perhitungan:</strong> <span id="formulaCalc">-</span>
@@ -688,6 +703,7 @@
                     Sampel tetap adalah <strong>nomor unik</strong> yang muncul dari daftar sampel sementara.
                     Total: <span id="totalSampelTetap">-</span> unit.
                 </p>
+                <div id="sampelTetapWarning"></div>
                 <div class="table-wrapper">
                     <table class="sample-table" id="sampleTable">
                         <thead>
@@ -745,7 +761,8 @@
             // 3. Hitung R₁
             const R1 = P - (Ss - S);
 
-            // 4. Generate semua sampel sementara dengan pola perputaran yang benar
+            // 4. Generate semua sampel sementara dengan pola perputaran yang BENAR
+            // Setiap putaran (j): mulai dari Rs₁ - (j × Int), lalu +1×Int, +2×Int, +3×Int, +4×Int
             const daftarSampelSementara = [];
 
             // Hitung berapa putaran yang diperlukan
@@ -762,6 +779,7 @@
                 }
 
                 // Tambahkan 4 sampel berikutnya: +Int, +2Int, +3Int, +4Int
+                // Penting: semua dihitung DARI startVal, bukan dari nilai sebelumnya!
                 const multipliers = [1, 2, 3, 4];
                 for (const k of multipliers) {
                     if (daftarSampelSementara.length >= Ss) break;
@@ -782,7 +800,7 @@
                 freqMap[val] = (freqMap[val] || 0) + 1;
             }
 
-            // 6. Ambil sampel unik (sampel tetap) — urutkan berdasarkan kemunculan pertama
+            // 6. Ambil sampel unik (sampel tetap) — berdasarkan urutan kemunculan pertama
             const uniqueInOrder = [];
             const seen = new Set();
             for (const val of daftarSampelSementara) {
@@ -799,23 +817,36 @@
             const sampleDetails = uniqueInOrder.map((nomor, index) => {
                 const freq = freqMap[nomor] || 0;
                 let level;
+                // Level 1: frekuensi tertinggi (sangat representatif)
                 if (freq === maxFreq && maxFreq > 1) {
                     level = 1;
-                } else if (freq > minFreq) {
+                }
+                // Level 2: frekuensi menengah
+                else if (freq > minFreq && freq < maxFreq) {
                     level = 2;
-                } else {
+                }
+                // Level 3: frekuensi terendah (cukup representatif)
+                else {
                     level = 3;
                 }
+                // Jika semua frekuensi sama, semua level 1
                 if (maxFreq === minFreq) level = 1;
+
+                let label;
+                if (level === 1) {
+                    label = freq >= 4 ? '⭐⭐ Sangat Representatif' : '⭐ Sangat Representatif';
+                } else if (level === 2) {
+                    label = '✦ Representatif';
+                } else {
+                    label = '• Cukup Representatif';
+                }
 
                 return {
                     urutan: index + 1,
                     nomor: nomor,
                     frekuensi: freq,
                     tingkat: level,
-                    labelTingkat: level === 1 ? '⭐ Sangat Representatif' :
-                        level === 2 ? '✦ Representatif' :
-                        '• Cukup Representatif'
+                    labelTingkat: label
                 };
             });
 
@@ -850,8 +881,7 @@
                 `Int = ${result.P} / ${result.S} = ${result.Int.toFixed(2)} &nbsp;|&nbsp; ` +
                 `Rs₁ = ${result.P} − (${result.Ss} − ${result.S}) = ${Math.round(result.R1)}`;
 
-            // SAMPEL SEMENTARA
-            document.getElementById('ssValue').textContent = result.Ss;
+            // SAMPEL SEMENTARA            document.getElementById('ssValue').textContent = result.Ss;
             const grid = document.getElementById('sampleSementaraGrid');
             grid.innerHTML = '';
 
@@ -877,7 +907,23 @@
             });
 
             // TABEL SAMPEL TETAP
-            document.getElementById('totalSampelTetap').textContent = result.sampelTerpilih.length;
+            const totalTetap = result.sampelTerpilih.length;
+            document.getElementById('totalSampelTetap').textContent = totalTetap;
+
+            // Peringatan jika jumlah sampel tetap tidak sama dengan S
+            const warningDiv = document.getElementById('sampelTetapWarning');
+            if (totalTetap < result.S) {
+                warningDiv.innerHTML = `
+                    <div class="warning">
+                        ⚠️ Jumlah sampel tetap (${totalTetap}) lebih kecil dari yang diinginkan (${result.S}).
+                        Ini terjadi karena interval (${result.Int.toFixed(2)}) terlalu kecil sehingga banyak nilai berulang.
+                        <br><strong>Solusi:</strong> Gunakan nilai P dan S yang lebih besar atau interval yang lebih besar.
+                    </div>
+                `;
+            } else {
+                warningDiv.innerHTML = '';
+            }
+
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
@@ -905,7 +951,8 @@
 
                 const tdFreq = document.createElement('td');
                 let freqClass = 'freq-1';
-                if (item.frekuensi >= 3) freqClass = 'freq-3';
+                if (item.frekuensi >= 4) freqClass = 'freq-4';
+                else if (item.frekuensi === 3) freqClass = 'freq-3';
                 else if (item.frekuensi === 2) freqClass = 'freq-2';
                 tdFreq.innerHTML = `<span class="frequency-tag ${freqClass}">${item.frekuensi}x</span>`;
                 tr.appendChild(tdFreq);
@@ -960,6 +1007,9 @@
                 <li>
                     <strong>Frekuensi Tertinggi:</strong> ${result.maxFreq}x muncul
                 </li>
+                <li>
+                    <strong>Frekuensi Terendah:</strong> ${result.minFreq}x muncul
+                </li>
             `;
         }
 
@@ -994,13 +1044,23 @@
                     document.getElementById('loading').classList.remove('active');
                     document.getElementById('results').style.display = 'block';
 
-                    msgContainer.innerHTML = `
-                        <div class="success">
-                            ✅ Penarikan sampel berhasil! 
-                            Ditemukan <strong>${result.sampelTerpilih.length}</strong> sampel tetap 
-                            dari <strong>${result.sampelSementara.length}</strong> sampel sementara.
-                        </div>
-                    `;
+                    if (result.sampelTerpilih.length === result.S) {
+                        msgContainer.innerHTML = `
+                            <div class="success">
+                                ✅ Penarikan sampel berhasil! 
+                                Ditemukan <strong>${result.sampelTerpilih.length}</strong> sampel tetap 
+                                dari <strong>${result.sampelSementara.length}</strong> sampel sementara.
+                            </div>
+                        `;
+                    } else {
+                        msgContainer.innerHTML = `
+                            <div class="warning">
+                                ⚠️ Penarikan sampel selesai. Ditemukan <strong>${result.sampelTerpilih.length}</strong> sampel tetap 
+                                dari <strong>${result.sampelSementara.length}</strong> sampel sementara.
+                                <br>Jumlah sampel tetap <strong>tidak sama</strong> dengan S (${result.S}) karena banyak nilai berulang.
+                            </div>
+                        `;
+                    }
                 } catch (err) {
                     document.getElementById('loading').classList.remove('active');
                     msgContainer.innerHTML = `<div class="error">❌ Terjadi kesalahan: ${err.message}</div>`;
@@ -1015,6 +1075,7 @@
             document.getElementById('results').style.display = 'none';
             document.getElementById('loading').classList.remove('active');
             document.getElementById('messageContainer').innerHTML = '';
+            document.getElementById('sampelTetapWarning').innerHTML = '';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
