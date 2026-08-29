@@ -97,6 +97,27 @@
             font-weight: 700;
         }
 
+        .tab-btn .badge-new {
+            background: #dc3545;
+            color: white;
+            font-size: 10px;
+            padding: 1px 8px;
+            border-radius: 12px;
+            margin-left: 6px;
+            font-weight: 700;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
         /* ===== TAB CONTENT ===== */
         .tab-content {
             display: none;
@@ -121,8 +142,8 @@
         /* ===== LANDING PAGE ===== */
         .landing-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
             margin: 20px 0;
         }
 
@@ -172,6 +193,23 @@
 
         .landing-card .btn-card:hover {
             background: #0f2a4f;
+        }
+
+        .landing-card .btn-card-success {
+            background: #28a745;
+        }
+
+        .landing-card .btn-card-success:hover {
+            background: #1e7e34;
+        }
+
+        .landing-card .btn-card-warning {
+            background: #f0c040;
+            color: #1a3a6b;
+        }
+
+        .landing-card .btn-card-warning:hover {
+            background: #d4a830;
         }
 
         .feature-list {
@@ -224,7 +262,7 @@
         }
 
         /* ================================================================
-           APLIKASI - STYLE (dari kode aplikasi)
+           APLIKASI - STYLE
            ================================================================ */
         .app-container {
             background: transparent;
@@ -633,10 +671,6 @@
             margin: 20px 0;
         }
 
-        .no-print {
-            display: initial;
-        }
-
         /* ===== DOKUMENTASI ===== */
         .doc-container {
             background: #fafcff;
@@ -649,12 +683,10 @@
         .doc-container::-webkit-scrollbar {
             width: 6px;
         }
-
         .doc-container::-webkit-scrollbar-track {
             background: #f0f0f0;
             border-radius: 4px;
         }
-
         .doc-container::-webkit-scrollbar-thumb {
             background: #c5d5e8;
             border-radius: 4px;
@@ -667,7 +699,6 @@
             padding-bottom: 10px;
             margin-top: 0;
         }
-
         .doc-container h2 {
             color: #1a3a6b;
             font-size: 20px;
@@ -675,19 +706,16 @@
             border-bottom: 2px solid #d4e4f7;
             padding-bottom: 6px;
         }
-
         .doc-container h3 {
             color: #1a3a6b;
             font-size: 17px;
             margin: 16px 0 8px 0;
         }
-
         .doc-container h4 {
             color: #2a4a7b;
             font-size: 15px;
             margin: 12px 0 6px 0;
         }
-
         .doc-container p {
             margin-bottom: 10px;
             line-height: 1.8;
@@ -695,19 +723,16 @@
             text-align: justify;
             font-size: 14px;
         }
-
         .doc-container ul,
         .doc-container ol {
             margin: 8px 0 12px 25px;
         }
-
         .doc-container li {
             margin-bottom: 4px;
             line-height: 1.6;
             font-size: 14px;
             color: #333;
         }
-
         .doc-container code {
             background: #f0f5ff;
             padding: 2px 8px;
@@ -716,7 +741,6 @@
             font-size: 13px;
             color: #1a3a6b;
         }
-
         .doc-container pre {
             background: #f0f5ff;
             padding: 12px 16px;
@@ -728,7 +752,6 @@
             font-size: 13px;
             color: #333;
         }
-
         .doc-container blockquote {
             background: #fff9e6;
             padding: 10px 16px;
@@ -736,35 +759,29 @@
             margin: 10px 0;
             border-radius: 0 6px 6px 0;
         }
-
         .doc-container blockquote p {
             margin-bottom: 0;
             color: #555;
         }
-
         .doc-container table {
             width: 100%;
             border-collapse: collapse;
             margin: 12px 0;
             font-size: 14px;
         }
-
         .doc-container table th {
             background: #1a3a6b;
             color: white;
             padding: 8px 12px;
             text-align: left;
         }
-
         .doc-container table td {
             padding: 8px 12px;
             border-bottom: 1px solid #e8ecf0;
         }
-
         .doc-container table tr:nth-child(even) {
             background: #f8faff;
         }
-
         .doc-container .highlight-box {
             background: #fff9e6;
             padding: 12px 16px;
@@ -778,7 +795,6 @@
             padding: 40px;
             color: #888;
         }
-
         .doc-loading .spinner {
             width: 30px;
             height: 30px;
@@ -795,6 +811,154 @@
             padding: 16px 20px;
             border-radius: 8px;
             border-left: 4px solid #dc3545;
+        }
+
+        /* ================================================================
+           TUTORIAL
+           ================================================================ */
+        .tutorial-container {
+            padding: 10px 0;
+        }
+
+        .tutorial-step {
+            display: flex;
+            gap: 20px;
+            background: #f8faff;
+            border: 2px solid #d4e4f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .tutorial-step:hover {
+            box-shadow: 0 4px 15px rgba(26, 58, 107, 0.1);
+        }
+
+        .tutorial-step .step-number {
+            flex: 0 0 50px;
+            height: 50px;
+            background: #1a3a6b;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .tutorial-step .step-content {
+            flex: 1;
+        }
+
+        .tutorial-step .step-content h3 {
+            color: #1a3a6b;
+            margin-bottom: 6px;
+            font-size: 17px;
+        }
+
+        .tutorial-step .step-content p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .tutorial-step .step-content .step-image-placeholder {
+            background: #eef5ff;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: #888;
+            border: 2px dashed #c5d5e8;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        .tutorial-step .step-content .step-image-placeholder .icon-large {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .tutorial-step .step-content .tip-box {
+            background: #fff9e6;
+            padding: 10px 16px;
+            border-radius: 6px;
+            border-left: 4px solid #f0c040;
+            margin: 8px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .tutorial-step .step-content .tip-box strong {
+            color: #1a3a6b;
+        }
+
+        .tutorial-step .step-content .code-example {
+            background: #f0f5ff;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            border-left: 4px solid #1a3a6b;
+            margin: 8px 0;
+            overflow-x: auto;
+        }
+
+        .tutorial-nav {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tutorial-nav .btn-nav {
+            padding: 10px 24px;
+            border: 2px solid #d4e4f7;
+            border-radius: 8px;
+            background: white;
+            color: #1a3a6b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tutorial-nav .btn-nav:hover {
+            background: #1a3a6b;
+            color: white;
+            border-color: #1a3a6b;
+        }
+
+        .tutorial-nav .btn-nav.active {
+            background: #1a3a6b;
+            color: white;
+            border-color: #1a3a6b;
+        }
+
+        .tutorial-progress {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .tutorial-progress .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e8ecf0;
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .tutorial-progress .progress-bar .progress-fill {
+            height: 100%;
+            background: #1a3a6b;
+            border-radius: 4px;
+            transition: width 0.5s ease;
         }
 
         /* ===== RESPONSIVE ===== */
@@ -823,6 +987,18 @@
                 text-align: center;
             }
 
+            .tutorial-step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .tutorial-step .step-number {
+                flex: 0 0 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
             .sample-sementara-grid {
                 grid-template-columns: 1fr;
                 gap: 1px;
@@ -832,7 +1008,6 @@
                 max-height: 500px;
                 padding: 12px;
             }
-
             .doc-container h1 {
                 font-size: 20px;
             }
@@ -904,12 +1079,10 @@
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-
             .sample-sementara-item .nilai.duplicate {
                 background: #f0c040 !important;
                 color: #1a3a6b !important;
             }
-
             .sample-sementara-item .nilai.unique {
                 border: 2px solid #28a745 !important;
             }
@@ -918,17 +1091,14 @@
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-
             .freq-3 {
                 background: #d4edda !important;
                 color: #155724 !important;
             }
-
             .freq-2 {
                 background: #fff3cd !important;
                 color: #856404 !important;
             }
-
             .freq-1 {
                 background: #f8d7da !important;
                 color: #721c24 !important;
@@ -938,18 +1108,15 @@
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-
             .info-box-app {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-
             .sample-table .highlight-row td {
                 background: #fff9e6 !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-
             .sample-table tr:hover td {
                 background: transparent !important;
             }
@@ -957,6 +1124,14 @@
             .doc-container {
                 max-height: none;
                 overflow: visible;
+            }
+
+            .tutorial-nav {
+                display: none !important;
+            }
+            .tutorial-step {
+                break-inside: avoid;
+                border: 1px solid #ddd;
             }
         }
     </style>
@@ -975,6 +1150,7 @@
         <div class="tabs">
             <button class="tab-btn active" data-tab="landing">🏠 Beranda</button>
             <button class="tab-btn" data-tab="app">📊 Aplikasi</button>
+            <button class="tab-btn" data-tab="tutorial">🎓 Tutorial <span class="badge-new">NEW</span></button>
             <button class="tab-btn" data-tab="docs">📖 Dokumentasi <span class="badge">MD</span></button>
         </div>
 
@@ -995,16 +1171,29 @@
                 </div>
 
                 <div class="landing-card">
+                    <div class="icon">🎓</div>
+                    <h3>Tutorial Penggunaan</h3>
+                    <p>Panduan langkah-demi-langkah menggunakan aplikasi penarikan sampel metode segmen terpadu untuk pemula.</p>
+                    <ul class="feature-list">
+                        <li>Panduan input data</li>
+                        <li>Interpretasi hasil</li>
+                        <li>Tips dan trik</li>
+                        <li>Contoh kasus</li>
+                    </ul>
+                    <button class="btn-card btn-card-success" onclick="switchTab('tutorial')">📖 Lihat Tutorial</button>
+                </div>
+
+                <div class="landing-card">
                     <div class="icon">📖</div>
                     <h3>Dokumentasi Metode</h3>
-                    <p>Pelajari teori dan rumus lengkap Teknik Penarikan Sampel Metode Segmen Terpadu dari karya ilmiah asli dalam format Markdown.</p>
+                    <p>Pelajari teori dan rumus lengkap Teknik Penarikan Sampel Metode Segmen Terpadu dari karya ilmiah asli.</p>
                     <ul class="feature-list">
                         <li>Rumus baku &amp; pola perguliran</li>
                         <li>Perbedaan dengan metode konvensional</li>
                         <li>Tingkat kerepresentatifan</li>
                         <li>Contoh perhitungan lengkap</li>
                     </ul>
-                    <button class="btn-card" onclick="switchTab('docs')">📖 Baca Dokumentasi</button>
+                    <button class="btn-card btn-card-warning" onclick="switchTab('docs')">📖 Baca Dokumentasi</button>
                 </div>
             </div>
 
@@ -1023,6 +1212,8 @@
                     Ss = 2(S−1) &nbsp;|&nbsp; Int = P / S &nbsp;|&nbsp; Rs₁ = P − (Ss − S)
                 </div>
                 <p style="margin-top:8px;">
+                    <a href="#" onclick="switchTab('tutorial'); return false;" style="color:#1a3a6b; font-weight:600;">🎓 Lihat tutorial penggunaan →</a>
+                    &nbsp;|&nbsp;
                     <a href="#" onclick="switchTab('docs'); return false;" style="color:#1a3a6b; font-weight:600;">📖 Baca dokumentasi lengkap →</a>
                 </p>
             </div>
@@ -1049,6 +1240,7 @@
                     <div class="btn-group no-print">
                         <button class="btn btn-secondary" onclick="resetForm()">↺ Reset</button>
                         <button class="btn btn-print" onclick="window.print()">🖨️ Cetak</button>
+                        <button class="btn btn-secondary" onclick="switchTab('tutorial')" style="background:#f0c040; color:#1a3a6b;">🎓 Tutorial</button>
                     </div>
                 </div>
 
@@ -1062,7 +1254,6 @@
                 <div id="results" style="display: none;">
                     <div class="result-section">
 
-                        <!-- INFO BOX -->
                         <h2>📋 Ringkasan Perhitungan</h2>
                         <div class="info-box-app" id="infoBox">
                             <div class="info-item">
@@ -1087,7 +1278,6 @@
                             </div>
                         </div>
 
-                        <!-- FORMULA BOX -->
                         <div class="formula-box" id="formulaBox">
                             <div class="formula-title">📐 Rumus Baku Penarikan Sampel</div>
                             <div class="formula-line"><strong>Rs₁</strong> = P − (Ss − S)</div>
@@ -1102,7 +1292,6 @@
                             </div>
                         </div>
 
-                        <!-- DAFTAR SAMPEL SEMENTARA -->
                         <div class="sample-sementara-wrapper" id="sampleSementaraWrapper">
                             <h3>📌 Daftar Sampel Sementara (Ss = 2(S−1) = <span id="ssValue">-</span> sampel)</h3>
                             <div style="display:flex; flex-wrap:wrap; gap:10px 20px; font-size:13px; color:#555; margin-bottom:8px; padding:6px 10px; background:#f0f5ff; border-radius:6px;">
@@ -1111,14 +1300,11 @@
                                 <span>🟡 Duplikat (muncul > 1x)</span>
                                 <span>🟢 Unik (pertama kali muncul)</span>
                             </div>
-                            <div class="sample-sementara-grid" id="sampleSementaraGrid">
-                                <!-- diisi JavaScript -->
-                            </div>
+                            <div class="sample-sementara-grid" id="sampleSementaraGrid"></div>
                         </div>
 
                         <hr class="section-divider">
 
-                        <!-- TABEL SAMPEL TETAP -->
                         <h2>📋 Daftar Sampel Tetap Terpilih</h2>
                         <p style="color:#666; font-size:14px; margin-bottom:10px;">
                             Sampel tetap adalah <strong>nomor unik</strong> yang muncul dari daftar sampel sementara.
@@ -1135,21 +1321,15 @@
                                         <th>Tingkat Representatif</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tableBody">
-                                    <!-- diisi JavaScript -->
-                                </tbody>
+                                <tbody id="tableBody"></tbody>
                             </table>
                         </div>
 
-                        <!-- CATATAN REPRESENTATIF -->
                         <div class="representative-note" id="repNote">
                             <h4>⭐ Tingkat Kerepresentatifan</h4>
-                            <ul id="repList">
-                                <!-- diisi JavaScript -->
-                            </ul>
+                            <ul id="repList"></ul>
                         </div>
 
-                        <!-- PESAN -->
                         <div id="messageContainer"></div>
 
                     </div>
@@ -1157,7 +1337,176 @@
             </div>
         </div>
 
-        <!-- ===== TAB 3: DOKUMENTASI ===== -->
+        <!-- ===== TAB 3: TUTORIAL ===== -->
+        <div class="tab-content" id="tab-tutorial">
+            <div class="tutorial-container">
+                <h2 style="color:#1a3a6b; margin-bottom:15px;">🎓 Tutorial Penggunaan Aplikasi</h2>
+                <p style="color:#666; margin-bottom:20px; font-size:14px;">
+                    Panduan langkah-demi-langkah ini akan membantu Anda memahami cara menggunakan aplikasi 
+                    <strong>Teknik Penarikan Sampel Metode Segmen Terpadu</strong>.
+                </p>
+
+                <!-- Progress -->
+                <div class="tutorial-progress">
+                    <span id="tutorialProgressText">Langkah 1 dari 6</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="tutorialProgressFill" style="width: 16.67%;"></div>
+                    </div>
+                </div>
+
+                <!-- Steps -->
+                <div id="tutorialSteps">
+                    <!-- Step 1 -->
+                    <div class="tutorial-step" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>📥 Memasukkan Data Populasi dan Sampel</h3>
+                            <p>
+                                Langkah pertama adalah memasukkan dua parameter utama:
+                            </p>
+                            <ul style="margin:8px 0 8px 20px; color:#555; font-size:14px;">
+                                <li><strong>Jumlah Populasi (P)</strong> — Total unit dalam populasi yang akan diambil sampelnya.</li>
+                                <li><strong>Jumlah Sampel Tetap (S)</strong> — Jumlah sampel yang diinginkan.</li>
+                            </ul>
+                            <div class="step-image-placeholder">
+                                <span class="icon-large">📝</span>
+                                <p>Masukkan nilai P dan S pada kolom input yang tersedia, lalu klik tombol <strong>"🚀 Hitung Sampel"</strong></p>
+                            </div>
+                            <div class="tip-box">
+                                <strong>💡 Tips:</strong> Untuk contoh kasus standar, gunakan P = 87 dan S = 12.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="tutorial-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>📊 Memahami Ringkasan Perhitungan</h3>
+                            <p>
+                                Setelah mengklik "Hitung Sampel", aplikasi akan menampilkan ringkasan perhitungan:
+                            </p>
+                            <div class="step-image-placeholder">
+                                <span class="icon-large">📊</span>
+                                <p><strong>Ringkasan Perhitungan</strong> menampilkan: Populasi (P), Sampel Tetap (S), Sampel Sementara (Ss), Interval (Int), dan R₁</p>
+                            </div>
+                            <div class="code-example">
+                                Contoh: P = 87, S = 12, Ss = 22, Int = 7.25, R₁ = 77
+                            </div>
+                            <div class="tip-box">
+                                <strong>💡 Tips:</strong> Perhatikan nilai <strong>Interval (Int)</strong> karena ini adalah kunci dari seluruh perhitungan.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="tutorial-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>📐 Melihat Rumus Baku</h3>
+                            <p>
+                                Aplikasi menampilkan rumus baku yang digunakan dalam metode ini:
+                            </p>
+                            <div class="code-example">
+                                Rs₁ = P − (Ss − S)<br>
+                                Rsᵢ = Rsᵢ₋₁ + (k × Int) &nbsp; untuk i = 2,3,4,5,... dan k = 1,2,3,4 sesuai urutan<br>
+                                Rs₅ⱼ₊₁ = Rs₁ − (j × Int) &nbsp; untuk j = 1,2,3,...
+                            </div>
+                            <p style="font-size:13px; color:#666;">
+                                <strong>Pola Perguliran:</strong> Setiap putaran (j) dimulai dari Rs₁ − (j × Int), 
+                                lalu dilanjutkan dengan +Int, +2Int, +3Int, +4Int dari nilai sebelumnya.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="tutorial-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>📌 Membaca Daftar Sampel Sementara</h3>
+                            <p>
+                                <strong>Sampel Sementara (Ss)</strong> adalah semua sampel yang dihasilkan dari proses perguliran.
+                                Jumlahnya adalah <strong>Ss = 2(S−1)</strong>.
+                            </p>
+                            <div class="step-image-placeholder">
+                                <span class="icon-large">📋</span>
+                                <p>Daftar sampel sementara ditampilkan dengan kode warna:</p>
+                                <p>🔵 <strong>Normal</strong> — nilai standar</p>
+                                <p>🟡 <strong>Duplikat</strong> — nilai yang muncul lebih dari 1 kali</p>
+                                <p>🟢 <strong>Unik</strong> — nilai yang pertama kali muncul</p>
+                            </div>
+                            <div class="tip-box">
+                                <strong>💡 Tips:</strong> Sampel yang berwarna <strong>🟢 hijau</strong> adalah sampel yang akan menjadi <strong>sampel tetap</strong>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="tutorial-step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3>📋 Membaca Daftar Sampel Tetap Terpilih</h3>
+                            <p>
+                                <strong>Sampel Tetap</strong> adalah nomor unik yang diambil dari daftar sampel sementara.
+                                Jumlahnya harus sama dengan <strong>S</strong> (jumlah sampel yang diinginkan).
+                            </p>
+                            <div class="step-image-placeholder">
+                                <span class="icon-large">✅</span>
+                                <p>Tabel menampilkan:</p>
+                                <p>• <strong>#</strong> — urutan sampel</p>
+                                <p>• <strong>Kode Sampel</strong> — R₁, R₂, R₃, ...</p>
+                                <p>• <strong>Nomor Urut</strong> — nomor dalam populasi</p>
+                                <p>• <strong>Frekuensi Muncul</strong> — berapa kali muncul di sampel sementara</p>
+                                <p>• <strong>Tingkat Representatif</strong> — tingkat kerepresentatifan</p>
+                            </div>
+                            <div class="tip-box">
+                                <strong>💡 Tips:</strong> Semakin tinggi <strong>frekuensi</strong>, semakin <strong>representatif</strong> sampel tersebut.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="tutorial-step" data-step="6">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h3>⭐ Interpretasi Tingkat Representatif</h3>
+                            <p>
+                                Aplikasi mengelompokkan sampel ke dalam 3 tingkat representatif:
+                            </p>
+                            <ul style="margin:8px 0 8px 20px; color:#555; font-size:14px;">
+                                <li><strong>⭐ Tingkat 1 (Sangat Representatif)</strong> — Frekuensi tertinggi (biasanya 3x)</li>
+                                <li><strong>✦ Tingkat 2 (Representatif)</strong> — Frekuensi menengah (biasanya 2x)</li>
+                                <li><strong>• Tingkat 3 (Cukup Representatif)</strong> — Frekuensi terendah (biasanya 1x)</li>
+                            </ul>
+                            <div class="step-image-placeholder">
+                                <span class="icon-large">⭐</span>
+                                <p><strong>Contoh:</strong> Nomor 77, 63, 55 muncul 3x → <strong>Sangat Representatif</strong></p>
+                                <p><strong>Contoh:</strong> Nomor 84, 12, 70, 48 muncul 2x → <strong>Representatif</strong></p>
+                                <p><strong>Contoh:</strong> Nomor 34, 5, 26, 19, 41 muncul 1x → <strong>Cukup Representatif</strong></p>
+                            </div>
+                            <div class="tip-box">
+                                <strong>💡 Tips:</strong> Gunakan sampel dengan tingkat representatif tertinggi untuk hasil yang paling akurat.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="tutorial-nav">
+                    <button class="btn-nav" id="tutorialPrev" onclick="tutorialPrev()">⬅ Sebelumnya</button>
+                    <span id="tutorialStepIndicator" style="display:flex; align-items:center; color:#888; font-size:14px;">1 / 6</span>
+                    <button class="btn-nav" id="tutorialNext" onclick="tutorialNext()">Selanjutnya ➡</button>
+                </div>
+
+                <!-- Tombol ke Aplikasi -->
+                <div style="text-align:center; margin-top:25px;">
+                    <button class="btn" onclick="switchTab('app')" style="background:#28a745;">🚀 Coba Sekarang di Aplikasi</button>
+                    <button class="btn btn-secondary" onclick="switchTab('docs')" style="margin-left:10px;">📖 Baca Dokumentasi</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== TAB 4: DOKUMENTASI ===== -->
         <div class="tab-content" id="tab-docs">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:15px;">
                 <h2 style="color:#1a3a6b; margin:0;">📖 Dokumentasi Metode</h2>
@@ -1186,12 +1535,14 @@
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Jika tab aplikasi, jalankan auto-run jika belum ada hasil
             if (tabId === 'app') {
                 const results = document.getElementById('results');
                 if (results.style.display === 'none') {
                     hitungSampel();
                 }
+            }
+            if (tabId === 'tutorial') {
+                resetTutorial();
             }
         }
 
@@ -1202,7 +1553,71 @@
         });
 
         // ============================================================
-        //  APLIKASI - FUNGSI (dari kode aplikasi)
+        //  TUTORIAL NAVIGATION
+        // ============================================================
+        let currentStep = 1;
+        const totalSteps = 6;
+
+        function updateTutorial() {
+            // Sembunyikan semua step
+            document.querySelectorAll('.tutorial-step').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // Tampilkan step yang aktif
+            const activeStep = document.querySelector(`.tutorial-step[data-step="${currentStep}"]`);
+            if (activeStep) {
+                activeStep.style.display = 'flex';
+            }
+
+            // Update progress
+            document.getElementById('tutorialProgressText').textContent = `Langkah ${currentStep} dari ${totalSteps}`;
+            document.getElementById('tutorialProgressFill').style.width = `${(currentStep / totalSteps) * 100}%`;
+            document.getElementById('tutorialStepIndicator').textContent = `${currentStep} / ${totalSteps}`;
+
+            // Update tombol
+            document.getElementById('tutorialPrev').style.display = currentStep === 1 ? 'none' : 'inline-block';
+            document.getElementById('tutorialNext').textContent = currentStep === totalSteps ? '✅ Selesai' : 'Selanjutnya ➡';
+        }
+
+        function tutorialNext() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateTutorial();
+            } else {
+                // Jika sudah di step terakhir, pindah ke aplikasi
+                switchTab('app');
+            }
+        }
+
+        function tutorialPrev() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateTutorial();
+            }
+        }
+
+        function resetTutorial() {
+            currentStep = 1;
+            updateTutorial();
+        }
+
+        // Keyboard navigation untuk tutorial
+        document.addEventListener('keydown', function(e) {
+            const tutorialTab = document.getElementById('tab-tutorial');
+            if (tutorialTab.classList.contains('active')) {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault();
+                    tutorialNext();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    tutorialPrev();
+                }
+            }
+        });
+
+        // ============================================================
+        //  APLIKASI - FUNGSI
         // ============================================================
 
         function normalize(val, P) {
@@ -1502,12 +1917,12 @@
 
         // Auto-run saat tab aplikasi di-load
         window.addEventListener('load', function() {
-            // Jalankan hitung sampel untuk tab aplikasi
             const P = parseInt(document.getElementById('populasi').value);
             const S = parseInt(document.getElementById('sampel').value);
             if (P >= 2 && S >= 2 && S <= P) {
                 hitungSampel();
             }
+            resetTutorial();
         });
 
         document.addEventListener('keydown', function(e) {
