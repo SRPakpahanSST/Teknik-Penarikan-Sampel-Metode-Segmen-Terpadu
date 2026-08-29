@@ -1,0 +1,1 @@
+# Teknik-Penarikan-Sampel-Metode-Segmen-Terpadu
