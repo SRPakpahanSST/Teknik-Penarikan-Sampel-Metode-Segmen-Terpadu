@@ -4,6 +4,9 @@
 
 Aplikasi web untuk menghitung penarikan sampel menggunakan **Metode Segmen Terpadu — Semua Untuk Satu** yang dikembangkan oleh **SR. Pakpahan, SST**.
 
+URL Link Aplikasi: 
+https://srpakpahansst.github.io/Teknik-Penarikan-Sampel-Metode-Segmen-Terpadu/
+
 ## 📖 Tentang Metode
 
 Metode Segmen Terpadu adalah teknik penarikan sampel baru yang menggunakan pendekatan **sampel sementara** sebelum menentukan sampel tetap. Metode ini berbeda dengan metode konvensional yang menggunakan Tabel Angka Random (TAR).
