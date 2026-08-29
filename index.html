@@ -184,7 +184,6 @@
             color: #1a3a6b;
         }
 
-        /* Formula Box */
         .formula-box {
             background: #f8f9fa;
             border-left: 4px solid #1a3a6b;
@@ -223,7 +222,6 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        /* Daftar Sampel Sementara */
         .sample-sementara-wrapper {
             background: #f8faff;
             border: 2px solid #d4e4f7;
@@ -306,7 +304,6 @@
             color: white;
         }
 
-        /* Tabel */
         .table-wrapper {
             overflow-x: auto;
             margin-top: 10px;
@@ -631,7 +628,7 @@
         <div id="results" style="display: none;">
             <div class="result-section">
 
-                <!-- ===== INFO BOX ===== -->
+                <!-- INFO BOX -->
                 <h2>📋 Ringkasan Perhitungan</h2>
                 <div class="info-box" id="infoBox">
                     <div class="info-item">
@@ -656,7 +653,7 @@
                     </div>
                 </div>
 
-                <!-- ===== FORMULA BOX ===== -->
+                <!-- FORMULA BOX -->
                 <div class="formula-box" id="formulaBox">
                     <div class="formula-title">📐 Rumus Baku Penarikan Sampel</div>
                     <div class="formula-line"><strong>Rs₁</strong> = P − (Ss − S)</div>
@@ -670,7 +667,7 @@
                     </div>
                 </div>
 
-                <!-- ===== DAFTAR SAMPEL SEMENTARA ===== -->
+                <!-- DAFTAR SAMPEL SEMENTARA -->
                 <div class="sample-sementara-wrapper" id="sampleSementaraWrapper">
                     <h3>📌 Daftar Sampel Sementara (Ss = 2(S−1) = <span id="ssValue">-</span> sampel)</h3>
                     <div class="sample-sementara-grid" id="sampleSementaraGrid">
@@ -685,7 +682,7 @@
 
                 <hr class="section-divider">
 
-                <!-- ===== TABEL SAMPEL TETAP ===== -->
+                <!-- TABEL SAMPEL TETAP -->
                 <h2>📋 Daftar Sampel Tetap Terpilih</h2>
                 <p style="color:#666; font-size:14px; margin-bottom:10px;">
                     Sampel tetap adalah <strong>nomor unik</strong> yang muncul dari daftar sampel sementara.
@@ -708,7 +705,7 @@
                     </table>
                 </div>
 
-                <!-- ===== CATATAN REPRESENTATIF ===== -->
+                <!-- CATATAN REPRESENTATIF -->
                 <div class="representative-note" id="repNote">
                     <h4>⭐ Tingkat Kerepresentatifan</h4>
                     <ul id="repList">
@@ -716,7 +713,7 @@
                     </ul>
                 </div>
 
-                <!-- ===== PESAN ===== -->
+                <!-- PESAN -->
                 <div id="messageContainer"></div>
 
             </div>
@@ -732,10 +729,8 @@
         // --- Fungsi Normalisasi ---
         function normalize(val, P) {
             let v = val;
-            // Selama nilai di luar rentang [1, P], geser dengan P
             while (v < 1) v += P;
             while (v > P) v -= P;
-            // Pembulatan ke integer terdekat
             return Math.round(v);
         }
 
@@ -750,10 +745,11 @@
             // 3. Hitung R₁
             const R1 = P - (Ss - S);
 
-            // 4. Generate semua sampel sementara
+            // 4. Generate semua sampel sementara dengan pola perputaran yang benar
             const daftarSampelSementara = [];
 
-            // Berapa banyak putaran yang dibutuhkan untuk menghasilkan Ss sampel
+            // Hitung berapa putaran yang diperlukan
+            // Setiap putaran menghasilkan 5 sampel
             const maxJ = Math.ceil(Ss / 5) + 1;
 
             for (let j = 0; j < maxJ; j++) {
@@ -786,15 +782,21 @@
                 freqMap[val] = (freqMap[val] || 0) + 1;
             }
 
-            // 6. Ambil sampel unik (sampel tetap) — urutkan berdasarkan nomor
-            const uniqueSamples = Object.keys(freqMap).map(Number).sort((a, b) => a - b);
+            // 6. Ambil sampel unik (sampel tetap) — urutkan berdasarkan kemunculan pertama
+            const uniqueInOrder = [];
+            const seen = new Set();
+            for (const val of daftarSampelSementara) {
+                if (!seen.has(val)) {
+                    seen.add(val);
+                    uniqueInOrder.push(val);
+                }
+            }
 
             // 7. Tentukan tingkat kerepresentatifan
             const maxFreq = Math.max(...Object.values(freqMap));
             const minFreq = Math.min(...Object.values(freqMap));
 
-            // Buat detail untuk setiap sampel unik
-            const sampleDetails = uniqueSamples.map(nomor => {
+            const sampleDetails = uniqueInOrder.map((nomor, index) => {
                 const freq = freqMap[nomor] || 0;
                 let level;
                 if (freq === maxFreq && maxFreq > 1) {
@@ -804,10 +806,10 @@
                 } else {
                     level = 3;
                 }
-                // Jika semua frekuensi sama, semua level 1
                 if (maxFreq === minFreq) level = 1;
 
                 return {
+                    urutan: index + 1,
                     nomor: nomor,
                     frekuensi: freq,
                     tingkat: level,
@@ -817,28 +819,7 @@
                 };
             });
 
-            // 8. Urutan penarikan (untuk tabel) — berdasarkan kemunculan pertama
-            const urutanPenarikan = [];
-            const seen = new Set();
-            let urutan = 1;
-
-            for (const val of daftarSampelSementara) {
-                if (!seen.has(val)) {
-                    seen.add(val);
-                    const detail = sampleDetails.find(d => d.nomor === val);
-                    if (detail) {
-                        urutanPenarikan.push({
-                            urutan: urutan++,
-                            nomor: val,
-                            frekuensi: detail.frekuensi,
-                            tingkat: detail.tingkat,
-                            labelTingkat: detail.labelTingkat
-                        });
-                    }
-                }
-            }
-
-            // 9. Hasil
+            // 8. Hasil
             return {
                 P: P,
                 S: S,
@@ -846,9 +827,8 @@
                 Int: Int,
                 R1: R1,
                 sampelSementara: daftarSampelSementara,
-                sampelTerpilih: uniqueSamples,
+                sampelTerpilih: uniqueInOrder,
                 sampleDetails: sampleDetails,
-                urutanPenarikan: urutanPenarikan,
                 freqMap: freqMap,
                 maxFreq: maxFreq,
                 minFreq: minFreq
@@ -886,7 +866,6 @@
                     span.classList.add('duplicate');
                 }
 
-                // Tandai yang pertama kali muncul (unik)
                 const firstIndex = result.sampelSementara.indexOf(val);
                 if (firstIndex === index) {
                     span.classList.add('unique');
@@ -902,32 +881,28 @@
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
-            result.urutanPenarikan.forEach((item) => {
+            result.sampleDetails.forEach((item) => {
                 const tr = document.createElement('tr');
 
                 if (item.frekuensi === result.maxFreq && result.maxFreq > 1) {
                     tr.className = 'highlight-row';
                 }
 
-                // Kolom #
                 const tdUrutan = document.createElement('td');
                 tdUrutan.textContent = item.urutan;
                 tr.appendChild(tdUrutan);
 
-                // Kolom Kode
                 const tdKode = document.createElement('td');
                 tdKode.textContent = `R${item.urutan}`;
                 tdKode.style.fontWeight = '600';
                 tr.appendChild(tdKode);
 
-                // Kolom Nomor Urut
                 const tdNomor = document.createElement('td');
                 tdNomor.textContent = item.nomor;
                 tdNomor.style.fontWeight = 'bold';
                 tdNomor.style.fontSize = '16px';
                 tr.appendChild(tdNomor);
 
-                // Kolom Frekuensi
                 const tdFreq = document.createElement('td');
                 let freqClass = 'freq-1';
                 if (item.frekuensi >= 3) freqClass = 'freq-3';
@@ -935,7 +910,6 @@
                 tdFreq.innerHTML = `<span class="frequency-tag ${freqClass}">${item.frekuensi}x</span>`;
                 tr.appendChild(tdFreq);
 
-                // Kolom Tingkat
                 const tdLevel = document.createElement('td');
                 tdLevel.textContent = item.labelTingkat;
                 tdLevel.style.fontSize = '13px';
@@ -981,7 +955,7 @@
                 </li>
                 <li>
                     <strong>Sampel Sementara:</strong> ${result.sampelSementara.length} sampel, 
-                    dengan ${Object.keys(result.freqMap).length} nomor unik
+                    dengan ${result.sampleDetails.length} nomor unik
                 </li>
                 <li>
                     <strong>Frekuensi Tertinggi:</strong> ${result.maxFreq}x muncul
@@ -997,7 +971,6 @@
             const msgContainer = document.getElementById('messageContainer');
             msgContainer.innerHTML = '';
 
-            // Validasi
             if (isNaN(P) || isNaN(S) || P < 2 || S < 2) {
                 msgContainer.innerHTML = `<div class="error">⚠️ Populasi dan sampel harus berupa angka minimal 2.</div>`;
                 document.getElementById('results').style.display = 'none';
@@ -1010,7 +983,6 @@
                 return;
             }
 
-            // Loading
             document.getElementById('loading').classList.add('active');
             document.getElementById('results').style.display = 'none';
 
