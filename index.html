@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         /* ================================================================
-           STYLE COVER / SAMPUL (SAMA SEPERTI SEBELUMNYA)
+           STYLE COVER / SAMPUL
            ================================================================ */
         * {
             margin: 0;
@@ -116,7 +116,6 @@
             font-weight: 600;
         }
 
-        /* --- GAMBAR (Placeholder dengan ikon) --- */
         .cover .cover-image {
             width: 180px;
             height: 180px;
@@ -148,7 +147,18 @@
             opacity: 0.9;
         }
 
-        /* --- TOMBOL MULAI --- */
+        .cover .cover-image img {
+            display: none;
+        }
+
+        .cover .cover-image.has-image .fallback-icon {
+            display: none;
+        }
+
+        .cover .cover-image.has-image img {
+            display: block;
+        }
+
         .btn-start {
             display: inline-block;
             padding: 16px 50px;
@@ -186,20 +196,6 @@
             transform: translateX(6px);
         }
 
-        /* --- Versi Gambar Jika Ada File --- */
-        .cover .cover-image img {
-            display: none;
-        }
-
-        .cover .cover-image.has-image .fallback-icon {
-            display: none;
-        }
-
-        .cover .cover-image.has-image img {
-            display: block;
-        }
-
-        /* --- FOOTER COVER --- */
         .cover .footer-cover {
             position: absolute;
             bottom: 30px;
@@ -229,64 +225,35 @@
             opacity: 1;
         }
 
-        /* ================================================================
-           STYLE APLIKASI (COPY dari sebelumnya, ditambah AI Panel)
-           ================================================================ */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
         .header {
             text-align: center;
             border-bottom: 3px solid #1a3a6b;
             padding-bottom: 20px;
             margin-bottom: 25px;
         }
-        .header h1 { color: #1a3a6b; font-size: 28px; }
-        .header .subtitle { color: #4a6a8b; font-size: 16px; font-style: italic; }
-        .header .author { color: #666; font-size: 14px; }
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #d4e4f7;
-            padding-bottom: 10px;
-        }
-        .tab-btn {
-            padding: 10px 24px;
-            border: none;
-            border-radius: 8px 8px 0 0;
-            background: #e8ecf0;
-            color: #555;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .tab-btn:hover { background: #d4e4f7; color: #1a3a6b; }
-        .tab-btn.active { background: #1a3a6b; color: white; }
-        .tab-btn .badge {
-            display: inline-block;
-            background: #f0c040;
+        .header h1 {
             color: #1a3a6b;
-            font-size: 11px;
-            padding: 1px 8px;
-            border-radius: 12px;
-            margin-left: 6px;
-            font-weight: 700;
+            font-size: 28px;
         }
-        .tab-btn .badge-ai {
-            display: inline-block;
-            background: linear-gradient(135deg, #6c5ce7, #0984e3);
-            color: white;
-            font-size: 10px;
-            padding: 1px 10px;
-            border-radius: 12px;
-            margin-left: 6px;
-            font-weight: 700;
-            animation: pulse-ai 2s infinite;
+        .header .subtitle {
+            color: #4a6a8b;
+            font-size: 16px;
+            font-style: italic;
         }
-        @keyframes pulse-ai {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+        .header .author {
+            color: #666;
+            font-size: 14px;
         }
+
         .ai-badge {
             display: inline-block;
             background: linear-gradient(135deg, #6c5ce7, #0984e3);
@@ -298,21 +265,107 @@
             font-weight: 700;
             animation: pulse-ai 2s infinite;
         }
+
         .ai-highlight {
             color: #6c5ce7;
             font-weight: 600;
         }
 
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .app-container { background: transparent; }
+        @keyframes pulse-ai {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #d4e4f7;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            background: #e8ecf0;
+            color: #555;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: #d4e4f7;
+            color: #1a3a6b;
+        }
+
+        .tab-btn.active {
+            background: #1a3a6b;
+            color: white;
+        }
+
+        .tab-btn .badge {
+            display: inline-block;
+            background: #f0c040;
+            color: #1a3a6b;
+            font-size: 11px;
+            padding: 1px 8px;
+            border-radius: 12px;
+            margin-left: 6px;
+            font-weight: 700;
+        }
+
+        .tab-btn .badge-ai {
+            display: inline-block;
+            background: linear-gradient(135deg, #6c5ce7, #0984e3);
+            color: white;
+            font-size: 10px;
+            padding: 1px 10px;
+            border-radius: 12px;
+            margin-left: 6px;
+            font-weight: 700;
+            animation: pulse-ai 2s infinite;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .app-container {
+            background: transparent;
+        }
+
         .input-section {
             background: #f0f5ff;
             padding: 25px;
             border-radius: 12px;
             margin-bottom: 25px;
         }
+
         .input-group {
             display: flex;
             flex-wrap: wrap;
@@ -320,10 +373,12 @@
             justify-content: center;
             align-items: flex-end;
         }
+
         .input-item {
             flex: 1 1 180px;
             min-width: 150px;
         }
+
         .input-item label {
             display: block;
             font-weight: 600;
@@ -331,7 +386,9 @@
             margin-bottom: 5px;
             font-size: 14px;
         }
-        .input-item input, .input-item textarea {
+
+        .input-item input,
+        .input-item textarea {
             width: 100%;
             padding: 10px 14px;
             border: 2px solid #c5d5e8;
@@ -340,17 +397,27 @@
             transition: border-color 0.3s;
             font-family: 'Courier New', monospace;
         }
-        .input-item input:focus, .input-item textarea:focus {
+
+        .input-item input:focus,
+        .input-item textarea:focus {
             border-color: #1a3a6b;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(26,58,107,0.15);
+            box-shadow: 0 0 0 3px rgba(26, 58, 107, 0.15);
         }
-        .input-item textarea { resize: vertical; min-height: 80px; font-size: 14px; }
-        .input-item input::placeholder, .input-item textarea::placeholder {
+
+        .input-item textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-size: 14px;
+        }
+
+        .input-item input::placeholder,
+        .input-item textarea::placeholder {
             color: #aaa;
             font-style: italic;
             font-weight: 300;
         }
+
         .metode-input {
             display: flex;
             gap: 16px;
@@ -361,6 +428,7 @@
             border-radius: 8px;
             border: 1px solid #d4e4f7;
         }
+
         .metode-input .radio-label {
             display: flex;
             align-items: center;
@@ -370,13 +438,18 @@
             cursor: pointer;
             font-weight: 500;
         }
+
         .metode-input .radio-label input[type="radio"] {
             width: 16px;
             height: 16px;
             accent-color: #1a3a6b;
             cursor: pointer;
         }
-        .metode-input .radio-label .icon { font-size: 18px; }
+
+        .metode-input .radio-label .icon {
+            font-size: 18px;
+        }
+
         .input-row {
             display: flex;
             flex-wrap: wrap;
@@ -384,8 +457,16 @@
             align-items: flex-end;
             width: 100%;
         }
-        .input-row .input-item { flex: 1 1 180px; min-width: 150px; }
-        .input-row .input-item.hidden { display: none; }
+
+        .input-row .input-item {
+            flex: 1 1 180px;
+            min-width: 150px;
+        }
+
+        .input-row .input-item.hidden {
+            display: none;
+        }
+
         .btn {
             background: #1a3a6b;
             color: white;
@@ -397,13 +478,21 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+
         .btn:hover {
             background: #0f2a4f;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26,58,107,0.3);
+            box-shadow: 0 5px 15px rgba(26, 58, 107, 0.3);
         }
-        .btn-secondary { background: #6c7a89; }
-        .btn-secondary:hover { background: #4a5a6a; }
+
+        .btn-secondary {
+            background: #6c7a89;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5a6a;
+        }
+
         .btn-group {
             display: flex;
             gap: 12px;
@@ -411,6 +500,7 @@
             justify-content: center;
             margin-top: 15px;
         }
+
         .btn-ai {
             background: linear-gradient(135deg, #6c5ce7, #0984e3);
             color: white;
@@ -422,10 +512,12 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+
         .btn-ai:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(108, 92, 231, 0.3);
         }
+
         .btn-ai-secondary {
             background: #e8ecf0;
             color: #555;
@@ -436,8 +528,16 @@
             font-size: 14px;
             cursor: pointer;
         }
-        .btn-ai-secondary:hover { background: #d4e4f7; }
-        .btn-sm { padding: 8px 16px; font-size: 14px; }
+
+        .btn-ai-secondary:hover {
+            background: #d4e4f7;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
         .btn-close-ai {
             background: none;
             border: none;
@@ -446,7 +546,10 @@
             cursor: pointer;
             padding: 0 8px;
         }
-        .btn-close-ai:hover { color: #333; }
+
+        .btn-close-ai:hover {
+            color: #333;
+        }
 
         .result-section {
             background: #fafcff;
@@ -455,6 +558,7 @@
             padding: 20px;
             margin-top: 20px;
         }
+
         .result-section h2 {
             color: #1a3a6b;
             font-size: 20px;
@@ -462,6 +566,7 @@
             border-bottom: 2px dashed #d4e4f7;
             padding-bottom: 10px;
         }
+
         .info-box-app {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -471,7 +576,11 @@
             padding: 15px;
             border-radius: 8px;
         }
-        .info-item { text-align: center; }
+
+        .info-item {
+            text-align: center;
+        }
+
         .info-item .label {
             font-size: 11px;
             color: #666;
@@ -479,11 +588,13 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
         .info-item .value {
             font-size: 22px;
             font-weight: 700;
             color: #1a3a6b;
         }
+
         .formula-box {
             background: #f8f9fa;
             border-left: 4px solid #1a3a6b;
@@ -494,12 +605,14 @@
             border-radius: 0 8px 8px 0;
             overflow-x: auto;
         }
+
         .formula-box .formula-title {
             font-weight: 700;
             color: #1a3a6b;
             font-size: 15px;
             font-family: 'Segoe UI', sans-serif;
         }
+
         .formula-detail {
             margin-top: 10px;
             padding: 8px 12px;
@@ -508,6 +621,7 @@
             font-size: 13px;
             font-family: 'Segoe UI', sans-serif;
         }
+
         .sample-sementara-wrapper {
             background: #f8faff;
             border: 2px solid #d4e4f7;
@@ -516,17 +630,20 @@
             margin: 15px 0;
             overflow-x: auto;
         }
+
         .sample-sementara-wrapper h3 {
             color: #1a3a6b;
             font-size: 16px;
             margin-bottom: 10px;
         }
+
         .sample-sementara-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2px 30px;
             padding: 8px 0;
         }
+
         .sample-sementara-item {
             display: flex;
             align-items: center;
@@ -534,12 +651,14 @@
             padding: 3px 6px;
             border-radius: 4px;
         }
+
         .sample-sementara-item .kode {
             font-weight: 600;
             color: #1a3a6b;
             font-size: 13px;
             min-width: 32px;
         }
+
         .sample-sementara-item .nilai {
             padding: 2px 12px;
             border-radius: 4px;
@@ -549,17 +668,40 @@
             background: #1a3a6b;
             color: white;
         }
-        .sample-sementara-item .nilai.duplicate { background: #f0c040; color: #1a3a6b; }
-        .sample-sementara-item .nilai.unique { border: 2px solid #28a745; }
-        .sample-sementara-item .nilai.added { background: #6c5ce7; color: white; border: 2px solid #6c5ce7; }
-        .sample-sementara-item .nilai.corrected { background: #dc3545; color: white; border: 2px solid #dc3545; }
-        .sample-sementara-item .freq { font-size: 11px; color: #888; }
-        .table-wrapper { overflow-x: auto; margin-top: 10px; }
+
+        .sample-sementara-item .nilai.duplicate {
+            background: #f0c040;
+            color: #1a3a6b;
+        }
+        .sample-sementara-item .nilai.unique {
+            border: 2px solid #28a745;
+        }
+        .sample-sementara-item .nilai.added {
+            background: #6c5ce7;
+            color: white;
+            border: 2px solid #6c5ce7;
+        }
+        .sample-sementara-item .nilai.corrected {
+            background: #dc3545;
+            color: white;
+            border: 2px solid #dc3545;
+        }
+        .sample-sementara-item .freq {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
         .sample-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
         }
+
         .sample-table th {
             background: #1a3a6b;
             color: white;
@@ -567,14 +709,29 @@
             text-align: left;
             white-space: nowrap;
         }
+
         .sample-table td {
             padding: 8px 12px;
             border-bottom: 1px solid #e8ecf0;
         }
-        .sample-table tr:hover td { background: #f0f5ff; }
-        .sample-table .highlight-row td { background: #fff9e6; border-bottom: 2px solid #f0c040; }
-        .sample-table .added-row td { background: #f0e6ff; border-bottom: 2px solid #6c5ce7; }
-        .sample-table .corrected-row td { background: #f8d7da; border-bottom: 2px solid #dc3545; }
+
+        .sample-table tr:hover td {
+            background: #f0f5ff;
+        }
+
+        .sample-table .highlight-row td {
+            background: #fff9e6;
+            border-bottom: 2px solid #f0c040;
+        }
+        .sample-table .added-row td {
+            background: #f0e6ff;
+            border-bottom: 2px solid #6c5ce7;
+        }
+        .sample-table .corrected-row td {
+            background: #f8d7da;
+            border-bottom: 2px solid #dc3545;
+        }
+
         .frequency-tag {
             display: inline-block;
             padding: 2px 12px;
@@ -582,13 +739,35 @@
             font-size: 12px;
             font-weight: 600;
         }
-        .freq-tingkat1 { background: #d4edda; color: #155724; }
-        .freq-tingkat2 { background: #cce5ff; color: #004085; }
-        .freq-tingkat3 { background: #fff3cd; color: #856404; }
-        .freq-tingkat4 { background: #f8d7da; color: #721c24; }
-        .freq-tingkat5 { background: #e2e3e5; color: #383d41; }
-        .freq-added { background: #6c5ce7; color: white; }
-        .freq-corrected { background: #dc3545; color: white; }
+        .freq-tingkat1 {
+            background: #d4edda;
+            color: #155724;
+        }
+        .freq-tingkat2 {
+            background: #cce5ff;
+            color: #004085;
+        }
+        .freq-tingkat3 {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .freq-tingkat4 {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .freq-tingkat5 {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+        .freq-added {
+            background: #6c5ce7;
+            color: white;
+        }
+        .freq-corrected {
+            background: #dc3545;
+            color: white;
+        }
+
         .representative-note {
             background: #e8f5e9;
             padding: 15px;
@@ -596,13 +775,23 @@
             margin-top: 15px;
             border-left: 4px solid #2e7d32;
         }
-        .representative-note h4 { color: #1e5a24; margin-bottom: 8px; }
-        .representative-note ul { list-style: none; padding: 0; }
+
+        .representative-note h4 {
+            color: #1e5a24;
+            margin-bottom: 8px;
+        }
+
+        .representative-note ul {
+            list-style: none;
+            padding: 0;
+        }
+
         .representative-note ul li {
             padding: 4px 0;
             padding-left: 20px;
             position: relative;
         }
+
         .representative-note ul li::before {
             content: "▸";
             position: absolute;
@@ -610,11 +799,23 @@
             color: #2e7d32;
             font-weight: bold;
         }
-        .rep-level-1 { border-left-color: #28a745; }
-        .rep-level-2 { border-left-color: #007bff; }
-        .rep-level-3 { border-left-color: #ffc107; }
-        .rep-level-4 { border-left-color: #fd7e14; }
-        .rep-level-5 { border-left-color: #6c757d; }
+
+        .rep-level-1 {
+            border-left-color: #28a745;
+        }
+        .rep-level-2 {
+            border-left-color: #007bff;
+        }
+        .rep-level-3 {
+            border-left-color: #ffc107;
+        }
+        .rep-level-4 {
+            border-left-color: #fd7e14;
+        }
+        .rep-level-5 {
+            border-left-color: #6c757d;
+        }
+
         .error {
             background: #f8d7da;
             color: #721c24;
@@ -647,8 +848,16 @@
             margin: 10px 0;
             border-left: 4px solid #1a3a6b;
         }
-        .loading { display: none; text-align: center; padding: 30px; }
-        .loading.active { display: block; }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        .loading.active {
+            display: block;
+        }
+
         .spinner {
             width: 40px;
             height: 40px;
@@ -658,8 +867,22 @@
             animation: spin 0.8s linear infinite;
             margin: 0 auto;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .section-divider { border: none; border-top: 2px dashed #d4e4f7; margin: 20px 0; }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 2px dashed #d4e4f7;
+            margin: 20px 0;
+        }
+
         .step-indicator {
             font-size: 13px;
             color: #888;
@@ -670,12 +893,14 @@
             border-radius: 6px;
             display: inline-block;
         }
+
         .landing-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
             margin: 20px 0;
         }
+
         .landing-card {
             background: #f8faff;
             border: 2px solid #d4e4f7;
@@ -683,13 +908,25 @@
             padding: 25px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
+
         .landing-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(26,58,107,0.12);
+            box-shadow: 0 8px 25px rgba(26, 58, 107, 0.12);
         }
-        .landing-card .icon { font-size: 40px; margin-bottom: 12px; }
-        .landing-card h3 { color: #1a3a6b; margin-bottom: 10px; }
-        .landing-card p { color: #555; line-height: 1.6; font-size: 14px; }
+
+        .landing-card .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+        .landing-card h3 {
+            color: #1a3a6b;
+            margin-bottom: 10px;
+        }
+        .landing-card p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 14px;
+        }
         .landing-card .btn-card {
             display: inline-block;
             margin-top: 15px;
@@ -704,14 +941,21 @@
             border: none;
             cursor: pointer;
         }
-        .landing-card .btn-card:hover { background: #0f2a4f; }
+        .landing-card .btn-card:hover {
+            background: #0f2a4f;
+        }
         .landing-card .btn-card-ai {
             background: linear-gradient(135deg, #6c5ce7, #0984e3);
         }
         .landing-card .btn-card-ai:hover {
             background: linear-gradient(135deg, #5a4bd1, #0077d4);
         }
-        .feature-list { list-style: none; padding: 0; margin: 10px 0; }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
         .feature-list li {
             padding: 6px 0;
             padding-left: 28px;
@@ -719,7 +963,12 @@
             font-size: 14px;
             color: #444;
         }
-        .feature-list li::before { content: "✅"; position: absolute; left: 0; }
+        .feature-list li::before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
         .info-box {
             background: #f0f5ff;
             border-radius: 10px;
@@ -727,8 +976,15 @@
             margin-top: 10px;
             border: 1px solid #d4e4f7;
         }
-        .info-box h3 { color: #1a3a6b; margin-bottom: 8px; }
-        .info-box p { color: #555; line-height: 1.7; font-size: 14px; }
+        .info-box h3 {
+            color: #1a3a6b;
+            margin-bottom: 8px;
+        }
+        .info-box p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 14px;
+        }
         .info-box .formula-highlight {
             background: white;
             padding: 10px 16px;
@@ -738,6 +994,7 @@
             margin: 8px 0;
             border-left: 4px solid #1a3a6b;
         }
+
         .doc-container {
             background: #fafcff;
             border-radius: 8px;
@@ -745,21 +1002,97 @@
             max-height: 700px;
             overflow-y: auto;
         }
-        .doc-container::-webkit-scrollbar { width: 6px; }
-        .doc-container::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
-        .doc-container::-webkit-scrollbar-thumb { background: #c5d5e8; border-radius: 4px; }
-        .doc-container h1 { color: #1a3a6b; font-size: 24px; border-bottom: 2px solid #d4e4f7; padding-bottom: 10px; margin-top: 0; }
-        .doc-container h2 { color: #1a3a6b; font-size: 20px; margin: 20px 0 12px 0; border-bottom: 2px solid #d4e4f7; padding-bottom: 6px; }
-        .doc-container h3 { color: #1a3a6b; font-size: 17px; margin: 16px 0 8px 0; }
-        .doc-container p { margin-bottom: 10px; line-height: 1.8; color: #333; text-align: justify; font-size: 14px; }
-        .doc-container ul, .doc-container ol { margin: 8px 0 12px 25px; }
-        .doc-container li { margin-bottom: 4px; line-height: 1.6; font-size: 14px; color: #333; }
-        .doc-container code { background: #f0f5ff; padding: 2px 8px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 13px; color: #1a3a6b; }
-        .doc-container pre { background: #f0f5ff; padding: 12px 16px; border-radius: 6px; border-left: 4px solid #1a3a6b; overflow-x: auto; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 13px; color: #333; }
-        .doc-loading { text-align: center; padding: 40px; color: #888; }
-        .doc-loading .spinner { width: 30px; height: 30px; border: 3px solid #e0e0e0; border-top: 3px solid #1a3a6b; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
-        .doc-error { background: #f8d7da; color: #721c24; padding: 16px 20px; border-radius: 8px; border-left: 4px solid #dc3545; }
-        .tutorial-container { padding: 10px 0; }
+        .doc-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .doc-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        .doc-container::-webkit-scrollbar-thumb {
+            background: #c5d5e8;
+            border-radius: 4px;
+        }
+        .doc-container h1 {
+            color: #1a3a6b;
+            font-size: 24px;
+            border-bottom: 2px solid #d4e4f7;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .doc-container h2 {
+            color: #1a3a6b;
+            font-size: 20px;
+            margin: 20px 0 12px 0;
+            border-bottom: 2px solid #d4e4f7;
+            padding-bottom: 6px;
+        }
+        .doc-container h3 {
+            color: #1a3a6b;
+            font-size: 17px;
+            margin: 16px 0 8px 0;
+        }
+        .doc-container p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+            color: #333;
+            text-align: justify;
+            font-size: 14px;
+        }
+        .doc-container ul,
+        .doc-container ol {
+            margin: 8px 0 12px 25px;
+        }
+        .doc-container li {
+            margin-bottom: 4px;
+            line-height: 1.6;
+            font-size: 14px;
+            color: #333;
+        }
+        .doc-container code {
+            background: #f0f5ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #1a3a6b;
+        }
+        .doc-container pre {
+            background: #f0f5ff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            border-left: 4px solid #1a3a6b;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #333;
+        }
+        .doc-loading {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+        .doc-loading .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #e0e0e0;
+            border-top: 3px solid #1a3a6b;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+        .doc-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 16px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+        }
+
+        .tutorial-container {
+            padding: 10px 0;
+        }
         .tutorial-step {
             display: flex;
             gap: 20px;
@@ -770,7 +1103,9 @@
             margin-bottom: 20px;
             transition: all 0.3s;
         }
-        .tutorial-step:hover { box-shadow: 0 4px 15px rgba(26,58,107,0.1); }
+        .tutorial-step:hover {
+            box-shadow: 0 4px 15px rgba(26, 58, 107, 0.1);
+        }
         .tutorial-step .step-number {
             flex: 0 0 50px;
             height: 50px;
@@ -783,9 +1118,20 @@
             font-size: 22px;
             font-weight: 700;
         }
-        .tutorial-step .step-content { flex: 1; }
-        .tutorial-step .step-content h3 { color: #1a3a6b; margin-bottom: 6px; font-size: 17px; }
-        .tutorial-step .step-content p { color: #555; line-height: 1.7; font-size: 14px; margin-bottom: 8px; }
+        .tutorial-step .step-content {
+            flex: 1;
+        }
+        .tutorial-step .step-content h3 {
+            color: #1a3a6b;
+            margin-bottom: 6px;
+            font-size: 17px;
+        }
+        .tutorial-step .step-content p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
         .tutorial-step .step-content .tip-box {
             background: #fff9e6;
             padding: 10px 16px;
@@ -795,7 +1141,9 @@
             font-size: 14px;
             color: #555;
         }
-        .tutorial-step .step-content .tip-box strong { color: #1a3a6b; }
+        .tutorial-step .step-content .tip-box strong {
+            color: #1a3a6b;
+        }
         .tutorial-step .step-content .code-example {
             background: #f0f5ff;
             padding: 10px 16px;
@@ -806,6 +1154,7 @@
             margin: 8px 0;
             overflow-x: auto;
         }
+
         .tutorial-nav {
             display: flex;
             gap: 12px;
@@ -823,7 +1172,12 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        .tutorial-nav .btn-nav:hover { background: #1a3a6b; color: white; border-color: #1a3a6b; }
+        .tutorial-nav .btn-nav:hover {
+            background: #1a3a6b;
+            color: white;
+            border-color: #1a3a6b;
+        }
+
         .tutorial-progress {
             text-align: center;
             margin-bottom: 20px;
@@ -846,7 +1200,7 @@
         }
 
         /* ================================================================
-           AI PANEL STYLE (TAMBAHAN)
+           AI PANEL STYLE
            ================================================================ */
         .ai-panel {
             background: linear-gradient(135deg, #f8f0ff, #f0f5ff);
@@ -856,10 +1210,18 @@
             margin: 15px 0;
             animation: slideDown 0.4s ease;
         }
+
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .ai-panel-header {
             display: flex;
             justify-content: space-between;
@@ -869,22 +1231,37 @@
             padding-bottom: 12px;
             border-bottom: 2px solid #d4e4f7;
         }
+
         .ai-panel-title {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .ai-panel-title .ai-icon { font-size: 28px; }
-        .ai-panel-title h3 { color: #1a3a6b; font-size: 18px; margin: 0; }
+        .ai-panel-title .ai-icon {
+            font-size: 28px;
+        }
+        .ai-panel-title h3 {
+            color: #1a3a6b;
+            font-size: 18px;
+            margin: 0;
+        }
+
         .ai-panel-status {
             display: flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
         }
-        .ai-status { font-size: 13px; font-weight: 600; }
-        .ai-status.online { color: #28a745; }
-        .ai-status.offline { color: #dc3545; }
+        .ai-status {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .ai-status.online {
+            color: #28a745;
+        }
+        .ai-status.offline {
+            color: #dc3545;
+        }
         .ai-mode {
             font-size: 13px;
             color: #555;
@@ -892,7 +1269,10 @@
             padding: 2px 12px;
             border-radius: 12px;
         }
-        .ai-quota { font-size: 13px; color: #888; }
+        .ai-quota {
+            font-size: 13px;
+            color: #888;
+        }
 
         .ai-settings {
             background: white;
@@ -908,7 +1288,12 @@
             flex-wrap: wrap;
             padding: 4px 0;
         }
-        .ai-settings-row label { font-weight: 600; color: #333; font-size: 14px; min-width: 100px; }
+        .ai-settings-row label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            min-width: 100px;
+        }
         .ai-mode-selector {
             display: flex;
             gap: 16px;
@@ -966,14 +1351,19 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(108, 92, 231, 0.15);
         }
-        .ai-feature-btn .ai-feature-icon { font-size: 22px; }
+        .ai-feature-btn .ai-feature-icon {
+            font-size: 22px;
+        }
         .ai-feature-btn .ai-feature-name {
             font-weight: 600;
             color: #333;
             font-size: 14px;
             flex: 1;
         }
-        .ai-feature-btn .ai-feature-status { font-size: 12px; color: #28a745; }
+        .ai-feature-btn .ai-feature-status {
+            font-size: 12px;
+            color: #28a745;
+        }
         .ai-feature-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -994,17 +1384,38 @@
             padding: 20px;
             margin-bottom: 15px;
         }
-        .ai-response-area::-webkit-scrollbar { width: 6px; }
-        .ai-response-area::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
-        .ai-response-area::-webkit-scrollbar-thumb { background: #c5d5e8; border-radius: 4px; }
+        .ai-response-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        .ai-response-area::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        .ai-response-area::-webkit-scrollbar-thumb {
+            background: #c5d5e8;
+            border-radius: 4px;
+        }
+
         .ai-response-placeholder {
             text-align: center;
             color: #888;
             padding: 30px 20px;
         }
-        .ai-response-placeholder .ai-placeholder-icon { font-size: 48px; display: block; margin-bottom: 12px; }
-        .ai-response-placeholder p { margin: 4px 0; font-size: 14px; }
-        .ai-response-content { font-size: 14px; line-height: 1.8; color: #333; }
+        .ai-response-placeholder .ai-placeholder-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .ai-response-placeholder p {
+            margin: 4px 0;
+            font-size: 14px;
+        }
+
+        .ai-response-content {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+        }
         .ai-response-content h2 {
             color: #1a3a6b;
             font-size: 18px;
@@ -1012,11 +1423,26 @@
             border-bottom: 2px solid #d4e4f7;
             padding-bottom: 6px;
         }
-        .ai-response-content h3 { color: #1a3a6b; font-size: 16px; margin: 12px 0 6px 0; }
-        .ai-response-content h4 { color: #2a4a7b; font-size: 14px; margin: 10px 0 4px 0; }
-        .ai-response-content p { margin-bottom: 8px; }
-        .ai-response-content ul, .ai-response-content ol { margin: 6px 0 10px 20px; }
-        .ai-response-content li { margin-bottom: 4px; }
+        .ai-response-content h3 {
+            color: #1a3a6b;
+            font-size: 16px;
+            margin: 12px 0 6px 0;
+        }
+        .ai-response-content h4 {
+            color: #2a4a7b;
+            font-size: 14px;
+            margin: 10px 0 4px 0;
+        }
+        .ai-response-content p {
+            margin-bottom: 8px;
+        }
+        .ai-response-content ul,
+        .ai-response-content ol {
+            margin: 6px 0 10px 20px;
+        }
+        .ai-response-content li {
+            margin-bottom: 4px;
+        }
         .ai-response-content table {
             width: 100%;
             border-collapse: collapse;
@@ -1033,7 +1459,9 @@
             padding: 6px 12px;
             border-bottom: 1px solid #e8ecf0;
         }
-        .ai-response-content table tr:nth-child(even) { background: #f8faff; }
+        .ai-response-content table tr:nth-child(even) {
+            background: #f8faff;
+        }
         .ai-response-content .highlight-box {
             background: #fff9e6;
             padding: 10px 16px;
@@ -1041,6 +1469,7 @@
             border-left: 4px solid #f0c040;
             margin: 10px 0;
         }
+
         .ai-loading {
             display: flex;
             align-items: center;
@@ -1068,50 +1497,158 @@
            RESPONSIVE
            ================================================================ */
         @media (max-width: 768px) {
-            .container { padding: 15px; }
-            .header h1 { font-size: 20px; }
-            .landing-grid { grid-template-columns: 1fr; gap: 16px; }
-            .tabs { gap: 4px; }
-            .tab-btn { padding: 8px 14px; font-size: 13px; flex: 1 1 auto; text-align: center; }
-            .tutorial-step { flex-direction: column; align-items: center; text-align: center; }
-            .tutorial-step .step-number { flex: 0 0 40px; height: 40px; font-size: 18px; }
-            .sample-sementara-grid { grid-template-columns: 1fr; gap: 1px; }
-            .doc-container { max-height: 500px; padding: 12px; }
-            .info-box-app { grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; }
-            .info-item .value { font-size: 18px; }
-            .input-row { flex-direction: column; }
-            .input-row .input-item { flex: 1 1 auto; width: 100%; }
-            .metode-input { flex-direction: column; gap: 8px; }
-            .btn { width: 100%; }
-            .btn-group .btn { width: auto; }
-            .ai-panel-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-            .ai-panel-status { width: 100%; justify-content: flex-start; }
-            .ai-settings-row { flex-direction: column; align-items: flex-start; }
-            .ai-settings-row label { min-width: auto; }
-            .ai-mode-selector { flex-direction: column; gap: 6px; }
-            .ai-features { grid-template-columns: 1fr 1fr; }
-            .ai-response-area { max-height: 400px; padding: 15px; }
+            .container {
+                padding: 15px;
+            }
+            .header h1 {
+                font-size: 20px;
+            }
+            .landing-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .tabs {
+                gap: 4px;
+            }
+            .tab-btn {
+                padding: 8px 14px;
+                font-size: 13px;
+                flex: 1 1 auto;
+                text-align: center;
+            }
+            .tutorial-step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .tutorial-step .step-number {
+                flex: 0 0 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            .sample-sementara-grid {
+                grid-template-columns: 1fr;
+                gap: 1px;
+            }
+            .doc-container {
+                max-height: 500px;
+                padding: 12px;
+            }
+            .info-box-app {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+                padding: 10px;
+            }
+            .info-item .value {
+                font-size: 18px;
+            }
+            .input-row {
+                flex-direction: column;
+            }
+            .input-row .input-item {
+                flex: 1 1 auto;
+                width: 100%;
+            }
+            .metode-input {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .btn {
+                width: 100%;
+            }
+            .btn-group .btn {
+                width: auto;
+            }
+            .ai-panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .ai-panel-status {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .ai-settings-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .ai-settings-row label {
+                min-width: auto;
+            }
+            .ai-mode-selector {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .ai-features {
+                grid-template-columns: 1fr 1fr;
+            }
+            .ai-response-area {
+                max-height: 400px;
+                padding: 15px;
+            }
         }
+
         @media (max-width: 480px) {
-            .ai-features { grid-template-columns: 1fr; }
+            .ai-features {
+                grid-template-columns: 1fr;
+            }
         }
+
         @media (max-width: 600px) {
-            .cover h1 { font-size: 26px; }
-            .cover .subtitle-cover { font-size: 15px; }
-            .cover .cover-image { width: 140px; height: 140px; }
-            .btn-start { padding: 14px 35px; font-size: 17px; }
-            .cover .footer-cover { font-size: 10px; bottom: 15px; }
+            .cover h1 {
+                font-size: 26px;
+            }
+            .cover .subtitle-cover {
+                font-size: 15px;
+            }
+            .cover .cover-image {
+                width: 140px;
+                height: 140px;
+            }
+            .btn-start {
+                padding: 14px 35px;
+                font-size: 17px;
+            }
+            .cover .footer-cover {
+                font-size: 10px;
+                bottom: 15px;
+            }
         }
+
         @media print {
-            .tab-btn { display: none; }
-            .tab-content { display: block !important; }
-            .landing-grid { display: block; }
-            .landing-card { break-inside: avoid; margin-bottom: 16px; }
-            .btn-group { display: none !important; }
-            .input-section { background: #f5f5f5; border: 1px solid #ddd; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .sample-sementara-item .nilai { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            .doc-container { max-height: none; overflow: visible; }
-            .ai-panel { display: none !important; }
+            .tab-btn {
+                display: none;
+            }
+            .tab-content {
+                display: block !important;
+            }
+            .landing-grid {
+                display: block;
+            }
+            .landing-card {
+                break-inside: avoid;
+                margin-bottom: 16px;
+            }
+            .btn-group {
+                display: none !important;
+            }
+            .input-section {
+                background: #f5f5f5;
+                border: 1px solid #ddd;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .sample-sementara-item .nilai {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .doc-container {
+                max-height: none;
+                overflow: visible;
+            }
+            .ai-panel {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -1144,7 +1681,7 @@
     APLIKASI UTAMA
     ============================================================ -->
     <div class="app-wrapper" id="appWrapper">
-        <div class="container" style="max-width:1100px; margin:0 auto; background:white; border-radius:16px; padding:30px; box-shadow:0 10px 40px rgba(0,0,0,0.15);">
+        <div class="container">
             <!-- HEADER -->
             <div class="header">
                 <h1>📊 TEKNIK PENARIKAN SAMPEL <span class="ai-badge">🤖 AI POWERED</span></h1>
@@ -1429,7 +1966,7 @@
     </div>
 
     <!-- ============================================================
-    JAVASCRIPT - APLIKASI UTAMA + AI (DIPERBAIKI)
+    JAVASCRIPT - APLIKASI UTAMA + AI (LENGKAP)
     ============================================================ -->
     <script>
         // ============================================================
@@ -1545,6 +2082,11 @@
         // APLIKASI - FUNGSI UTAMA
         // ============================================================
         let currentResult = null;
+
+        // Fungsi bantu untuk memastikan array
+        function safeArr(arr) {
+            return Array.isArray(arr) ? arr : [];
+        }
 
         function normalize(val, P) {
             let v = val;
@@ -1710,6 +2252,10 @@
 
         function tampilkanHasil(result) {
             currentResult = result;
+            // ALIAS untuk AI
+            currentResult.sampelTerpilih = result.sampelTetap || [];
+            currentResult.sampelSementara = result.itemSampelSementara || [];
+            currentResult.uniqueCount = result.uniqueCount || currentResult.sampelTerpilih.length || 0;
 
             document.getElementById('displayP').textContent = result.P;
             document.getElementById('displayS').textContent = result.S;
@@ -2011,7 +2557,7 @@
         }
 
         // ============================================================
-        // AI - CORE (DIPERBAIKI DENGAN PENGECEKAN)
+        // AI - CORE
         // ============================================================
         const AI_CONFIG = {
             DEFAULT_API_KEY: 'AIzaSyDemoKeyForAPINDO2026',
@@ -2078,7 +2624,6 @@
 
         async function callOfflineAI(prompt) {
             await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1500));
-            // Deteksi fitur dari prompt
             const isAssistant = prompt.includes('Smart Assistant') || prompt.includes('rekomendasi');
             const isPredictive = prompt.includes('Predictive') || prompt.includes('prediksi');
             const isOptimizer = prompt.includes('Optimizer') || prompt.includes('optimasi');
@@ -2094,15 +2639,15 @@
         }
 
         // ============================================================
-        // OFFLINE GENERATORS (DIPERBAIKI DENGAN PENGECEKAN)
+        // OFFLINE GENERATORS
         // ============================================================
+
         function generateOfflineAssistant(prompt) {
             const P = currentResult?.P || 0;
             const S = currentResult?.S || 0;
-            const uniqueCount = currentResult?.uniqueCount || currentResult?.sampelTerpilih?.length || 0;
+            const sampelTetap = safeArr(currentResult?.sampelTetap);
+            const uniqueCount = currentResult?.uniqueCount || sampelTetap.length || 0;
             const maxFreq = currentResult?.maxFreq || 0;
-            const sampelTerpilih = currentResult?.sampelTerpilih || [];
-            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
 
             const isOptimal = uniqueCount >= S && maxFreq >= 2;
             const confidence = isOptimal ? 85 + Math.floor(Math.random() * 10) : 60 + Math.floor(Math.random() * 20);
@@ -2215,11 +2760,12 @@ ${isOptimal ? `✅ **Parameter S sudah OPTIMAL!**` : `⚠️ **Parameter S perlu
             const Ss = currentResult?.Ss || 0;
             const Int = currentResult?.Int || 0;
             const R1 = currentResult?.R1 || 0;
-            const sampelTerpilih = currentResult?.sampelTerpilih || [];
-            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
-            const uniqueCount = currentResult?.uniqueCount || sampleList.length || 0;
+            const sampelTetap = safeArr(currentResult?.sampelTetap);
+            const uniqueCount = currentResult?.uniqueCount || sampelTetap.length || 0;
             const maxFreq = currentResult?.maxFreq || 0;
             const minFreq = currentResult?.minFreq || 0;
+            const sampleDetails = safeArr(currentResult?.sampleDetails);
+            const repList = sampleDetails.map(d => `${d.labelTingkat}: ${d.nomor} (${d.frekuensi}x)`).join('; ');
 
             const now = new Date();
             const dateStr = now.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -2244,7 +2790,10 @@ ${isOptimal ? `✅ **Parameter S sudah OPTIMAL!**` : `⚠️ **Parameter S perlu
 | **Total Sampel Unik** | ${uniqueCount} unit |
 | **Frekuensi Tertinggi** | ${maxFreq}x |
 | **Frekuensi Terendah** | ${minFreq}x |
-| **Daftar Sampel** | ${sampleList.length > 0 ? sampleList.join(', ') : '-'} |
+| **Daftar Sampel** | ${sampelTetap.length > 0 ? sampelTetap.join(', ') : '-'} |
+
+### ⭐ Tingkat Representatif
+${repList || 'Tidak ada data.'}
 
 ### 📌 Kesimpulan
 Berdasarkan analisis menggunakan metode Segmen Terpadu, diperoleh ${uniqueCount} sampel tetap dari ${P} populasi dengan tingkat representatif yang baik.
@@ -2256,11 +2805,10 @@ Berdasarkan analisis menggunakan metode Segmen Terpadu, diperoleh ${uniqueCount}
         function generateOfflineAnomaly(prompt) {
             const P = currentResult?.P || 0;
             const S = currentResult?.S || 0;
-            const sampelTerpilih = currentResult?.sampelTerpilih || [];
-            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
-            const sampelSementara = currentResult?.sampelSementara || [];
-            const uniqueCount = currentResult?.uniqueCount || sampleList.length || 0;
-            const totalDuplicates = (sampelSementara.length || 0) - (uniqueCount || 0);
+            const sampelTetap = safeArr(currentResult?.sampelTetap);
+            const itemSampelSementara = safeArr(currentResult?.itemSampelSementara);
+            const uniqueCount = currentResult?.uniqueCount || sampelTetap.length || 0;
+            const totalDuplicates = itemSampelSementara.length - uniqueCount;
             const hasAnomaly = totalDuplicates > (S || 0) * 1.5;
 
             return `## 🔍 AI Anomaly Detector - Deteksi Anomali Data
@@ -2268,7 +2816,7 @@ Berdasarkan analisis menggunakan metode Segmen Terpadu, diperoleh ${uniqueCount}
 ### 📊 Status Deteksi
 | Metrik | Nilai |
 |--------|-------|
-| **Total Sampel** | ${sampelSementara.length || 0} |
+| **Total Sampel** | ${itemSampelSementara.length || 0} |
 | **Sampel Unik** | ${uniqueCount || 0} |
 | **Duplikat** | ${totalDuplicates} |
 | **Anomali Terdeteksi** | ${hasAnomaly ? '⚠️ Ya' : '✅ Tidak Ada'} |
@@ -2352,18 +2900,17 @@ AI telah menganalisis data sampel Anda.
         }
 
         // ============================================================
-        // AI - FEATURES (DIPERBAIKI DENGAN PENGECEKAN)
+        // AI - FEATURES
         // ============================================================
 
         async function runAIAssistant() {
             if (!currentResult) return '⚠️ Silakan hitung sampel terlebih dahulu.';
             const P = currentResult.P || 0;
             const S = currentResult.S || 0;
-            const sampelTerpilih = currentResult.sampelTerpilih || [];
-            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
+            const sampelTetap = safeArr(currentResult.sampelTetap);
             const maxFreq = currentResult.maxFreq || 0;
             const minFreq = currentResult.minFreq || 0;
-            const uniqueCount = currentResult.uniqueCount || sampleList.length || 0;
+            const uniqueCount = currentResult.uniqueCount || sampelTetap.length || 0;
 
             const prompt = `
         Anda adalah AI Smart Assistant untuk analisis penarikan sampel.
@@ -2373,7 +2920,7 @@ AI telah menganalisis data sampel Anda.
         - Sampel Unik: ${uniqueCount}
         - Frekuensi Tertinggi: ${maxFreq}x
         - Frekuensi Terendah: ${minFreq}x
-        - Daftar Sampel: ${sampleList.length > 0 ? sampleList.join(', ') : 'Belum ada data'}
+        - Daftar Sampel: ${sampelTetap.length > 0 ? sampelTetap.join(', ') : 'Belum ada data'}
 
         Buat analisis dan rekomendasi dalam bahasa Indonesia dengan format Markdown.
         Sertakan:
@@ -2449,13 +2996,12 @@ AI telah menganalisis data sampel Anda.
             const Ss = currentResult.Ss || 0;
             const Int = currentResult.Int || 0;
             const R1 = currentResult.R1 || 0;
-            const sampelTerpilih = currentResult.sampelTerpilih || [];
-            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
-            const uniqueCount = currentResult.uniqueCount || sampleList.length || 0;
+            const sampelTetap = safeArr(currentResult.sampelTetap);
+            const uniqueCount = currentResult.uniqueCount || sampelTetap.length || 0;
             const maxFreq = currentResult.maxFreq || 0;
             const minFreq = currentResult.minFreq || 0;
-            const sampleDetails = currentResult.sampleDetails || [];
-            const details = Array.isArray(sampleDetails) ? sampleDetails : [];
+            const sampleDetails = safeArr(currentResult.sampleDetails);
+            const repStr = sampleDetails.map(d => `${d.labelTingkat}: ${d.nomor} (${d.frekuensi}x)`).join('; ');
 
             const now = new Date();
             const dateStr = now.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -2468,9 +3014,9 @@ AI telah menganalisis data sampel Anda.
         - Metode: Segmen Terpadu
         - Populasi: ${P}, Sampel Tetap: ${S}, Sampel Sementara: ${Ss}
         - Interval: ${Int.toFixed(2)}, R₁: ${Math.round(R1)}
-        - Sampel Unik: ${uniqueCount}, Daftar: ${sampleList.length > 0 ? sampleList.join(', ') : '-'}
+        - Sampel Unik: ${uniqueCount}, Daftar: ${sampelTetap.length > 0 ? sampelTetap.join(', ') : '-'}
         - Frekuensi Tertinggi: ${maxFreq}x, Terendah: ${minFreq}x
-        - Detail Representatif: ${details.map(d => `${d.labelTingkat}: ${d.nomor} (${d.frekuensi}x)`).join('; ')}
+        - Detail Representatif: ${repStr || 'Tidak ada'}
 
         Laporan mencakup: header, ringkasan perhitungan, hasil penarikan, analisis representatif, kesimpulan.
         `;
@@ -2481,15 +3027,14 @@ AI telah menganalisis data sampel Anda.
             if (!currentResult) return '⚠️ Silakan hitung sampel terlebih dahulu.';
             const P = currentResult.P || 0;
             const S = currentResult.S || 0;
-            const sampelTerpilih = currentResult.sampelTerpilih || [];
-            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
-            const sampelSementara = currentResult.sampelSementara || [];
+            const sampelTetap = safeArr(currentResult.sampelTetap);
+            const itemSampelSementara = safeArr(currentResult.itemSampelSementara);
             const freqMap = currentResult.freqMap || {};
-            const uniqueCount = currentResult.uniqueCount || sampleList.length || 0;
+            const uniqueCount = currentResult.uniqueCount || sampelTetap.length || 0;
 
             const avgFreq = Object.values(freqMap).length > 0 ? Object.values(freqMap).reduce((a, b) => a + b, 0) / Object
                 .values(freqMap).length : 0;
-            const totalDuplicates = sampelSementara.length - uniqueCount;
+            const totalDuplicates = itemSampelSementara.length - uniqueCount;
             const anomalies = [];
             for (const [val, freq] of Object.entries(freqMap)) {
                 if (freq > avgFreq * 2.5) anomalies.push({ nomor: val, freq, type: 'terlalu sering', severity: 'sedang' });
@@ -2498,9 +3043,9 @@ AI telah menganalisis data sampel Anda.
             }
             if (totalDuplicates > S * 1.5) {
                 anomalies.push({ type: 'duplikat berlebihan', severity: 'tinggi',
-                detail: `Duplikat: ${totalDuplicates} dari ${sampelSementara.length} sampel sementara` });
+                detail: `Duplikat: ${totalDuplicates} dari ${itemSampelSementara.length} sampel sementara` });
             }
-            const sorted = [...sampleList].sort((a, b) => a - b);
+            const sorted = [...sampelTetap].sort((a, b) => a - b);
             if (sorted.length > 4) {
                 const q1 = sorted[Math.floor(sorted.length * 0.25)];
                 const q3 = sorted[Math.floor(sorted.length * 0.75)];
@@ -2512,7 +3057,7 @@ AI telah menganalisis data sampel Anda.
             }
             const prompt = `
         Anda adalah AI Anomaly Detector.
-        Data: Populasi=${P}, S=${S}, Sampel Sementara=${sampelSementara.length}, Unik=${uniqueCount}, Duplikat=${totalDuplicates}, Frekuensi Rata-rata=${avgFreq.toFixed(1)}x.
+        Data: Populasi=${P}, S=${S}, Sampel Sementara=${itemSampelSementara.length}, Unik=${uniqueCount}, Duplikat=${totalDuplicates}, Frekuensi Rata-rata=${avgFreq.toFixed(1)}x.
         Anomali terdeteksi: ${anomalies.length > 0 ? anomalies.map(a => `${a.nomor ? 'Nomor '+a.nomor : ''} ${a.detail || a.type}`).join(', ') : 'Tidak ada'}.
 
         Tugas: analisis anomali, berikan penjelasan dan rekomendasi, status akhir (Bersih / Perlu Perbaikan).
@@ -2544,7 +3089,7 @@ AI telah menganalisis data sampel Anda.
         }
 
         // ============================================================
-        // AI - CONTROLLER (SAMA)
+        // AI - CONTROLLER
         // ============================================================
         let aiState = { isRunning: false, currentFeature: null, results: {} };
 
