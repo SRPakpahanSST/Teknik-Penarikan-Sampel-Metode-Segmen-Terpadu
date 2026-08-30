@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teknik Penarikan Sampel - Metode Segmen Terpadu</title>
+    <!-- Marked.js untuk render Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* ================================================================
+           STYLE - Sama seperti sebelumnya, ditambah perbaikan untuk tingkat
+           ================================================================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #e8f0fe 0%, #d4e4f7 100%);
@@ -30,19 +31,9 @@
             padding-bottom: 20px;
             margin-bottom: 25px;
         }
-        .header h1 {
-            color: #1a3a6b;
-            font-size: 28px;
-        }
-        .header .subtitle {
-            color: #4a6a8b;
-            font-size: 16px;
-            font-style: italic;
-        }
-        .header .author {
-            color: #666;
-            font-size: 14px;
-        }
+        .header h1 { color: #1a3a6b; font-size: 28px; }
+        .header .subtitle { color: #4a6a8b; font-size: 16px; font-style: italic; }
+        .header .author { color: #666; font-size: 14px; }
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -62,14 +53,8 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        .tab-btn:hover {
-            background: #d4e4f7;
-            color: #1a3a6b;
-        }
-        .tab-btn.active {
-            background: #1a3a6b;
-            color: white;
-        }
+        .tab-btn:hover { background: #d4e4f7; color: #1a3a6b; }
+        .tab-btn.active { background: #1a3a6b; color: white; }
         .tab-btn .badge {
             display: inline-block;
             background: #f0c040;
@@ -80,17 +65,9 @@
             margin-left: 6px;
             font-weight: 700;
         }
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .app-container { background: transparent; }
         .input-section {
             background: #f0f5ff;
@@ -130,11 +107,7 @@
             outline: none;
             box-shadow: 0 0 0 3px rgba(26,58,107,0.15);
         }
-        .input-item textarea {
-            resize: vertical;
-            min-height: 80px;
-            font-size: 14px;
-        }
+        .input-item textarea { resize: vertical; min-height: 80px; font-size: 14px; }
         .metode-input {
             display: flex;
             gap: 16px;
@@ -160,6 +133,7 @@
             accent-color: #1a3a6b;
             cursor: pointer;
         }
+        .metode-input .radio-label .icon { font-size: 18px; }
         .input-row {
             display: flex;
             flex-wrap: wrap;
@@ -185,12 +159,8 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(26,58,107,0.3);
         }
-        .btn-secondary {
-            background: #6c7a89;
-        }
-        .btn-secondary:hover {
-            background: #4a5a6a;
-        }
+        .btn-secondary { background: #6c7a89; }
+        .btn-secondary:hover { background: #4a5a6a; }
         .btn-group {
             display: flex;
             gap: 12px;
@@ -221,9 +191,7 @@
             padding: 15px;
             border-radius: 8px;
         }
-        .info-item {
-            text-align: center;
-        }
+        .info-item { text-align: center; }
         .info-item .label {
             font-size: 11px;
             color: #666;
@@ -308,14 +276,16 @@
         .sample-sementara-item .nilai.unique {
             border: 2px solid #28a745;
         }
+        .sample-sementara-item .nilai.added {
+            background: #6c5ce7;
+            color: white;
+            border: 2px solid #6c5ce7;
+        }
         .sample-sementara-item .freq {
             font-size: 11px;
             color: #888;
         }
-        .table-wrapper {
-            overflow-x: auto;
-            margin-top: 10px;
-        }
+        .table-wrapper { overflow-x: auto; margin-top: 10px; }
         .sample-table {
             width: 100%;
             border-collapse: collapse;
@@ -332,13 +302,9 @@
             padding: 8px 12px;
             border-bottom: 1px solid #e8ecf0;
         }
-        .sample-table tr:hover td {
-            background: #f0f5ff;
-        }
-        .sample-table .highlight-row td {
-            background: #fff9e6;
-            border-bottom: 2px solid #f0c040;
-        }
+        .sample-table tr:hover td { background: #f0f5ff; }
+        .sample-table .highlight-row td { background: #fff9e6; border-bottom: 2px solid #f0c040; }
+        .sample-table .added-row td { background: #f0e6ff; border-bottom: 2px solid #6c5ce7; }
         .frequency-tag {
             display: inline-block;
             padding: 2px 12px;
@@ -346,9 +312,12 @@
             font-size: 12px;
             font-weight: 600;
         }
-        .freq-high { background: #d4edda; color: #155724; }
-        .freq-mid { background: #fff3cd; color: #856404; }
-        .freq-low { background: #f8d7da; color: #721c24; }
+        .freq-tingkat1 { background: #d4edda; color: #155724; }  /* sangat representatif */
+        .freq-tingkat2 { background: #cce5ff; color: #004085; }  /* representatif */
+        .freq-tingkat3 { background: #fff3cd; color: #856404; }  /* cukup representatif */
+        .freq-tingkat4 { background: #f8d7da; color: #721c24; }  /* kurang representatif */
+        .freq-tingkat5 { background: #e2e3e5; color: #383d41; }  /* minim representatif */
+        .freq-added { background: #6c5ce7; color: white; }
         .representative-note {
             background: #e8f5e9;
             padding: 15px;
@@ -356,14 +325,8 @@
             margin-top: 15px;
             border-left: 4px solid #2e7d32;
         }
-        .representative-note h4 {
-            color: #1e5a24;
-            margin-bottom: 8px;
-        }
-        .representative-note ul {
-            list-style: none;
-            padding: 0;
-        }
+        .representative-note h4 { color: #1e5a24; margin-bottom: 8px; }
+        .representative-note ul { list-style: none; padding: 0; }
         .representative-note ul li {
             padding: 4px 0;
             padding-left: 20px;
@@ -376,6 +339,11 @@
             color: #2e7d32;
             font-weight: bold;
         }
+        .rep-level-1 { border-left-color: #28a745; }
+        .rep-level-2 { border-left-color: #007bff; }
+        .rep-level-3 { border-left-color: #ffc107; }
+        .rep-level-4 { border-left-color: #fd7e14; }
+        .rep-level-5 { border-left-color: #6c757d; }
         .error {
             background: #f8d7da;
             color: #721c24;
@@ -400,14 +368,16 @@
             margin: 10px 0;
             border-left: 4px solid #ffc107;
         }
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 30px;
+        .info {
+            background: #e8f0fe;
+            color: #1a3a6b;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #1a3a6b;
         }
-        .loading.active {
-            display: block;
-        }
+        .loading { display: none; text-align: center; padding: 30px; }
+        .loading.active { display: block; }
         .spinner {
             width: 40px;
             height: 40px;
@@ -417,15 +387,8 @@
             animation: spin 0.8s linear infinite;
             margin: 0 auto;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .section-divider {
-            border: none;
-            border-top: 2px dashed #d4e4f7;
-            margin: 20px 0;
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .section-divider { border: none; border-top: 2px dashed #d4e4f7; margin: 20px 0; }
         .step-indicator {
             font-size: 13px;
             color: #888;
@@ -453,19 +416,9 @@
             transform: translateY(-4px);
             box-shadow: 0 8px 25px rgba(26,58,107,0.12);
         }
-        .landing-card .icon {
-            font-size: 40px;
-            margin-bottom: 12px;
-        }
-        .landing-card h3 {
-            color: #1a3a6b;
-            margin-bottom: 10px;
-        }
-        .landing-card p {
-            color: #555;
-            line-height: 1.6;
-            font-size: 14px;
-        }
+        .landing-card .icon { font-size: 40px; margin-bottom: 12px; }
+        .landing-card h3 { color: #1a3a6b; margin-bottom: 10px; }
+        .landing-card p { color: #555; line-height: 1.6; font-size: 14px; }
         .landing-card .btn-card {
             display: inline-block;
             margin-top: 15px;
@@ -480,14 +433,8 @@
             border: none;
             cursor: pointer;
         }
-        .landing-card .btn-card:hover {
-            background: #0f2a4f;
-        }
-        .feature-list {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0;
-        }
+        .landing-card .btn-card:hover { background: #0f2a4f; }
+        .feature-list { list-style: none; padding: 0; margin: 10px 0; }
         .feature-list li {
             padding: 6px 0;
             padding-left: 28px;
@@ -507,15 +454,8 @@
             margin-top: 10px;
             border: 1px solid #d4e4f7;
         }
-        .info-box h3 {
-            color: #1a3a6b;
-            margin-bottom: 8px;
-        }
-        .info-box p {
-            color: #555;
-            line-height: 1.7;
-            font-size: 14px;
-        }
+        .info-box h3 { color: #1a3a6b; margin-bottom: 8px; }
+        .info-box p { color: #555; line-height: 1.7; font-size: 14px; }
         .info-box .formula-highlight {
             background: white;
             padding: 10px 16px;
@@ -547,21 +487,90 @@
         .doc-loading .spinner { width: 30px; height: 30px; border: 3px solid #e0e0e0; border-top: 3px solid #1a3a6b; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
         .doc-error { background: #f8d7da; color: #721c24; padding: 16px 20px; border-radius: 8px; border-left: 4px solid #dc3545; }
         .tutorial-container { padding: 10px 0; }
-        .tutorial-step { display: flex; gap: 20px; background: #f8faff; border: 2px solid #d4e4f7; border-radius: 12px; padding: 20px; margin-bottom: 20px; transition: all 0.3s; }
+        .tutorial-step {
+            display: flex;
+            gap: 20px;
+            background: #f8faff;
+            border: 2px solid #d4e4f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
         .tutorial-step:hover { box-shadow: 0 4px 15px rgba(26,58,107,0.1); }
-        .tutorial-step .step-number { flex: 0 0 50px; height: 50px; background: #1a3a6b; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; }
+        .tutorial-step .step-number {
+            flex: 0 0 50px;
+            height: 50px;
+            background: #1a3a6b;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+        }
         .tutorial-step .step-content { flex: 1; }
         .tutorial-step .step-content h3 { color: #1a3a6b; margin-bottom: 6px; font-size: 17px; }
         .tutorial-step .step-content p { color: #555; line-height: 1.7; font-size: 14px; margin-bottom: 8px; }
-        .tutorial-step .step-content .tip-box { background: #fff9e6; padding: 10px 16px; border-radius: 6px; border-left: 4px solid #f0c040; margin: 8px 0; font-size: 14px; color: #555; }
+        .tutorial-step .step-content .tip-box {
+            background: #fff9e6;
+            padding: 10px 16px;
+            border-radius: 6px;
+            border-left: 4px solid #f0c040;
+            margin: 8px 0;
+            font-size: 14px;
+            color: #555;
+        }
         .tutorial-step .step-content .tip-box strong { color: #1a3a6b; }
-        .tutorial-step .step-content .code-example { background: #f0f5ff; padding: 10px 16px; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 13px; border-left: 4px solid #1a3a6b; margin: 8px 0; overflow-x: auto; }
-        .tutorial-nav { display: flex; gap: 12px; justify-content: center; margin-top: 25px; flex-wrap: wrap; }
-        .tutorial-nav .btn-nav { padding: 10px 24px; border: 2px solid #d4e4f7; border-radius: 8px; background: white; color: #1a3a6b; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .tutorial-step .step-content .code-example {
+            background: #f0f5ff;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            border-left: 4px solid #1a3a6b;
+            margin: 8px 0;
+            overflow-x: auto;
+        }
+        .tutorial-nav {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        .tutorial-nav .btn-nav {
+            padding: 10px 24px;
+            border: 2px solid #d4e4f7;
+            border-radius: 8px;
+            background: white;
+            color: #1a3a6b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
         .tutorial-nav .btn-nav:hover { background: #1a3a6b; color: white; border-color: #1a3a6b; }
-        .tutorial-progress { text-align: center; margin-bottom: 20px; color: #888; font-size: 14px; }
-        .tutorial-progress .progress-bar { width: 100%; height: 6px; background: #e8ecf0; border-radius: 4px; margin-top: 8px; overflow: hidden; }
-        .tutorial-progress .progress-bar .progress-fill { height: 100%; background: #1a3a6b; border-radius: 4px; transition: width 0.5s ease; }
+        .tutorial-progress {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+        .tutorial-progress .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e8ecf0;
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .tutorial-progress .progress-bar .progress-fill {
+            height: 100%;
+            background: #1a3a6b;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
         @media (max-width: 768px) {
             .container { padding: 15px; }
             .header h1 { font-size: 20px; }
@@ -617,6 +626,7 @@
                     <li>Perhitungan Ss, Int, dan R₁</li>
                     <li>Perputaran setiap 5 sampel</li>
                     <li>Sampel tetap berdasarkan frekuensi tertinggi</li>
+                    <li>Otomatis menambah sampel jika kurang dari target</li>
                 </ul>
                 <button class="btn-card" onclick="switchTab('app')">🚀 Buka Aplikasi</button>
             </div>
@@ -669,12 +679,12 @@
                     </div>
                     <div class="input-item" id="jumlahPopulasiGroup">
                         <label for="jumlahPopulasi">🔢 Jumlah Populasi (P)</label>
-                        <input type="number" id="jumlahPopulasi" value="87" min="2" step="1">
+                        <input type="number" id="jumlahPopulasi" value="200" min="2" step="1">
                         <div style="font-size:12px; color:#888; margin-top:4px;">Masukkan jumlah total populasi</div>
                     </div>
                     <div class="input-item">
                         <label for="sampel">Jumlah Sampel Tetap (S)</label>
-                        <input type="number" id="sampel" value="12" min="2" step="1">
+                        <input type="number" id="sampel" value="120" min="2" step="1">
                         <div style="font-size:12px; color:#888; margin-top:4px;">Jumlah sampel yang diinginkan</div>
                     </div>
                     <div class="input-item" style="flex:0 0 auto;">
@@ -700,6 +710,7 @@
                         <div class="info-item"><div class="label">Interval (Int)</div><div class="value" id="displayInt">-</div></div>
                         <div class="info-item"><div class="label">R₁ (Sampel Pertama)</div><div class="value" id="displayR1">-</div></div>
                         <div class="info-item"><div class="label">Putaran</div><div class="value" id="displayPutaran">-</div></div>
+                        <div class="info-item"><div class="label">Nomor Unik</div><div class="value" id="displayUnik">-</div></div>
                     </div>
                     <div class="formula-box" id="formulaBox">
                         <div class="formula-title">📐 Rumus Baku Penarikan Sampel</div>
@@ -715,6 +726,7 @@
                             <span>🔵 Normal</span>
                             <span>🟡 Duplikat (muncul > 1x)</span>
                             <span>🟢 Unik (pertama kali muncul)</span>
+                            <span>🟣 Tambahan (dari duplikat terbaik)</span>
                         </div>
                         <div class="sample-sementara-grid" id="sampleSementaraGrid"></div>
                     </div>
@@ -723,15 +735,20 @@
                     <p style="color:#666; font-size:14px; margin-bottom:10px;">
                         Sampel tetap adalah <strong>S nomor dengan frekuensi tertinggi</strong> dari sampel sementara.
                         Total: <span id="totalSampelTetap">-</span> unit dari target <span id="targetSampel">-</span>.
+                        <span id="unikInfo" style="color:#888; font-size:13px;"></span>
                     </p>
                     <div id="sampelTetapWarning"></div>
                     <div class="table-wrapper">
                         <table class="sample-table" id="sampleTable">
-                            <thead><tr><th>#</th><th>Kode Sampel</th><th>Nomor Urut</th><th>Frekuensi Muncul</th><th>Tingkat Representatif</th></tr></thead>
+                            <thead><tr><th>#</th><th>Kode</th><th>Nomor</th><th>Frekuensi</th><th>Tingkat Representatif</th><th>Status</th></tr></thead>
                             <tbody id="tableBody"></tbody>
                         </table>
                     </div>
-                    <div class="representative-note" id="repNote"><h4>⭐ Tingkat Kerepresentatifan</h4><ul id="repList"></ul></div>
+                    <!-- CATATAN REPRESENTATIF DENGAN ISTILAH YANG DIPERBAIKI -->
+                    <div class="representative-note" id="repNote">
+                        <h4>⭐ Tingkat Kerepresentatifan Berdasarkan Frekuensi</h4>
+                        <ul id="repList"></ul>
+                    </div>
                     <div id="messageContainer"></div>
                 </div>
             </div>
@@ -744,10 +761,10 @@
             <p style="color:#666; margin-bottom:20px; font-size:14px;">Panduan langkah-demi-langkah menggunakan aplikasi.</p>
             <div class="tutorial-progress"><span id="tutorialProgressText">Langkah 1 dari 4</span><div class="progress-bar"><div class="progress-fill" id="tutorialProgressFill" style="width:25%;"></div></div></div>
             <div id="tutorialSteps">
-                <div class="tutorial-step" data-step="1"><div class="step-number">1</div><div class="step-content"><h3>📥 Memasukkan Data</h3><p>Pilih metode input populasi dan masukkan data.</p><div class="code-example">Contoh: P = 87, S = 12</div></div></div>
+                <div class="tutorial-step" data-step="1"><div class="step-number">1</div><div class="step-content"><h3>📥 Memasukkan Data</h3><p>Pilih metode input populasi dan masukkan data.</p><div class="code-example">Contoh: P = 200, S = 120</div></div></div>
                 <div class="tutorial-step" data-step="2"><div class="step-number">2</div><div class="step-content"><h3>🚀 Menjalankan Proses</h3><p>Klik tombol <strong>"🚀 Proses"</strong>.</p></div></div>
                 <div class="tutorial-step" data-step="3"><div class="step-number">3</div><div class="step-content"><h3>📌 Membaca Sampel Sementara</h3><p>Sampel Sementara (Ss) = 2(S−1). Setiap 5 sampel adalah satu putaran.</p></div></div>
-                <div class="tutorial-step" data-step="4"><div class="step-number">4</div><div class="step-content"><h3>📋 Membaca Sampel Tetap</h3><p>Sampel Tetap adalah S nomor dengan frekuensi tertinggi.</p></div></div>
+                <div class="tutorial-step" data-step="4"><div class="step-number">4</div><div class="step-content"><h3>📋 Membaca Sampel Tetap</h3><p>Sampel Tetap adalah S nomor dengan frekuensi tertinggi. Jika kurang, otomatis ditambah dari duplikat terbaik.</p></div></div>
             </div>
             <div class="tutorial-nav">
                 <button class="btn-nav" id="tutorialPrev" onclick="tutorialPrev()">⬅ Sebelumnya</button>
@@ -842,7 +859,6 @@
     // ============================================================
     let currentResult = null;
 
-    // Normalisasi nilai ke rentang [1, P]
     function normalize(val, P) {
         let v = val;
         while (v < 1) v += P;
@@ -850,7 +866,24 @@
         return Math.round(v);
     }
 
-    // Proses penarikan sampel
+    /**
+     * Fungsi untuk menentukan tingkat representatif berdasarkan frekuensi absolut
+     * Istilah yang lebih baik dan tidak tumpang tindih
+     */
+    function getTingkatRepresentatif(freq) {
+        if (freq >= 5) {
+            return { level: 1, label: '⭐ Sangat Representatif', css: 'freq-tingkat1' };
+        } else if (freq === 4) {
+            return { level: 2, label: '🌟🌟 Representatif', css: 'freq-tingkat2' };
+        } else if (freq === 3) {
+            return { level: 3, label: '🌟 Cukup Representatif', css: 'freq-tingkat3' };
+        } else if (freq === 2) {
+            return { level: 4, label: '🔸 Kurang Representatif', css: 'freq-tingkat4' };
+        } else { // freq === 1
+            return { level: 5, label: '🔹 Minim Representatif', css: 'freq-tingkat5' };
+        }
+    }
+
     function prosesPenarikanSampel(P, S, populasiItems) {
         const Int = P / S;
         const Ss = 2 * (S - 1);
@@ -865,7 +898,6 @@
             const startVal = R1 - (j * Int);
             let currentVal = startVal;
 
-            // Sampel ke-1
             if (totalGenerated < Ss) {
                 const norm = normalize(currentVal, P);
                 daftarSampelSementara.push(norm);
@@ -873,7 +905,6 @@
                 totalGenerated++;
             }
 
-            // Sampel ke-2: +1*Int
             if (totalGenerated < Ss) {
                 currentVal = currentVal + (1 * Int);
                 const norm = normalize(currentVal, P);
@@ -882,7 +913,6 @@
                 totalGenerated++;
             }
 
-            // Sampel ke-3: +2*Int (menggunakan nilai sebelumnya)
             if (totalGenerated < Ss) {
                 currentVal = currentVal + (2 * Int);
                 const norm = normalize(currentVal, P);
@@ -891,7 +921,6 @@
                 totalGenerated++;
             }
 
-            // Sampel ke-4: +3*Int
             if (totalGenerated < Ss) {
                 currentVal = currentVal + (3 * Int);
                 const norm = normalize(currentVal, P);
@@ -900,7 +929,6 @@
                 totalGenerated++;
             }
 
-            // Sampel ke-5: +4*Int
             if (totalGenerated < Ss) {
                 currentVal = currentVal + (4 * Int);
                 const norm = normalize(currentVal, P);
@@ -912,13 +940,11 @@
             j++;
         }
 
-        // Ambil item dari populasi
         const itemSampelSementara = daftarSampelSementara.map(idx => {
             const index = (idx - 1) % P;
             return populasiItems[index >= 0 ? index : index + P];
         });
 
-        // Hitung frekuensi
         const freqMap = {};
         for (const item of itemSampelSementara) {
             freqMap[item] = (freqMap[item] || 0) + 1;
@@ -929,23 +955,38 @@
             .sort((a, b) => b[1] - a[1] || parseInt(a[0]) - parseInt(b[0]))
             .map(entry => parseInt(entry[0]));
 
-        const sampelTetap = sortedByFreq.slice(0, S);
+        let sampelTetap = sortedByFreq.slice(0, S);
+        let addedFromDuplicates = [];
+
+        if (sampelTetap.length < S) {
+            const needed = S - sampelTetap.length;
+            let tambahan = [];
+            let i = 0;
+            while (tambahan.length < needed && i < sortedByFreq.length * 3) {
+                const val = sortedByFreq[i % sortedByFreq.length];
+                if (!tambahan.includes(val)) {
+                    tambahan.push(val);
+                }
+                i++;
+            }
+            addedFromDuplicates = tambahan.slice(0, needed);
+            sampelTetap = [...sampelTetap, ...addedFromDuplicates];
+        }
 
         const maxFreq = Math.max(...Object.values(freqMap));
         const minFreq = Math.min(...Object.values(freqMap));
 
         const sampleDetails = sampelTetap.map((nomor, index) => {
             const freq = freqMap[nomor] || 0;
-            let level;
-            if (freq === maxFreq && maxFreq > 1) level = 1;
-            else if (freq > minFreq && freq < maxFreq) level = 2;
-            else level = 3;
-            if (maxFreq === minFreq) level = 1;
-            let label;
-            if (level === 1) label = '⭐ Sangat Representatif';
-            else if (level === 2) label = '✦ Representatif';
-            else label = '• Cukup Representatif';
-            return { urutan: index + 1, nomor, frekuensi: freq, tingkat: level, labelTingkat: label };
+            const isAdded = addedFromDuplicates.includes(nomor) && index >= sortedByFreq.length;
+            const tingkat = getTingkatRepresentatif(freq);
+            return {
+                urutan: index + 1,
+                nomor,
+                frekuensi: freq,
+                tingkat: tingkat,
+                isAdded: isAdded
+            };
         });
 
         return {
@@ -958,11 +999,12 @@
             freqMap,
             maxFreq,
             minFreq,
-            putaran: j
+            putaran: j,
+            uniqueCount: Object.keys(freqMap).length,
+            addedFromDuplicates: addedFromDuplicates
         };
     }
 
-    // Tampilkan hasil
     function tampilkanHasil(result) {
         currentResult = result;
 
@@ -972,12 +1014,16 @@
         document.getElementById('displayInt').textContent = result.Int.toFixed(2);
         document.getElementById('displayR1').textContent = Math.round(result.R1);
         document.getElementById('displayPutaran').textContent = result.putaran;
+        document.getElementById('displayUnik').textContent = result.uniqueCount;
 
         document.getElementById('formulaCalc').innerHTML =
             `Ss = 2(${result.S} − 1) = ${result.Ss} &nbsp;|&nbsp; ` +
             `Int = ${result.P} / ${result.S} = ${result.Int.toFixed(2)} &nbsp;|&nbsp; ` +
             `R₁ = ${result.P} − (${result.Ss} − ${result.S}) = ${Math.round(result.R1)} &nbsp;|&nbsp; ` +
-            `Putaran = ${result.putaran}`;
+            `Putaran = ${result.putaran} &nbsp;|&nbsp; Unik = ${result.uniqueCount}`;
+
+        document.getElementById('unikInfo').textContent =
+            `(Nomor unik: ${result.uniqueCount} dari ${result.Ss} sampel sementara)`;
 
         // Sampel Sementara
         document.getElementById('ssValue').textContent = result.Ss;
@@ -994,6 +1040,8 @@
                 firstOccurrence.push(i);
             }
         }
+
+        const addedSet = new Set(result.addedFromDuplicates);
 
         const displayLimit = 100;
         const totalItems = result.itemSampelSementara.length;
@@ -1015,6 +1063,9 @@
             const freq = freqMap[val] || 0;
             if (freq > 1) valSpan.classList.add('duplicate');
             if (firstOccurrence.includes(index)) valSpan.classList.add('unique');
+            if (addedSet.has(val) && index >= result.uniqueCount) {
+                valSpan.classList.add('added');
+            }
             valSpan.textContent = val;
             const freqSpan = document.createElement('span');
             freqSpan.className = 'freq';
@@ -1042,7 +1093,9 @@
 
         sortedDetails.forEach((item) => {
             const tr = document.createElement('tr');
-            if (item.frekuensi === result.maxFreq && result.maxFreq > 1) {
+            if (item.isAdded) {
+                tr.className = 'added-row';
+            } else if (item.frekuensi === result.maxFreq && result.maxFreq > 1) {
                 tr.className = 'highlight-row';
             }
             const tdUrutan = document.createElement('td');
@@ -1058,42 +1111,104 @@
             tdNomor.style.fontSize = '16px';
             tr.appendChild(tdNomor);
             const tdFreq = document.createElement('td');
-            let freqClass = 'freq-low';
-            if (item.frekuensi >= 3) freqClass = 'freq-high';
-            else if (item.frekuensi === 2) freqClass = 'freq-mid';
+            let freqClass = item.tingkat.css;
+            if (item.isAdded) freqClass = 'freq-added';
             tdFreq.innerHTML = `<span class="frequency-tag ${freqClass}">${item.frekuensi}x</span>`;
             tr.appendChild(tdFreq);
             const tdLevel = document.createElement('td');
-            tdLevel.textContent = item.labelTingkat;
+            tdLevel.textContent = item.tingkat.label;
             tdLevel.style.fontSize = '13px';
             tr.appendChild(tdLevel);
+            const tdStatus = document.createElement('td');
+            if (item.isAdded) {
+                tdStatus.innerHTML = '🟣 Tambahan';
+                tdStatus.style.color = '#6c5ce7';
+                tdStatus.style.fontWeight = '600';
+            } else {
+                tdStatus.textContent = '✅ Unik';
+                tdStatus.style.color = '#28a745';
+            }
+            tr.appendChild(tdStatus);
             tbody.appendChild(tr);
         });
 
-        // Catatan Representatif
+        // ============================================================
+        // CATATAN REPRESENTATIF - DENGAN ISTILAH YANG DIPERBAIKI
+        // ============================================================
         const repList = document.getElementById('repList');
         repList.innerHTML = '';
-        const level1 = sortedDetails.filter(d => d.tingkat === 1);
-        const level2 = sortedDetails.filter(d => d.tingkat === 2);
-        const level3 = sortedDetails.filter(d => d.tingkat === 3);
-        if (level1.length) repList.innerHTML += `<li><strong>Tingkat 1 (Sangat Representatif):</strong> Nomor ${level1.map(d=>d.nomor).join(', ')} (muncul ${level1[0]?.frekuensi||0}x)</li>`;
-        if (level2.length) repList.innerHTML += `<li><strong>Tingkat 2 (Representatif):</strong> Nomor ${level2.map(d=>d.nomor).join(', ')} (muncul ${level2[0]?.frekuensi||0}x)</li>`;
-        if (level3.length) repList.innerHTML += `<li><strong>Tingkat 3 (Cukup Representatif):</strong> Nomor ${level3.map(d=>d.nomor).join(', ')} (muncul ${level3[0]?.frekuensi||0}x)</li>`;
+
+        // Kelompokkan berdasarkan tingkat (level)
+        const groups = {};
+        sortedDetails.forEach(item => {
+            const key = item.tingkat.level;
+            if (!groups[key]) groups[key] = { label: item.tingkat.label, items: [], freq: item.frekuensi };
+            groups[key].items.push(item.nomor);
+        });
+
+        // Urutkan dari level 1 sampai 5
+        const levelOrder = [1, 2, 3, 4, 5];
+        const levelNames = {
+            1: 'Sangat Representatif',
+            2: 'Representatif',
+            3: 'Cukup Representatif',
+            4: 'Kurang Representatif',
+            5: 'Minim Representatif'
+        };
+        const levelIcons = {
+            1: '⭐⭐⭐',
+            2: '⭐⭐',
+            3: '⭐',
+            4: '🔸',
+            5: '🔹'
+        };
+
+        let hasData = false;
+        for (const level of levelOrder) {
+            if (groups[level]) {
+                hasData = true;
+                const g = groups[level];
+                // Tentukan warna border berdasarkan level
+                let borderClass = 'rep-level-' + level;
+                repList.innerHTML += `
+                    <li class="${borderClass}" style="border-left:4px solid; padding-left:16px; margin-bottom:6px;">
+                        <strong>${levelIcons[level]} Tingkat ${level} (${levelNames[level]}):</strong> 
+                        Nomor ${g.items.join(', ')} (muncul ${g.freq}x)
+                    </li>
+                `;
+            }
+        }
+
+        // Jika tidak ada data, tampilkan pesan
+        if (!hasData) {
+            repList.innerHTML = '<li>Tidak ada data sampel untuk ditampilkan.</li>';
+        }
+
+        // Tambahan informasi
         repList.innerHTML += `
-            <li style="margin-top:10px; padding-top:10px; border-top:1px dashed #ccc;">
-                <strong>Total Sampel Tetap:</strong> ${result.sampelTetap.length} unit dari ${result.P} populasi (${((result.sampelTetap.length/result.P)*100).toFixed(1)}%)
+            <li style="margin-top:12px; padding-top:12px; border-top:2px dashed #ccc; list-style:none; padding-left:0;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 20px; font-size:13px; color:#555;">
+                    <span><strong>Total Sampel Tetap:</strong> ${result.sampelTetap.length} unit</span>
+                    <span><strong>Populasi:</strong> ${result.P} unit</span>
+                    <span><strong>Nomor Unik:</strong> ${result.uniqueCount} dari ${result.Ss} sampel sementara</span>
+                    <span><strong>Frekuensi Tertinggi:</strong> ${result.maxFreq}x</span>
+                    <span><strong>Frekuensi Terendah:</strong> ${result.minFreq}x</span>
+                    <span><strong>Jumlah Putaran:</strong> ${result.putaran} putaran</span>
+                    ${result.addedFromDuplicates.length > 0 ? `<span style="color:#6c5ce7;"><strong>🟣 Tambahan:</strong> ${result.addedFromDuplicates.length} sampel dari duplikat</span>` : ''}
+                </div>
             </li>
-            <li><strong>Sampel Sementara:</strong> ${result.itemSampelSementara.length} sampel, dengan ${Object.keys(result.freqMap).length} nomor unik</li>
-            <li><strong>Frekuensi Tertinggi:</strong> ${result.maxFreq}x muncul</li>
-            <li><strong>Frekuensi Terendah:</strong> ${result.minFreq}x muncul</li>
-            <li><strong>Jumlah Putaran:</strong> ${result.putaran} putaran</li>
         `;
 
+        // Warning / Info
         const warningDiv = document.getElementById('sampelTetapWarning');
         if (result.sampelTetap.length === result.S) {
-            warningDiv.innerHTML = `<div class="success">✅ Jumlah sampel tetap (${result.sampelTetap.length}) sesuai dengan target (${result.S}).</div>`;
+            if (result.addedFromDuplicates.length > 0) {
+                warningDiv.innerHTML = `<div class="info">✅ Jumlah sampel tetap (${result.sampelTetap.length}) sesuai target (${result.S}). <strong>${result.addedFromDuplicates.length} sampel ditambahkan</strong> dari duplikat terbaik karena nomor unik hanya ${result.uniqueCount}.</div>`;
+            } else {
+                warningDiv.innerHTML = `<div class="success">✅ Jumlah sampel tetap (${result.sampelTetap.length}) sesuai dengan target (${result.S}). Semua dari nomor unik.</div>`;
+            }
         } else {
-            warningDiv.innerHTML = `<div class="warning">⚠️ Jumlah sampel tetap (${result.sampelTetap.length}) tidak sama dengan target (${result.S}).<br>Ini terjadi karena jumlah nomor unik kurang dari S.</div>`;
+            warningDiv.innerHTML = `<div class="warning">⚠️ Jumlah sampel tetap (${result.sampelTetap.length}) tidak sama dengan target (${result.S}).</div>`;
         }
         document.getElementById('stepIndicator').textContent = `Langkah: Penarikan Sampel (${result.putaran} putaran)`;
     }
@@ -1139,7 +1254,7 @@
                     document.getElementById('loading').classList.remove('active');
                     document.getElementById('results').style.display = 'block';
                     if (result.sampelTetap.length === result.S) {
-                        msgContainer.innerHTML = `<div class="success">✅ Penarikan sampel berhasil! Ditemukan <strong>${result.sampelTetap.length}</strong> sampel tetap dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.<br>Total putaran: <strong>${result.putaran}</strong> putaran.</div>`;
+                        msgContainer.innerHTML = `<div class="success">✅ Penarikan sampel berhasil! Ditemukan <strong>${result.sampelTetap.length}</strong> sampel tetap dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.<br>Total putaran: <strong>${result.putaran}</strong> putaran. Nomor unik: ${result.uniqueCount}.</div>`;
                     } else {
                         msgContainer.innerHTML = `<div class="warning">⚠️ Penarikan sampel selesai. Ditemukan <strong>${result.sampelTetap.length}</strong> sampel tetap dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.<br>Total putaran: <strong>${result.putaran}</strong> putaran.</div>`;
                     }
@@ -1156,8 +1271,8 @@
 
     function resetForm() {
         document.getElementById('itemPopulasi').value = '1,2,3,4,5,6,7,8,9,10';
-        document.getElementById('jumlahPopulasi').value = '87';
-        document.getElementById('sampel').value = '12';
+        document.getElementById('jumlahPopulasi').value = '200';
+        document.getElementById('sampel').value = '120';
         document.getElementById('results').style.display = 'none';
         document.getElementById('loading').classList.remove('active');
         document.getElementById('messageContainer').innerHTML = '';
@@ -1192,8 +1307,8 @@
         loadDocumentation();
         toggleMetodePopulasi();
         document.querySelector('input[name="metodePopulasi"][value="jumlah"]').checked = true;
-        document.getElementById('jumlahPopulasi').value = '87';
-        document.getElementById('sampel').value = '12';
+        document.getElementById('jumlahPopulasi').value = '200';
+        document.getElementById('sampel').value = '120';
         toggleMetodePopulasi();
         setTimeout(prosesPenarikan, 300);
     });
