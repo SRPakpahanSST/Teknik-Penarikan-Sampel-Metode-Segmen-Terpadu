@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         /* ================================================================
-           STYLE - Sama seperti sebelumnya, ditambah perbaikan untuk tingkat
+           STYLE - Sama seperti sebelumnya
            ================================================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -108,7 +108,6 @@
             box-shadow: 0 0 0 3px rgba(26,58,107,0.15);
         }
         .input-item textarea { resize: vertical; min-height: 80px; font-size: 14px; }
-        /* Placeholder style */
         .input-item input::placeholder, .input-item textarea::placeholder {
             color: #aaa;
             font-style: italic;
@@ -672,12 +671,12 @@
                     </div>
                     <div class="input-item" id="jumlahPopulasiGroup">
                         <label for="jumlahPopulasi">🔢 Jumlah Populasi (P)</label>
-                        <input type="number" id="jumlahPopulasi" placeholder="..." value="" min="2" step="1">
+                        <input type="number" id="jumlahPopulasi" placeholder="Masukkan P, misal: 87" value="" min="2" step="1">
                         <div style="font-size:12px; color:#888; margin-top:4px;">Contoh: 87, 200, 1000</div>
                     </div>
                     <div class="input-item">
                         <label for="sampel">Jumlah Sampel Tetap (S)</label>
-                        <input type="number" id="sampel" placeholder="..." value="" min="2" step="1">
+                        <input type="number" id="sampel" placeholder="Masukkan S, misal: 12" value="" min="2" step="1">
                         <div style="font-size:12px; color:#888; margin-top:4px;">Contoh: 12, 120, 50</div>
                     </div>
                     <div class="input-item" style="flex:0 0 auto;">
@@ -793,7 +792,6 @@
         if (tabId === 'app') {
             const results = document.getElementById('results');
             if (results.style.display === 'none') {
-                // Jika input kosong, jangan auto-run; biarkan pengguna mengisi dulu
                 const P = document.getElementById('jumlahPopulasi').value;
                 const S = document.getElementById('sampel').value;
                 if (P && S) {
