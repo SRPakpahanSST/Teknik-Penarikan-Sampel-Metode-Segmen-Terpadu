@@ -99,23 +99,6 @@
             font-weight: 700;
         }
 
-        .tab-btn .badge-ai {
-            display: inline-block;
-            background: linear-gradient(135deg, #6c5ce7, #0984e3);
-            color: white;
-            font-size: 10px;
-            padding: 1px 10px;
-            border-radius: 12px;
-            margin-left: 6px;
-            font-weight: 700;
-            animation: pulse-ai 2s infinite;
-        }
-
-        @keyframes pulse-ai {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-
         .tab-content {
             display: none;
             animation: fadeIn 0.4s ease;
@@ -189,6 +172,57 @@
             font-size: 14px;
         }
 
+        /* ===== METODE INPUT POPULASI ===== */
+        .metode-input {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            padding: 10px 14px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #d4e4f7;
+        }
+
+        .metode-input .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .metode-input .radio-label input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #1a3a6b;
+            cursor: pointer;
+        }
+
+        .metode-input .radio-label .icon {
+            font-size: 18px;
+        }
+
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: flex-end;
+            width: 100%;
+        }
+
+        .input-row .input-item {
+            flex: 1 1 180px;
+            min-width: 150px;
+        }
+
+        .input-row .input-item.hidden {
+            display: none;
+        }
+
+        /* ===== BUTTONS ===== */
         .btn {
             background: #1a3a6b;
             color: white;
@@ -232,20 +266,21 @@
             background: #d4a830;
         }
 
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b02a37;
+        }
+
         .btn-group {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
             justify-content: center;
             margin-top: 15px;
-        }
-
-        .btn-group-vertical {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: center;
-            margin-top: 10px;
         }
 
         .result-section {
@@ -533,6 +568,10 @@
             color: #888;
             text-align: center;
             margin: 8px 0;
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            display: inline-block;
         }
 
         /* ================================================================
@@ -883,9 +922,11 @@
             .doc-container { max-height: 500px; padding: 12px; }
             .info-box-app { grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; }
             .info-item .value { font-size: 18px; }
-            .input-group { flex-direction: column; }
-            .input-item { flex: 1 1 auto; width: 100%; }
+            .input-row { flex-direction: column; }
+            .input-row .input-item { flex: 1 1 auto; width: 100%; }
+            .metode-input { flex-direction: column; gap: 8px; }
             .btn { width: 100%; }
+            .btn-group .btn { width: auto; }
         }
 
         @media print {
@@ -924,11 +965,11 @@
                 <div class="landing-card">
                     <div class="icon">📊</div>
                     <h3>Aplikasi Penarikan Sampel</h3>
-                    <p>Hitung sampel dengan metode segmen terpadu secara otomatis. Masukkan item populasi dan jumlah sampel.</p>
+                    <p>Hitung sampel dengan metode segmen terpadu secara otomatis. Dua metode input populasi: item list atau jumlah langsung.</p>
                     <ul class="feature-list">
                         <li>Input item populasi (list angka)</li>
+                        <li>Input langsung jumlah populasi (P)</li>
                         <li>Perhitungan Ss, Int, dan R₁</li>
-                        <li>Daftar sampel sementara &amp; tetap</li>
                         <li>Fitur koreksi jika sampel tetap kurang</li>
                     </ul>
                     <button class="btn-card" onclick="switchTab('app')">🚀 Buka Aplikasi</button>
@@ -939,7 +980,7 @@
                     <h3>Tutorial Penggunaan</h3>
                     <p>Panduan langkah-demi-langkah menggunakan aplikasi penarikan sampel metode segmen terpadu.</p>
                     <ul class="feature-list">
-                        <li>Panduan input data</li>
+                        <li>Dua metode input populasi</li>
                         <li>Interpretasi hasil</li>
                         <li>Fitur koreksi sampel</li>
                         <li>Contoh kasus</li>
@@ -981,26 +1022,55 @@
             <div class="app-container">
                 <!-- INPUT SECTION -->
                 <div class="input-section">
-                    <div class="input-group">
-                        <div class="input-item" style="flex: 2 1 300px;">
+                    <!-- Metode Input Populasi -->
+                    <div class="metode-input">
+                        <span style="font-weight:600; color:#1a3a6b; font-size:14px;">📋 Metode Input Populasi:</span>
+                        <label class="radio-label">
+                            <input type="radio" name="metodePopulasi" value="item" checked onchange="toggleMetodePopulasi()">
+                            <span class="icon">📝</span> Item Populasi (pisahkan koma)
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="metodePopulasi" value="jumlah" onchange="toggleMetodePopulasi()">
+                            <span class="icon">🔢</span> Jumlah Populasi (P)
+                        </label>
+                    </div>
+
+                    <!-- Input Row -->
+                    <div class="input-row">
+                        <!-- Metode Item Populasi -->
+                        <div class="input-item" id="itemPopulasiGroup" style="flex: 2 1 300px;">
                             <label for="itemPopulasi">📋 Item Populasi (pisahkan dengan koma)</label>
                             <textarea id="itemPopulasi" rows="3" placeholder="Contoh: 1,2,3,4,5,6,7,8,9,10">1,2,3,4,5,6,7,8,9,10</textarea>
                             <div style="font-size:12px; color:#888; margin-top:4px;">Masukkan angka-angka populasi, dipisahkan koma</div>
                         </div>
+
+                        <!-- Metode Jumlah Populasi -->
+                        <div class="input-item hidden" id="jumlahPopulasiGroup">
+                            <label for="jumlahPopulasi">🔢 Jumlah Populasi (P)</label>
+                            <input type="number" id="jumlahPopulasi" value="200" min="2" step="1">
+                            <div style="font-size:12px; color:#888; margin-top:4px;">Masukkan jumlah total populasi</div>
+                        </div>
+
                         <div class="input-item">
                             <label for="sampel">Jumlah Sampel Tetap (S)</label>
-                            <input type="number" id="sampel" value="6" min="2" step="1">
+                            <input type="number" id="sampel" value="120" min="2" step="1">
+                            <div style="font-size:12px; color:#888; margin-top:4px;">Jumlah sampel yang diinginkan</div>
                         </div>
+
                         <div class="input-item" style="flex: 0 0 auto;">
                             <button class="btn" onclick="prosesPenarikan()">🚀 Proses</button>
                         </div>
                     </div>
+
                     <div class="btn-group no-print">
                         <button class="btn btn-secondary" onclick="resetForm()">↺ Reset</button>
                         <button class="btn btn-print" onclick="window.print()">🖨️ Cetak</button>
                         <button class="btn btn-warning" onclick="koreksiSampel()" id="btnKoreksi">🔧 Koreksi Sampel</button>
                     </div>
-                    <div class="step-indicator" id="stepIndicator">Langkah: Proses 1 (Penarikan Sampel)</div>
+
+                    <div style="text-align:center; margin-top:10px;">
+                        <span class="step-indicator" id="stepIndicator">Langkah: Proses 1 (Penarikan Sampel)</span>
+                    </div>
                 </div>
 
                 <!-- LOADING -->
@@ -1108,9 +1178,9 @@
                 </p>
 
                 <div class="tutorial-progress">
-                    <span id="tutorialProgressText">Langkah 1 dari 6</span>
+                    <span id="tutorialProgressText">Langkah 1 dari 7</span>
                     <div class="progress-bar">
-                        <div class="progress-fill" id="tutorialProgressFill" style="width: 16.67%;"></div>
+                        <div class="progress-fill" id="tutorialProgressFill" style="width: 14.29%;"></div>
                     </div>
                 </div>
 
@@ -1118,24 +1188,39 @@
                     <div class="tutorial-step" data-step="1">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3>📥 Memasukkan Data Populasi</h3>
-                            <p>Masukkan <strong>item populasi</strong> dalam bentuk angka-angka yang dipisahkan dengan koma.</p>
-                            <div class="code-example">Contoh: 1,2,3,4,5,6,7,8,9,10</div>
-                            <div class="tip-box"><strong>💡 Tips:</strong> Semua angka akan digunakan sebagai populasi (P).</div>
+                            <h3>📥 Memilih Metode Input Populasi</h3>
+                            <p>Pilih salah satu dari dua metode input populasi:</p>
+                            <ul style="margin:8px 0 8px 20px; color:#555; font-size:14px;">
+                                <li><strong>📝 Item Populasi</strong> — Masukkan angka-angka populasi dipisahkan koma</li>
+                                <li><strong>🔢 Jumlah Populasi (P)</strong> — Masukkan langsung jumlah total populasi</li>
+                            </ul>
+                            <div class="tip-box"><strong>💡 Tips:</strong> Untuk contoh standar P=200, gunakan metode "Jumlah Populasi".</div>
                         </div>
                     </div>
 
                     <div class="tutorial-step" data-step="2">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3>📊 Memasukkan Jumlah Sampel</h3>
-                            <p>Masukkan <strong>Jumlah Sampel Tetap (S)</strong> yang diinginkan.</p>
-                            <div class="tip-box"><strong>💡 Tips:</strong> S harus lebih besar dari 0 dan kurang dari atau sama dengan P.</div>
+                            <h3>📊 Memasukkan Data Populasi</h3>
+                            <p>Sesuai metode yang dipilih:</p>
+                            <div class="code-example">Metode Item: 1,2,3,4,5,6,7,8,9,10</div>
+                            <div class="code-example">Metode Jumlah: 200</div>
+                            <div class="tip-box"><strong>💡 Tips:</strong> Populasi akan dibuat otomatis dari 1 sampai P untuk metode jumlah.</div>
                         </div>
                     </div>
 
                     <div class="tutorial-step" data-step="3">
                         <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>📊 Memasukkan Jumlah Sampel</h3>
+                            <p>Masukkan <strong>Jumlah Sampel Tetap (S)</strong> yang diinginkan.</p>
+                            <div class="code-example">Contoh: S = 120 untuk P = 200</div>
+                            <div class="tip-box"><strong>💡 Tips:</strong> S harus lebih besar dari 0 dan kurang dari atau sama dengan P.</div>
+                        </div>
+                    </div>
+
+                    <div class="tutorial-step" data-step="4">
+                        <div class="step-number">4</div>
                         <div class="step-content">
                             <h3>🚀 Menjalankan Proses</h3>
                             <p>Klik tombol <strong>"🚀 Proses"</strong> untuk menjalankan penarikan sampel.</p>
@@ -1143,8 +1228,8 @@
                         </div>
                     </div>
 
-                    <div class="tutorial-step" data-step="4">
-                        <div class="step-number">4</div>
+                    <div class="tutorial-step" data-step="5">
+                        <div class="step-number">5</div>
                         <div class="step-content">
                             <h3>📌 Membaca Daftar Sampel Sementara</h3>
                             <p><strong>Sampel Sementara (Ss)</strong> adalah semua sampel yang dihasilkan dari proses perguliran. Jumlahnya <strong>Ss = 2(S−1)</strong>.</p>
@@ -1152,8 +1237,8 @@
                         </div>
                     </div>
 
-                    <div class="tutorial-step" data-step="5">
-                        <div class="step-number">5</div>
+                    <div class="tutorial-step" data-step="6">
+                        <div class="step-number">6</div>
                         <div class="step-content">
                             <h3>📋 Membaca Daftar Sampel Tetap</h3>
                             <p><strong>Sampel Tetap</strong> adalah nomor unik dari daftar sampel sementara. Jumlahnya harus = <strong>S</strong>.</p>
@@ -1161,8 +1246,8 @@
                         </div>
                     </div>
 
-                    <div class="tutorial-step" data-step="6">
-                        <div class="step-number">6</div>
+                    <div class="tutorial-step" data-step="7">
+                        <div class="step-number">7</div>
                         <div class="step-content">
                             <h3>🔧 Menggunakan Fitur Koreksi Sampel</h3>
                             <p>Jika jumlah sampel tetap kurang dari target S, fitur koreksi akan:</p>
@@ -1172,8 +1257,8 @@
                                 <li>Memberi tanda <strong>🔴 merah</strong> pada sampel yang dikoreksi</li>
                             </ul>
                             <div class="code-example" style="background:#fff3cd; border-left-color:#f0c040;">
-                                ⚠️ Contoh: Jika sampel tetap hanya 5 dari target 6, 
-                                ambil sampel sementara terakhir (misal 10) → kurangi 1 (menjadi 9) → tambahkan ke sampel tetap.
+                                ⚠️ Contoh: P=200, S=120, sampel tetap hanya 119 dari target 120, 
+                                ambil sampel sementara terakhir → kurangi 1 → tambahkan ke sampel tetap.
                             </div>
                             <div class="tip-box"><strong>💡 Tips:</strong> Tombol koreksi hanya bisa digunakan sekali per proses.</div>
                         </div>
@@ -1182,7 +1267,7 @@
 
                 <div class="tutorial-nav">
                     <button class="btn-nav" id="tutorialPrev" onclick="tutorialPrev()">⬅ Sebelumnya</button>
-                    <span id="tutorialStepIndicator" style="display:flex; align-items:center; color:#888; font-size:14px;">1 / 6</span>
+                    <span id="tutorialStepIndicator" style="display:flex; align-items:center; color:#888; font-size:14px;">1 / 7</span>
                     <button class="btn-nav" id="tutorialNext" onclick="tutorialNext()">Selanjutnya ➡</button>
                 </div>
 
@@ -1224,11 +1309,7 @@
             if (tabId === 'app') {
                 const results = document.getElementById('results');
                 if (results.style.display === 'none') {
-                    // Cek jika ada data di input, jalankan auto
-                    const itemPopulasi = document.getElementById('itemPopulasi').value.trim();
-                    if (itemPopulasi) {
-                        prosesPenarikan();
-                    }
+                    prosesPenarikan();
                 }
             }
             if (tabId === 'tutorial') {
@@ -1246,7 +1327,7 @@
         //  TUTORIAL NAVIGATION
         // ============================================================
         let currentStep = 1;
-        const totalSteps = 6;
+        const totalSteps = 7;
 
         function updateTutorial() {
             document.querySelectorAll('.tutorial-step').forEach(el => {
@@ -1296,6 +1377,28 @@
                 }
             }
         });
+
+        // ============================================================
+        //  TOGGLE METODE POPULASI
+        // ============================================================
+        function toggleMetodePopulasi() {
+            const metode = document.querySelector('input[name="metodePopulasi"]:checked').value;
+
+            const itemGroup = document.getElementById('itemPopulasiGroup');
+            const jumlahGroup = document.getElementById('jumlahPopulasiGroup');
+
+            if (metode === 'item') {
+                itemGroup.classList.remove('hidden');
+                jumlahGroup.classList.add('hidden');
+            } else {
+                itemGroup.classList.add('hidden');
+                jumlahGroup.classList.remove('hidden');
+            }
+
+            // Reset hasil jika sudah ada
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('messageContainer').innerHTML = '';
+        }
 
         // ============================================================
         //  APLIKASI - FUNGSI UTAMA
@@ -1370,7 +1473,18 @@
                 .sort((a, b) => b[1] - a[1] || a[0] - b[0])
                 .map(entry => parseInt(entry[0]));
 
-            const sampelTetap = sortedItems.slice(0, S);
+            let sampelTetap = sortedItems.slice(0, S);
+
+            // Jika jumlah sampel tetap kurang dari S, tambahkan dari nilai unik yang tersisa
+            if (sampelTetap.length < S) {
+                const remaining = Object.keys(freqMap)
+                    .map(Number)
+                    .filter(v => !sampelTetap.includes(v))
+                    .sort((a, b) => a - b);
+
+                const needed = S - sampelTetap.length;
+                sampelTetap = [...sampelTetap, ...remaining.slice(0, needed)];
+            }
 
             return {
                 P: P,
@@ -1412,25 +1526,30 @@
 
             const freqMap = result.freqMap;
 
-            // Tampilkan sampel sementara dengan warna
-            const itemSampelSementara = result.itemSampelSementara;
-
             // Buat set untuk tracking unik
             const seen = new Set();
             const firstOccurrence = [];
 
-            for (let i = 0; i < itemSampelSementara.length; i++) {
-                const val = itemSampelSementara[i];
+            for (let i = 0; i < result.itemSampelSementara.length; i++) {
+                const val = result.itemSampelSementara[i];
                 if (!seen.has(val)) {
                     seen.add(val);
                     firstOccurrence.push(i);
                 }
             }
 
-            // Tentukan apakah ada koreksi (nilai terakhir berubah)
             const isKoreksiApplied = result._koreksiApplied || false;
 
-            itemSampelSementara.forEach((val, index) => {
+            // Tampilkan hanya 20 sampel sementara pertama jika terlalu banyak
+            const displayLimit = 50;
+            const totalItems = result.itemSampelSementara.length;
+            const displayItems = totalItems > displayLimit ?
+                result.itemSampelSementara.slice(0, displayLimit) :
+                result.itemSampelSementara;
+
+            const displayCount = displayItems.length;
+
+            displayItems.forEach((val, index) => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'sample-sementara-item';
 
@@ -1450,8 +1569,7 @@
                     valSpan.classList.add('unique');
                 }
 
-                // Tandai jika ini adalah hasil koreksi (nilai terakhir)
-                if (isKoreksiApplied && index === itemSampelSementara.length - 1) {
+                if (isKoreksiApplied && index === displayItems.length - 1 && index === totalItems - 1) {
                     valSpan.classList.add('fixed');
                 }
 
@@ -1467,6 +1585,14 @@
                 grid.appendChild(itemDiv);
             });
 
+            // Jika ada sampel yang tidak ditampilkan
+            if (totalItems > displayLimit) {
+                const infoDiv = document.createElement('div');
+                infoDiv.style.cssText = 'grid-column: 1 / -1; text-align:center; color:#888; font-size:13px; padding:8px;';
+                infoDiv.textContent = `... dan ${totalItems - displayLimit} sampel lainnya (total ${totalItems} sampel)`;
+                grid.appendChild(infoDiv);
+            }
+
             // Tabel Sampel Tetap
             document.getElementById('totalSampelTetap').textContent = result.sampelTetap.length;
             document.getElementById('targetSampel').textContent = result.S;
@@ -1474,7 +1600,6 @@
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
-            // Buat detail sampel tetap dengan frekuensi
             const sampleDetails = result.sampelTetap.map((nomor, index) => {
                 const freq = freqMap[nomor] || 0;
                 let level;
@@ -1498,7 +1623,8 @@
                     frekuensi: freq,
                     tingkat: level,
                     labelTingkat: label,
-                    isKoreksi: isKoreksiApplied && index === result.sampelTetap.length - 1
+                    isKoreksi: isKoreksiApplied && index === result.sampelTetap.length - 1 &&
+                        result.sampelTetap.length > result.S - 1
                 };
             });
 
@@ -1614,6 +1740,7 @@
                     </div>
                 `;
                 document.getElementById('btnKoreksi').style.display = 'inline-block';
+                document.getElementById('btnKoreksi').disabled = false;
             } else {
                 warningDiv.innerHTML = `
                     <div class="success">
@@ -1623,85 +1750,101 @@
                 document.getElementById('btnKoreksi').style.display = 'none';
             }
 
-            // Update step indicator
             document.getElementById('stepIndicator').textContent = isKoreksi ? 'Langkah: Proses 2 (Koreksi Sampel)' : 'Langkah: Proses 1 (Penarikan Sampel)';
+        }
+
+        /**
+         * Fungsi untuk mendapatkan item populasi dari input
+         */
+        function getPopulasiItems() {
+            const metode = document.querySelector('input[name="metodePopulasi"]:checked').value;
+
+            if (metode === 'item') {
+                const itemPopulasiStr = document.getElementById('itemPopulasi').value.trim();
+                if (!itemPopulasiStr) {
+                    throw new Error('Item populasi tidak boleh kosong.');
+                }
+                const items = itemPopulasiStr.split(',').map(s => parseInt(s.trim()));
+                if (items.some(isNaN)) {
+                    throw new Error('Item populasi harus berupa angka-angka yang dipisahkan koma.');
+                }
+                return items;
+            } else {
+                const P = parseInt(document.getElementById('jumlahPopulasi').value);
+                if (isNaN(P) || P < 2) {
+                    throw new Error('Jumlah populasi (P) harus berupa angka minimal 2.');
+                }
+                // Buat array dari 1 sampai P
+                return Array.from({ length: P }, (_, i) => i + 1);
+            }
         }
 
         /**
          * Fungsi utama proses penarikan
          */
         function prosesPenarikan() {
-            const itemPopulasiStr = document.getElementById('itemPopulasi').value.trim();
-            const S = parseInt(document.getElementById('sampel').value);
-
             const msgContainer = document.getElementById('messageContainer');
             msgContainer.innerHTML = '';
 
             // Reset koreksi
             koreksiActivated = false;
 
-            // Validasi input
-            if (!itemPopulasiStr) {
-                msgContainer.innerHTML = `<div class="error">⚠️ Item populasi tidak boleh kosong.</div>`;
-                document.getElementById('results').style.display = 'none';
-                return;
-            }
+            try {
+                const populasiItems = getPopulasiItems();
+                const P = populasiItems.length;
+                const S = parseInt(document.getElementById('sampel').value);
 
-            const populasiItems = itemPopulasiStr.split(',').map(s => parseInt(s.trim()));
-            if (populasiItems.some(isNaN)) {
-                msgContainer.innerHTML = `<div class="error">⚠️ Item populasi harus berupa angka-angka yang dipisahkan koma.</div>`;
-                document.getElementById('results').style.display = 'none';
-                return;
-            }
-
-            const P = populasiItems.length;
-
-            if (isNaN(S) || S < 2) {
-                msgContainer.innerHTML = `<div class="error">⚠️ Jumlah sampel (S) harus berupa angka minimal 2.</div>`;
-                document.getElementById('results').style.display = 'none';
-                return;
-            }
-
-            if (S > P) {
-                msgContainer.innerHTML = `<div class="error">⚠️ Jumlah sampel (${S}) tidak boleh lebih besar dari populasi (${P}).</div>`;
-                document.getElementById('results').style.display = 'none';
-                return;
-            }
-
-            // Tampilkan loading
-            document.getElementById('loading').classList.add('active');
-            document.getElementById('results').style.display = 'none';
-
-            setTimeout(() => {
-                try {
-                    const result = prosesPenarikanSampel(P, S, populasiItems);
-                    tampilkanHasil(result, false);
-
-                    document.getElementById('loading').classList.remove('active');
-                    document.getElementById('results').style.display = 'block';
-
-                    if (result.sampelTetap.length === result.S) {
-                        msgContainer.innerHTML = `
-                            <div class="success">
-                                ✅ Penarikan sampel berhasil! 
-                                Ditemukan <strong>${result.sampelTetap.length}</strong> sampel tetap 
-                                dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.
-                            </div>
-                        `;
-                    } else {
-                        msgContainer.innerHTML = `
-                            <div class="warning">
-                                ⚠️ Penarikan sampel selesai. Ditemukan <strong>${result.sampelTetap.length}</strong> sampel tetap 
-                                dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.
-                                <br>Gunakan tombol <strong>"🔧 Koreksi Sampel"</strong> jika perlu.
-                            </div>
-                        `;
-                    }
-                } catch (err) {
-                    document.getElementById('loading').classList.remove('active');
-                    msgContainer.innerHTML = `<div class="error">❌ Terjadi kesalahan: ${err.message}</div>`;
+                if (isNaN(S) || S < 2) {
+                    msgContainer.innerHTML = `<div class="error">⚠️ Jumlah sampel (S) harus berupa angka minimal 2.</div>`;
+                    document.getElementById('results').style.display = 'none';
+                    return;
                 }
-            }, 400);
+
+                if (S > P) {
+                    msgContainer.innerHTML = `<div class="error">⚠️ Jumlah sampel (${S}) tidak boleh lebih besar dari populasi (${P}).</div>`;
+                    document.getElementById('results').style.display = 'none';
+                    return;
+                }
+
+                // Tampilkan loading
+                document.getElementById('loading').classList.add('active');
+                document.getElementById('results').style.display = 'none';
+
+                setTimeout(() => {
+                    try {
+                        const result = prosesPenarikanSampel(P, S, populasiItems);
+                        tampilkanHasil(result, false);
+
+                        document.getElementById('loading').classList.remove('active');
+                        document.getElementById('results').style.display = 'block';
+
+                        if (result.sampelTetap.length === result.S) {
+                            msgContainer.innerHTML = `
+                                <div class="success">
+                                    ✅ Penarikan sampel berhasil! 
+                                    Ditemukan <strong>${result.sampelTetap.length}</strong> sampel tetap 
+                                    dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.
+                                </div>
+                            `;
+                        } else {
+                            msgContainer.innerHTML = `
+                                <div class="warning">
+                                    ⚠️ Penarikan sampel selesai. Ditemukan <strong>${result.sampelTetap.length}</strong> sampel tetap 
+                                    dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.
+                                    <br>Gunakan tombol <strong>"🔧 Koreksi Sampel"</strong> jika perlu.
+                                </div>
+                            `;
+                        }
+                    } catch (err) {
+                        document.getElementById('loading').classList.remove('active');
+                        msgContainer.innerHTML = `<div class="error">❌ Terjadi kesalahan: ${err.message}</div>`;
+                    }
+                }, 400);
+
+            } catch (err) {
+                msgContainer.innerHTML = `<div class="error">❌ ${err.message}</div>`;
+                document.getElementById('results').style.display = 'none';
+            }
         }
 
         /**
@@ -1734,13 +1877,23 @@
             const lastValue = itemSampelSementara[itemSampelSementara.length - 1];
             let newValue = lastValue - 1;
             if (newValue <= 0) {
-                newValue = 1; // Pastikan minimal 1
+                newValue = 1;
+            }
+
+            // Cek apakah nilai sudah ada di sampel tetap
+            if (currentResult.sampelTetap.includes(newValue)) {
+                // Coba kurangi lagi
+                newValue = newValue - 1;
+                if (newValue <= 0) newValue = 1;
+                // Jika masih ada, cari nilai unik terdekat
+                while (currentResult.sampelTetap.includes(newValue) && newValue > 1) {
+                    newValue--;
+                }
             }
 
             // Tambahkan ke sampel tetap
             const newSampelTetap = [...currentResult.sampelTetap, newValue];
 
-            // Update result
             const updatedResult = {
                 ...currentResult,
                 sampelTetap: newSampelTetap,
@@ -1754,13 +1907,10 @@
             updatedResult.maxFreq = Math.max(...Object.values(newFreqMap));
             updatedResult.minFreq = Math.min(...Object.values(newFreqMap));
 
-            // Tampilkan ulang hasil dengan koreksi
             tampilkanHasil(updatedResult, true);
 
-            // Tandai koreksi sudah diaktifkan
             koreksiActivated = true;
 
-            // Update message
             const msgContainer = document.getElementById('messageContainer');
             msgContainer.innerHTML = `
                 <div class="success" style="background:#f8d7da; border-left-color:#dc3545; color:#721c24;">
@@ -1769,8 +1919,8 @@
                 </div>
             `;
 
-            // Disable tombol koreksi
             document.getElementById('btnKoreksi').style.display = 'none';
+            document.getElementById('btnKoreksi').disabled = true;
         }
 
         /**
@@ -1778,12 +1928,14 @@
          */
         function resetForm() {
             document.getElementById('itemPopulasi').value = '1,2,3,4,5,6,7,8,9,10';
-            document.getElementById('sampel').value = '6';
+            document.getElementById('jumlahPopulasi').value = '200';
+            document.getElementById('sampel').value = '120';
             document.getElementById('results').style.display = 'none';
             document.getElementById('loading').classList.remove('active');
             document.getElementById('messageContainer').innerHTML = '';
             document.getElementById('sampelTetapWarning').innerHTML = '';
             document.getElementById('btnKoreksi').style.display = 'inline-block';
+            document.getElementById('btnKoreksi').disabled = false;
             koreksiActivated = false;
             currentResult = null;
             document.getElementById('stepIndicator').textContent = 'Langkah: Proses 1 (Penarikan Sampel)';
@@ -1826,17 +1978,17 @@
         window.addEventListener('load', function() {
             resetTutorial();
             loadDocumentation();
-            // Auto-run jika ada data
-            const itemPopulasi = document.getElementById('itemPopulasi').value.trim();
-            if (itemPopulasi) {
+            toggleMetodePopulasi();
+            // Auto-run dengan metode jumlah populasi (P=200, S=120)
+            setTimeout(() => {
                 prosesPenarikan();
-            }
+            }, 300);
         });
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 const active = document.activeElement;
-                if (active && (active.id === 'sampel' || active.id === 'itemPopulasi')) {
+                if (active && (active.id === 'sampel' || active.id === 'itemPopulasi' || active.id === 'jumlahPopulasi')) {
                     prosesPenarikan();
                 }
             }
