@@ -18,7 +18,7 @@ Teknik Penarikan Sampel Metode baru ini menggunakan teknik segmen terpadu, bahwa
 
 Teknik Penarikan Sampel Metode Segmen Terpadu, Semua Untuk Satu ini, berbeda dengan Teknik penarikan Sampel Metode Konvensional yang menggunakan Tabel Angka Random (TAR), meski memiliki perbedaan, namun di antara keduanya ada memiliki kesamaan.
 
-Penarikan sampel metode baru ini hanya menggunakan instrumen perhitungan berupa Interval, dan angka Random sampel pertama sehingga memudahkan perhitungan matematis, cepat mendapatkan hasil objek terpilih sebagai sampel tetap, sampel yang terpilih adalah berkualitas karena ke-representatif-annya dapat mewakili karakteristik populasinya, dan terkendali dalam proses penghitungan angka random sampel, dan dalam penggantian sampel terpilih bila sampel terpilih utama adalah non respon.
+Penarikan sampel metode baru ini hanya menggunakan instrumen perhitungan berupa Interval, dan angka Rampel tsrpilih pertama 2 sehingga memudahkan perhitungan matematis, cepat mendapatkan hasil objek terpilih sebagai sampel tetap, sampel yang terpilih adalah berkualitas karena ke-representatif-annya dapat mewakili karakteristik populasinya, dan terkendali dalam proses penghitungan angka random sampel, dan dalam penggantian sampel terpilih bila sampel terpilih utama adalah non respon.
 
 ---
 
