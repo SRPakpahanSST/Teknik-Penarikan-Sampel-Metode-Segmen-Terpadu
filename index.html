@@ -1429,7 +1429,7 @@
     </div>
 
     <!-- ============================================================
-    JAVASCRIPT - APLIKASI UTAMA + AI
+    JAVASCRIPT - APLIKASI UTAMA + AI (DIPERBAIKI)
     ============================================================ -->
     <script>
         // ============================================================
@@ -2011,7 +2011,7 @@
         }
 
         // ============================================================
-        // AI - CORE
+        // AI - CORE (DIPERBAIKI DENGAN PENGECEKAN)
         // ============================================================
         const AI_CONFIG = {
             DEFAULT_API_KEY: 'AIzaSyDemoKeyForAPINDO2026',
@@ -2093,12 +2093,20 @@
             return generateOfflineGeneral(prompt);
         }
 
-        // Offline generators (simplified)
+        // ============================================================
+        // OFFLINE GENERATORS (DIPERBAIKI DENGAN PENGECEKAN)
+        // ============================================================
         function generateOfflineAssistant(prompt) {
-            const { P, S, uniqueCount, maxFreq, sampelTerpilih } = currentResult || { P: 0, S: 0, uniqueCount: 0,
-            maxFreq: 0, sampelTerpilih: [] };
+            const P = currentResult?.P || 0;
+            const S = currentResult?.S || 0;
+            const uniqueCount = currentResult?.uniqueCount || currentResult?.sampelTerpilih?.length || 0;
+            const maxFreq = currentResult?.maxFreq || 0;
+            const sampelTerpilih = currentResult?.sampelTerpilih || [];
+            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
+
             const isOptimal = uniqueCount >= S && maxFreq >= 2;
             const confidence = isOptimal ? 85 + Math.floor(Math.random() * 10) : 60 + Math.floor(Math.random() * 20);
+
             return `## 🤖 AI Smart Assistant - Analisis & Rekomendasi
 
 ### 📊 Ringkasan Data
@@ -2133,7 +2141,16 @@ ${isOptimal ? 'Sampel ini sangat representatif dan layak digunakan.' : 'Sarankan
         }
 
         function generateOfflinePredictive(prompt) {
-            const { P, S } = currentResult || { P: 0, S: 0 };
+            const P = currentResult?.P || 0;
+            const S = currentResult?.S || 0;
+            if (P === 0) {
+                return `## 📊 AI Predictive Sampling - Tidak Ada Data
+
+⚠️ Tidak ada data populasi untuk dianalisis. Silakan hitung sampel terlebih dahulu.
+
+---
+*🤖 Analisis ini dihasilkan oleh AI dalam mode Offline (Simulasi)*`;
+            }
             const scenarios = [
                 { S: Math.round(P * 0.1), label: 'Minimal' },
                 { S: Math.round(P * 0.15), label: 'Sedang' },
@@ -2163,7 +2180,16 @@ Berdasarkan analisis prediktif, skenario **Optimal** memberikan hasil terbaik.
         }
 
         function generateOfflineOptimizer(prompt) {
-            const { P, S } = currentResult || { P: 0, S: 0 };
+            const P = currentResult?.P || 0;
+            const S = currentResult?.S || 0;
+            if (P === 0) {
+                return `## ⚙️ AI Smart Optimizer - Tidak Ada Data
+
+⚠️ Tidak ada data populasi untuk dianalisis. Silakan hitung sampel terlebih dahulu.
+
+---
+*🤖 Analisis ini dihasilkan oleh AI dalam mode Offline (Simulasi)*`;
+            }
             const optimalS = Math.round(P * 0.2);
             const isOptimal = S >= optimalS - 2 && S <= optimalS + 2;
             return `## ⚙️ AI Smart Optimizer - Optimasi Parameter
@@ -2184,10 +2210,21 @@ ${isOptimal ? `✅ **Parameter S sudah OPTIMAL!**` : `⚠️ **Parameter S perlu
         }
 
         function generateOfflineReport(prompt) {
-            const { P, S, Ss, Int, R1, sampelTerpilih, uniqueCount, maxFreq, minFreq, sampleDetails } = currentResult || {};
+            const P = currentResult?.P || 0;
+            const S = currentResult?.S || 0;
+            const Ss = currentResult?.Ss || 0;
+            const Int = currentResult?.Int || 0;
+            const R1 = currentResult?.R1 || 0;
+            const sampelTerpilih = currentResult?.sampelTerpilih || [];
+            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
+            const uniqueCount = currentResult?.uniqueCount || sampleList.length || 0;
+            const maxFreq = currentResult?.maxFreq || 0;
+            const minFreq = currentResult?.minFreq || 0;
+
             const now = new Date();
             const dateStr = now.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
             const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
             return `## 📄 AI Report Generator - Laporan Penarikan Sampel
 
 ### 📋 Informasi Umum
@@ -2198,7 +2235,7 @@ ${isOptimal ? `✅ **Parameter S sudah OPTIMAL!**` : `⚠️ **Parameter S perlu
 | **Populasi (P)** | ${P} unit |
 | **Sampel Tetap (S)** | ${S} unit |
 | **Sampel Sementara (Ss)** | ${Ss} |
-| **Interval (Int)** | ${Int?.toFixed(2) || 'N/A'} |
+| **Interval (Int)** | ${Int?.toFixed ? Int.toFixed(2) : Int || 'N/A'} |
 | **R₁** | ${R1 ? Math.round(R1) : 'N/A'} |
 
 ### 📊 Hasil Penarikan Sampel
@@ -2207,7 +2244,7 @@ ${isOptimal ? `✅ **Parameter S sudah OPTIMAL!**` : `⚠️ **Parameter S perlu
 | **Total Sampel Unik** | ${uniqueCount} unit |
 | **Frekuensi Tertinggi** | ${maxFreq}x |
 | **Frekuensi Terendah** | ${minFreq}x |
-| **Daftar Sampel** | ${sampelTerpilih?.join(', ') || '-'} |
+| **Daftar Sampel** | ${sampleList.length > 0 ? sampleList.join(', ') : '-'} |
 
 ### 📌 Kesimpulan
 Berdasarkan analisis menggunakan metode Segmen Terpadu, diperoleh ${uniqueCount} sampel tetap dari ${P} populasi dengan tingkat representatif yang baik.
@@ -2217,15 +2254,21 @@ Berdasarkan analisis menggunakan metode Segmen Terpadu, diperoleh ${uniqueCount}
         }
 
         function generateOfflineAnomaly(prompt) {
-            const { P, S, sampelTerpilih, sampelSementara, uniqueCount, freqMap } = currentResult || {};
-            const totalDuplicates = (sampelSementara?.length || 0) - (uniqueCount || 0);
+            const P = currentResult?.P || 0;
+            const S = currentResult?.S || 0;
+            const sampelTerpilih = currentResult?.sampelTerpilih || [];
+            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
+            const sampelSementara = currentResult?.sampelSementara || [];
+            const uniqueCount = currentResult?.uniqueCount || sampleList.length || 0;
+            const totalDuplicates = (sampelSementara.length || 0) - (uniqueCount || 0);
             const hasAnomaly = totalDuplicates > (S || 0) * 1.5;
+
             return `## 🔍 AI Anomaly Detector - Deteksi Anomali Data
 
 ### 📊 Status Deteksi
 | Metrik | Nilai |
 |--------|-------|
-| **Total Sampel** | ${sampelSementara?.length || 0} |
+| **Total Sampel** | ${sampelSementara.length || 0} |
 | **Sampel Unik** | ${uniqueCount || 0} |
 | **Duplikat** | ${totalDuplicates} |
 | **Anomali Terdeteksi** | ${hasAnomaly ? '⚠️ Ya' : '✅ Tidak Ada'} |
@@ -2241,15 +2284,18 @@ ${hasAnomaly ? '⚠️ Periksa kembali data untuk anomali yang terdeteksi.' : '�
         }
 
         function generateOfflineGeneral(prompt) {
+            const P = currentResult?.P || 'N/A';
+            const S = currentResult?.S || 'N/A';
+            const uniqueCount = currentResult?.uniqueCount || 'N/A';
             return `## 🤖 AI Analysis
 
 ### 📊 Ringkasan
 AI telah menganalisis data sampel Anda.
 
 ### 📌 Parameter
-- Populasi: ${currentResult?.P || 'N/A'}
-- Sampel: ${currentResult?.S || 'N/A'}
-- Sampel Unik: ${currentResult?.uniqueCount || 'N/A'}
+- Populasi: ${P}
+- Sampel: ${S}
+- Sampel Unik: ${uniqueCount}
 
 ### 🎯 Status
 ✅ Analisis selesai.
@@ -2306,12 +2352,19 @@ AI telah menganalisis data sampel Anda.
         }
 
         // ============================================================
-        // AI - FEATURES
+        // AI - FEATURES (DIPERBAIKI DENGAN PENGECEKAN)
         // ============================================================
 
         async function runAIAssistant() {
             if (!currentResult) return '⚠️ Silakan hitung sampel terlebih dahulu.';
-            const { P, S, sampelTerpilih, maxFreq, minFreq, uniqueCount } = currentResult;
+            const P = currentResult.P || 0;
+            const S = currentResult.S || 0;
+            const sampelTerpilih = currentResult.sampelTerpilih || [];
+            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
+            const maxFreq = currentResult.maxFreq || 0;
+            const minFreq = currentResult.minFreq || 0;
+            const uniqueCount = currentResult.uniqueCount || sampleList.length || 0;
+
             const prompt = `
         Anda adalah AI Smart Assistant untuk analisis penarikan sampel.
         Data:
@@ -2320,7 +2373,7 @@ AI telah menganalisis data sampel Anda.
         - Sampel Unik: ${uniqueCount}
         - Frekuensi Tertinggi: ${maxFreq}x
         - Frekuensi Terendah: ${minFreq}x
-        - Daftar Sampel: ${sampelTerpilih.join(', ')}
+        - Daftar Sampel: ${sampleList.length > 0 ? sampleList.join(', ') : 'Belum ada data'}
 
         Buat analisis dan rekomendasi dalam bahasa Indonesia dengan format Markdown.
         Sertakan:
@@ -2335,7 +2388,11 @@ AI telah menganalisis data sampel Anda.
 
         async function runAIPredictive() {
             if (!currentResult) return '⚠️ Silakan hitung sampel terlebih dahulu.';
-            const { P, S } = currentResult;
+            const P = currentResult.P || 0;
+            const S = currentResult.S || 0;
+            if (P === 0) {
+                return '⚠️ Data populasi tidak tersedia. Silakan hitung sampel terlebih dahulu.';
+            }
             const scenarios = [
                 { S: Math.round(P * 0.08), label: 'Minimal' },
                 { S: Math.round(P * 0.12), label: 'Kecil' },
@@ -2365,7 +2422,12 @@ AI telah menganalisis data sampel Anda.
 
         async function runAIOptimizer() {
             if (!currentResult) return '⚠️ Silakan hitung sampel terlebih dahulu.';
-            const { P, S, uniqueCount } = currentResult;
+            const P = currentResult.P || 0;
+            const S = currentResult.S || 0;
+            const uniqueCount = currentResult.uniqueCount || 0;
+            if (P === 0) {
+                return '⚠️ Data populasi tidak tersedia.';
+            }
             const optimalS = Math.round(P * 0.2);
             const minS = Math.max(2, Math.round(P * 0.05));
             const maxS = Math.min(P, Math.round(P * 0.35));
@@ -2382,10 +2444,23 @@ AI telah menganalisis data sampel Anda.
 
         async function runAIReport() {
             if (!currentResult) return '⚠️ Silakan hitung sampel terlebih dahulu.';
-            const { P, S, Ss, Int, R1, sampelTerpilih, uniqueCount, maxFreq, minFreq, sampleDetails } = currentResult;
+            const P = currentResult.P || 0;
+            const S = currentResult.S || 0;
+            const Ss = currentResult.Ss || 0;
+            const Int = currentResult.Int || 0;
+            const R1 = currentResult.R1 || 0;
+            const sampelTerpilih = currentResult.sampelTerpilih || [];
+            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
+            const uniqueCount = currentResult.uniqueCount || sampleList.length || 0;
+            const maxFreq = currentResult.maxFreq || 0;
+            const minFreq = currentResult.minFreq || 0;
+            const sampleDetails = currentResult.sampleDetails || [];
+            const details = Array.isArray(sampleDetails) ? sampleDetails : [];
+
             const now = new Date();
             const dateStr = now.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
             const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
             const prompt = `
         Anda adalah AI Report Generator. Buat laporan profesional dalam bahasa Indonesia dengan format Markdown.
         Data:
@@ -2393,9 +2468,9 @@ AI telah menganalisis data sampel Anda.
         - Metode: Segmen Terpadu
         - Populasi: ${P}, Sampel Tetap: ${S}, Sampel Sementara: ${Ss}
         - Interval: ${Int.toFixed(2)}, R₁: ${Math.round(R1)}
-        - Sampel Unik: ${uniqueCount}, Daftar: ${sampelTerpilih.join(', ')}
+        - Sampel Unik: ${uniqueCount}, Daftar: ${sampleList.length > 0 ? sampleList.join(', ') : '-'}
         - Frekuensi Tertinggi: ${maxFreq}x, Terendah: ${minFreq}x
-        - Detail Representatif: ${sampleDetails.map(d => `${d.labelTingkat}: ${d.nomor} (${d.frekuensi}x)`).join('; ')}
+        - Detail Representatif: ${details.map(d => `${d.labelTingkat}: ${d.nomor} (${d.frekuensi}x)`).join('; ')}
 
         Laporan mencakup: header, ringkasan perhitungan, hasil penarikan, analisis representatif, kesimpulan.
         `;
@@ -2404,8 +2479,16 @@ AI telah menganalisis data sampel Anda.
 
         async function runAIAnomaly() {
             if (!currentResult) return '⚠️ Silakan hitung sampel terlebih dahulu.';
-            const { P, S, sampelTerpilih, sampelSementara, freqMap, uniqueCount } = currentResult;
-            const avgFreq = Object.values(freqMap).reduce((a, b) => a + b, 0) / Object.values(freqMap).length || 0;
+            const P = currentResult.P || 0;
+            const S = currentResult.S || 0;
+            const sampelTerpilih = currentResult.sampelTerpilih || [];
+            const sampleList = Array.isArray(sampelTerpilih) ? sampelTerpilih : [];
+            const sampelSementara = currentResult.sampelSementara || [];
+            const freqMap = currentResult.freqMap || {};
+            const uniqueCount = currentResult.uniqueCount || sampleList.length || 0;
+
+            const avgFreq = Object.values(freqMap).length > 0 ? Object.values(freqMap).reduce((a, b) => a + b, 0) / Object
+                .values(freqMap).length : 0;
             const totalDuplicates = sampelSementara.length - uniqueCount;
             const anomalies = [];
             for (const [val, freq] of Object.entries(freqMap)) {
@@ -2417,7 +2500,7 @@ AI telah menganalisis data sampel Anda.
                 anomalies.push({ type: 'duplikat berlebihan', severity: 'tinggi',
                 detail: `Duplikat: ${totalDuplicates} dari ${sampelSementara.length} sampel sementara` });
             }
-            const sorted = [...sampelTerpilih].sort((a, b) => a - b);
+            const sorted = [...sampleList].sort((a, b) => a - b);
             if (sorted.length > 4) {
                 const q1 = sorted[Math.floor(sorted.length * 0.25)];
                 const q3 = sorted[Math.floor(sorted.length * 0.75)];
@@ -2461,7 +2544,7 @@ AI telah menganalisis data sampel Anda.
         }
 
         // ============================================================
-        // AI - CONTROLLER
+        // AI - CONTROLLER (SAMA)
         // ============================================================
         let aiState = { isRunning: false, currentFeature: null, results: {} };
 
@@ -2649,6 +2732,5 @@ AI telah menganalisis data sampel Anda.
             }
         });
     </script>
-
 </body>
 </html>
