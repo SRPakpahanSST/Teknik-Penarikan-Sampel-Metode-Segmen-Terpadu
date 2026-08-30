@@ -1327,6 +1327,31 @@
             box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
         }
 
+        /* ===== PROVIDER SELECTOR (BARU) ===== */
+        #customProviderRow select {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid #c5d5e8;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            min-width: 150px;
+        }
+        #customProviderRow select:focus {
+            border-color: #6c5ce7;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+        }
+        .provider-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+            flex-basis: 100%;
+            text-align: left;
+        }
+
         .ai-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1586,6 +1611,11 @@
                 max-height: 400px;
                 padding: 15px;
             }
+            #customKeyRow input,
+            #customProviderRow select {
+                width: 100%;
+                min-width: unset;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1819,11 +1849,24 @@
                                     </label>
                                 </div>
                             </div>
+
+                            <!-- CUSTOM KEY ROW (dengan Provider Selector) -->
                             <div class="ai-settings-row" id="customKeyRow" style="display:none;">
                                 <label for="customApiKey">🔑 API Key:</label>
                                 <input type="password" id="customApiKey" placeholder="Masukkan API Key Anda..." style="flex:1; padding:8px 12px; border:2px solid #c5d5e8; border-radius:6px;">
                                 <button class="btn btn-sm" onclick="saveCustomKey()" style="padding:8px 16px;">💾 Simpan</button>
                             </div>
+
+                            <!-- PROVIDER SELECTOR (BARU) -->
+                            <div class="ai-settings-row" id="customProviderRow" style="display:none;">
+                                <label for="aiProvider">🤖 Provider AI:</label>
+                                <select id="aiProvider" style="flex:1; padding:8px 12px; border:2px solid #c5d5e8; border-radius:6px; font-size:14px; background:white; color:#333; cursor:pointer; min-width:150px;">
+                                    <option value="gemini">Google Gemini</option>
+                                    <option value="openai">OpenAI</option>
+                                </select>
+                                <div class="provider-info">💡 Gemini: dapatkan di aistudio.google.com | OpenAI: dapatkan di platform.openai.com</div>
+                            </div>
+
                             <div class="ai-settings-row" id="offlineInfo" style="display:none;">
                                 <span style="color:#888; font-size:13px;">📡 Mode Offline: AI akan menggunakan simulasi cerdas tanpa API Key.</span>
                             </div>
@@ -2557,30 +2600,44 @@
         }
 
         // ============================================================
-        // AI - CORE
+        // AI - CORE (DENGAN DUKUNGAN GEMINI & OPENAI)
         // ============================================================
         const AI_CONFIG = {
             DEFAULT_API_KEY: 'AIzaSyDemoKeyForAPINDO2026',
             QUOTA_LIMIT: 50,
             mode: 'auto',
+            provider: 'gemini', // 'gemini' atau 'openai'
             customKey: localStorage.getItem('ai_custom_api_key') || '',
             quotaUsed: parseInt(localStorage.getItem('ai_quota_used') || '0'),
         };
 
+        // Fungsi untuk memanggil API berdasarkan provider yang dipilih
         async function callAIAPI(prompt, mode = null) {
             const useMode = mode || AI_CONFIG.mode;
+            const provider = AI_CONFIG.provider;
+
+            // Validasi kuota untuk mode auto
             if (useMode === 'auto' && AI_CONFIG.quotaUsed >= AI_CONFIG.QUOTA_LIMIT) {
                 throw new Error('⚠️ Kuota AI Auto habis. Gunakan Custom atau Offline.');
             }
+
             let response;
             switch (useMode) {
                 case 'auto':
+                    // Auto hanya support Gemini (default)
                     response = await callGeminiAPI(AI_CONFIG.DEFAULT_API_KEY, prompt);
                     break;
                 case 'custom':
                     const key = AI_CONFIG.customKey || promptCustomKey();
                     if (!key) throw new Error('⚠️ Masukkan API Key terlebih dahulu.');
-                    response = await callGeminiAPI(key, prompt);
+
+                    if (provider === 'gemini') {
+                        response = await callGeminiAPI(key, prompt);
+                    } else if (provider === 'openai') {
+                        response = await callOpenAIAPI(key, prompt);
+                    } else {
+                        throw new Error(`Provider "${provider}" tidak didukung.`);
+                    }
                     break;
                 case 'offline':
                     response = await callOfflineAI(prompt);
@@ -2588,6 +2645,7 @@
                 default:
                     throw new Error('Mode AI tidak dikenali.');
             }
+
             if (useMode === 'auto') {
                 AI_CONFIG.quotaUsed++;
                 localStorage.setItem('ai_quota_used', AI_CONFIG.quotaUsed.toString());
@@ -2596,6 +2654,7 @@
             return response;
         }
 
+        // --- GOOGLE GEMINI API ---
         async function callGeminiAPI(apiKey, prompt) {
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
@@ -2622,6 +2681,43 @@
             }
         }
 
+        // --- OPENAI API ---
+        async function callOpenAIAPI(apiKey, prompt) {
+            try {
+                const url = 'https://api.openai.com/v1/chat/completions';
+                const body = {
+                    model: 'gpt-3.5-turbo',
+                    messages: [
+                        { role: 'system',
+                            content: 'Anda adalah asisten AI yang membantu analisis statistik dan penarikan sampel. Berikan jawaban dalam bahasa Indonesia dengan format Markdown yang rapi.' },
+                        { role: 'user', content: prompt }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 2048
+                };
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify(body)
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error?.message || `HTTP ${res.status}`);
+                }
+                const data = await res.json();
+                const text = data.choices?.[0]?.message?.content || '';
+                if (!text) throw new Error('Tidak ada respons dari AI.');
+                return text;
+            } catch (error) {
+                console.error('OpenAI API Error:', error);
+                throw error;
+            }
+        }
+
+        // --- OFFLINE AI (Simulasi) ---
         async function callOfflineAI(prompt) {
             await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1500));
             const isAssistant = prompt.includes('Smart Assistant') || prompt.includes('rekomendasi');
@@ -2853,7 +2949,7 @@ AI telah menganalisis data sampel Anda.
         }
 
         function promptCustomKey() {
-            const key = prompt('🔑 Masukkan API Key Google Gemini Anda:');
+            const key = prompt('🔑 Masukkan API Key Anda:');
             if (key) {
                 AI_CONFIG.customKey = key;
                 localStorage.setItem('ai_custom_api_key', key);
@@ -2871,13 +2967,36 @@ AI telah menganalisis data sampel Anda.
             }
         }
 
+        // ============================================================
+        // AI - MODE & PROVIDER CONTROL (DIPERBAIKI)
+        // ============================================================
         function changeAIMode(mode) {
             AI_CONFIG.mode = mode;
             document.getElementById('aiModeDisplay').textContent = `Mode: ${mode.charAt(0).toUpperCase() + mode.slice(1)}`;
-            const customRow = document.getElementById('customKeyRow');
+
+            const customKeyRow = document.getElementById('customKeyRow');
+            const customProviderRow = document.getElementById('customProviderRow');
             const offlineInfo = document.getElementById('offlineInfo');
-            customRow.style.display = mode === 'custom' ? 'flex' : 'none';
-            offlineInfo.style.display = mode === 'offline' ? 'block' : 'none';
+
+            // Tampilkan/sembunyikan elemen sesuai mode
+            if (mode === 'custom') {
+                customKeyRow.style.display = 'flex';
+                customProviderRow.style.display = 'flex';
+                offlineInfo.style.display = 'none';
+                // Load provider dari localStorage
+                const savedProvider = localStorage.getItem('ai_provider') || 'gemini';
+                document.getElementById('aiProvider').value = savedProvider;
+                AI_CONFIG.provider = savedProvider;
+            } else if (mode === 'offline') {
+                customKeyRow.style.display = 'none';
+                customProviderRow.style.display = 'none';
+                offlineInfo.style.display = 'block';
+            } else { // auto
+                customKeyRow.style.display = 'none';
+                customProviderRow.style.display = 'none';
+                offlineInfo.style.display = 'none';
+            }
+
             const statusEl = document.getElementById('aiStatus');
             if (mode === 'offline') {
                 statusEl.textContent = '● Offline (Simulasi)';
@@ -2886,21 +3005,33 @@ AI telah menganalisis data sampel Anda.
                 statusEl.textContent = '● Online';
                 statusEl.className = 'ai-status online';
             }
+
             localStorage.setItem('ai_mode_preference', mode);
             clearAIResponse();
         }
 
         function saveCustomKey() {
             const key = document.getElementById('customApiKey').value.trim();
+            const provider = document.getElementById('aiProvider').value;
+
             if (!key) { alert('⚠️ Masukkan API Key.'); return; }
-            if (key.length < 20) { alert('⚠️ API Key tidak valid.'); return; }
+            // Validasi sederhana
+            if (provider === 'gemini' && !key.startsWith('AIza')) {
+                if (!confirm('API Key Gemini biasanya dimulai dengan "AIza". Lanjutkan?')) return;
+            }
+            if (provider === 'openai' && !key.startsWith('sk-')) {
+                if (!confirm('API Key OpenAI biasanya dimulai dengan "sk-". Lanjutkan?')) return;
+            }
+
             AI_CONFIG.customKey = key;
+            AI_CONFIG.provider = provider;
             localStorage.setItem('ai_custom_api_key', key);
-            alert('✅ API Key tersimpan!');
+            localStorage.setItem('ai_provider', provider);
+            alert(`✅ API Key untuk ${provider.toUpperCase()} tersimpan!`);
         }
 
         // ============================================================
-        // AI - FEATURES
+        // AI - FEATURES (SAMA)
         // ============================================================
 
         async function runAIAssistant() {
@@ -3258,6 +3389,11 @@ AI telah menganalisis data sampel Anda.
                 document.getElementById('customApiKey').value = savedKey;
                 AI_CONFIG.customKey = savedKey;
             }
+
+            const savedProvider = localStorage.getItem('ai_provider') || 'gemini';
+            document.getElementById('aiProvider').value = savedProvider;
+            AI_CONFIG.provider = savedProvider;
+
             updateQuotaDisplay();
         });
 
