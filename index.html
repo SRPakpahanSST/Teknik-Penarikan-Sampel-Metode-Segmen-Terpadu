@@ -23,7 +23,6 @@
             overflow: hidden;
         }
 
-        /* --- COVER PAGE --- */
         .cover {
             position: fixed;
             top: 0;
@@ -1313,21 +1312,21 @@
             height: 16px;
             cursor: pointer;
         }
-        #customKeyRow input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 2px solid #c5d5e8;
-            border-radius: 6px;
-            font-size: 14px;
-            min-width: 200px;
-        }
-        #customKeyRow input:focus {
-            border-color: #6c5ce7;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
-        }
 
-        /* ===== PROVIDER SELECTOR (BARU) ===== */
+        /* ---- Provider selector di atas API Key ---- */
+        #customProviderRow {
+            display: none;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 0;
+        }
+        #customProviderRow label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            min-width: 100px;
+        }
         #customProviderRow select {
             flex: 1;
             padding: 8px 12px;
@@ -1350,6 +1349,46 @@
             margin-top: 4px;
             flex-basis: 100%;
             text-align: left;
+        }
+
+        #customKeyRow {
+            display: none;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            padding: 4px 0;
+        }
+        #customKeyRow label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            min-width: 100px;
+        }
+        #customKeyRow input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid #c5d5e8;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 200px;
+        }
+        #customKeyRow input:focus {
+            border-color: #6c5ce7;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+        }
+        #customKeyRow .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        #offlineInfo {
+            display: none;
+            padding: 4px 0;
+        }
+        #offlineInfo span {
+            color: #888;
+            font-size: 13px;
         }
 
         .ai-features {
@@ -1850,25 +1889,25 @@
                                 </div>
                             </div>
 
-                            <!-- CUSTOM KEY ROW (dengan Provider Selector) -->
-                            <div class="ai-settings-row" id="customKeyRow" style="display:none;">
-                                <label for="customApiKey">🔑 API Key:</label>
-                                <input type="password" id="customApiKey" placeholder="Masukkan API Key Anda..." style="flex:1; padding:8px 12px; border:2px solid #c5d5e8; border-radius:6px;">
-                                <button class="btn btn-sm" onclick="saveCustomKey()" style="padding:8px 16px;">💾 Simpan</button>
-                            </div>
-
-                            <!-- PROVIDER SELECTOR (BARU) -->
-                            <div class="ai-settings-row" id="customProviderRow" style="display:none;">
+                            <!-- Provider AI (di atas API Key) -->
+                            <div class="ai-settings-row" id="customProviderRow">
                                 <label for="aiProvider">🤖 Provider AI:</label>
-                                <select id="aiProvider" style="flex:1; padding:8px 12px; border:2px solid #c5d5e8; border-radius:6px; font-size:14px; background:white; color:#333; cursor:pointer; min-width:150px;">
+                                <select id="aiProvider">
                                     <option value="gemini">Google Gemini</option>
                                     <option value="openai">OpenAI</option>
                                 </select>
                                 <div class="provider-info">💡 Gemini: dapatkan di aistudio.google.com | OpenAI: dapatkan di platform.openai.com</div>
                             </div>
 
-                            <div class="ai-settings-row" id="offlineInfo" style="display:none;">
-                                <span style="color:#888; font-size:13px;">📡 Mode Offline: AI akan menggunakan simulasi cerdas tanpa API Key.</span>
+                            <!-- API Key (di bawah Provider) -->
+                            <div class="ai-settings-row" id="customKeyRow">
+                                <label for="customApiKey">🔑 API Key:</label>
+                                <input type="password" id="customApiKey" placeholder="Masukkan API Key Anda...">
+                                <button class="btn btn-sm" onclick="saveCustomKey()">💾 Simpan</button>
+                            </div>
+
+                            <div class="ai-settings-row" id="offlineInfo">
+                                <span>📡 Mode Offline: AI akan menggunakan simulasi cerdas tanpa API Key.</span>
                             </div>
                         </div>
 
@@ -1976,24 +2015,84 @@
                 </div>
             </div>
 
-            <!-- TUTORIAL -->
+            <!-- TUTORIAL (DIPERBAIKI) -->
             <div class="tab-content" id="tab-tutorial">
                 <div class="tutorial-container">
                     <h2 style="color:#1a3a6b; margin-bottom:15px;">🎓 Tutorial Penggunaan Aplikasi</h2>
-                    <p style="color:#666; margin-bottom:20px; font-size:14px;">Panduan langkah-demi-langkah menggunakan aplikasi.</p>
-                    <div class="tutorial-progress"><span id="tutorialProgressText">Langkah 1 dari 4</span><div class="progress-bar"><div class="progress-fill" id="tutorialProgressFill" style="width:25%;"></div></div></div>
+                    <p style="color:#666; margin-bottom:20px; font-size:14px;">Panduan langkah-demi-langkah menggunakan aplikasi Teknik Penarikan Sampel Metode Segmen Terpadu, termasuk fitur AI.</p>
+                    <div class="tutorial-progress">
+                        <span id="tutorialProgressText">Langkah 1 dari 6</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="tutorialProgressFill" style="width:16.67%;"></div>
+                        </div>
+                    </div>
                     <div id="tutorialSteps">
-                        <div class="tutorial-step" data-step="1"><div class="step-number">1</div><div class="step-content"><h3>📥 Memasukkan Data</h3><p>Pilih metode input populasi dan masukkan data.</p><div class="code-example">Contoh: P = 200, S = 120</div></div></div>
-                        <div class="tutorial-step" data-step="2"><div class="step-number">2</div><div class="step-content"><h3>🚀 Menjalankan Proses</h3><p>Klik tombol <strong>"🚀 Proses"</strong>.</p></div></div>
-                        <div class="tutorial-step" data-step="3"><div class="step-number">3</div><div class="step-content"><h3>📌 Membaca Sampel Sementara</h3><p>Sampel Sementara (Ss) = 2(S−1). Setiap 5 sampel adalah satu putaran.</p></div></div>
-                        <div class="tutorial-step" data-step="4"><div class="step-number">4</div><div class="step-content"><h3>📋 Membaca Sampel Tetap</h3><p>Sampel Tetap adalah S nomor dengan frekuensi tertinggi. Jika kurang 1, otomatis dikoreksi dari nilai sementara terakhir - 1.</p></div></div>
+                        <!-- Step 1 -->
+                        <div class="tutorial-step" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>📥 Memasukkan Data Populasi</h3>
+                                <p>Pilih metode input populasi (Item Populasi dengan koma atau Jumlah Populasi P). Masukkan data sesuai kebutuhan.</p>
+                                <div class="code-example">Contoh metode jumlah: P = 87, S = 12</div>
+                                <div class="code-example">Contoh metode item: 1,2,3,4,5,6,7,8,9,10</div>
+                                <div class="tip-box"><strong>💡 Tips:</strong> Gunakan metode "Jumlah Populasi" untuk simulasi cepat.</div>
+                            </div>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="tutorial-step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>🚀 Menjalankan Proses Penarikan Sampel</h3>
+                                <p>Setelah data terisi, klik tombol <strong>"🚀 Proses"</strong>. Aplikasi akan menghitung Ss, Interval, R₁, dan menampilkan daftar sampel sementara dan sampel tetap.</p>
+                                <div class="tip-box"><strong>💡 Tips:</strong> Jika jumlah sampel tetap kurang 1 dari target, aplikasi akan melakukan koreksi otomatis.</div>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="tutorial-step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>📌 Membaca Hasil Perhitungan</h3>
+                                <p>Perhatikan ringkasan perhitungan (P, S, Ss, Int, R₁). Daftar sampel sementara menunjukkan setiap nilai dengan warna (duplikat, unik, koreksi). Sampel tetap adalah S nomor dengan frekuensi tertinggi.</p>
+                                <div class="tip-box"><strong>💡 Tips:</strong> Warna 🟢 hijau menandakan nilai unik pertama kali muncul, 🟡 kuning duplikat.</div>
+                            </div>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="tutorial-step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>🤖 Mengaktifkan AI Panel</h3>
+                                <p>Klik tombol <strong>"🤖 Buka AI Panel"</strong> untuk mengakses 5 fitur AI. Panel ini akan menganalisis data sampel Anda.</p>
+                                <div class="tip-box"><strong>💡 Tips:</strong> Pastikan Anda sudah menjalankan proses penarikan sampel sebelum menggunakan AI.</div>
+                            </div>
+                        </div>
+                        <!-- Step 5 -->
+                        <div class="tutorial-step" data-step="5">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h3>⚙️ Mengatur Mode dan Provider AI</h3>
+                                <p>Pilih mode API Key: <strong>Auto</strong> (default, kuota terbatas), <strong>Custom</strong> (masukkan API Key sendiri), atau <strong>Offline</strong> (simulasi). Jika memilih Custom, pilih provider (Gemini atau OpenAI) dan masukkan API Key, lalu klik Simpan.</p>
+                                <div class="code-example">Provider: Google Gemini (gratis) atau OpenAI (berbayar)</div>
+                                <div class="tip-box"><strong>💡 Tips:</strong> Mode Offline tidak memerlukan API Key dan cocok untuk demo.</div>
+                            </div>
+                        </div>
+                        <!-- Step 6 -->
+                        <div class="tutorial-step" data-step="6">
+                            <div class="step-number">6</div>
+                            <div class="step-content">
+                                <h3>📊 Menjalankan Fitur AI</h3>
+                                <p>Klik salah satu tombol fitur AI: Smart Assistant, Predictive Sampling, Smart Optimizer, Report Generator, atau Anomaly Detector. Hasil analisis akan muncul di area respons AI. Anda juga bisa menjalankan semua fitur sekaligus dengan tombol <strong>"🚀 Jalankan Semua Analisis"</strong>.</p>
+                                <div class="tip-box"><strong>💡 Tips:</strong> Ekspor laporan dengan tombol <strong>"📥 Export Laporan"</strong> untuk menyimpan hasil analisis dalam file Markdown.</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tutorial-nav">
                         <button class="btn-nav" id="tutorialPrev" onclick="tutorialPrev()">⬅ Sebelumnya</button>
-                        <span id="tutorialStepIndicator" style="display:flex; align-items:center; color:#888; font-size:14px;">1 / 4</span>
+                        <span id="tutorialStepIndicator" style="display:flex; align-items:center; color:#888; font-size:14px;">1 / 6</span>
                         <button class="btn-nav" id="tutorialNext" onclick="tutorialNext()">Selanjutnya ➡</button>
                     </div>
-                    <div style="text-align:center; margin-top:25px;"><button class="btn" onclick="switchTab('app')">🚀 Coba Sekarang</button></div>
+                    <div style="text-align:center; margin-top:25px;">
+                        <button class="btn" onclick="switchTab('app')">🚀 Coba Sekarang</button>
+                    </div>
                 </div>
             </div>
 
@@ -2065,10 +2164,10 @@
         });
 
         // ============================================================
-        // TUTORIAL
+        // TUTORIAL (6 LANGKAH)
         // ============================================================
         let currentStep = 1;
-        const totalSteps = 4;
+        const totalSteps = 6;
 
         function updateTutorial() {
             document.querySelectorAll('.tutorial-step').forEach(el => el.style.display = 'none');
@@ -2606,17 +2705,15 @@
             DEFAULT_API_KEY: 'AIzaSyDemoKeyForAPINDO2026',
             QUOTA_LIMIT: 50,
             mode: 'auto',
-            provider: 'gemini', // 'gemini' atau 'openai'
+            provider: 'gemini',
             customKey: localStorage.getItem('ai_custom_api_key') || '',
             quotaUsed: parseInt(localStorage.getItem('ai_quota_used') || '0'),
         };
 
-        // Fungsi untuk memanggil API berdasarkan provider yang dipilih
         async function callAIAPI(prompt, mode = null) {
             const useMode = mode || AI_CONFIG.mode;
             const provider = AI_CONFIG.provider;
 
-            // Validasi kuota untuk mode auto
             if (useMode === 'auto' && AI_CONFIG.quotaUsed >= AI_CONFIG.QUOTA_LIMIT) {
                 throw new Error('⚠️ Kuota AI Auto habis. Gunakan Custom atau Offline.');
             }
@@ -2624,13 +2721,11 @@
             let response;
             switch (useMode) {
                 case 'auto':
-                    // Auto hanya support Gemini (default)
                     response = await callGeminiAPI(AI_CONFIG.DEFAULT_API_KEY, prompt);
                     break;
                 case 'custom':
                     const key = AI_CONFIG.customKey || promptCustomKey();
                     if (!key) throw new Error('⚠️ Masukkan API Key terlebih dahulu.');
-
                     if (provider === 'gemini') {
                         response = await callGeminiAPI(key, prompt);
                     } else if (provider === 'openai') {
@@ -2654,7 +2749,6 @@
             return response;
         }
 
-        // --- GOOGLE GEMINI API ---
         async function callGeminiAPI(apiKey, prompt) {
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
@@ -2681,7 +2775,6 @@
             }
         }
 
-        // --- OPENAI API ---
         async function callOpenAIAPI(apiKey, prompt) {
             try {
                 const url = 'https://api.openai.com/v1/chat/completions';
@@ -2978,22 +3071,22 @@ AI telah menganalisis data sampel Anda.
             const customProviderRow = document.getElementById('customProviderRow');
             const offlineInfo = document.getElementById('offlineInfo');
 
-            // Tampilkan/sembunyikan elemen sesuai mode
             if (mode === 'custom') {
-                customKeyRow.style.display = 'flex';
+                // Tampilkan provider dulu, baru API Key
                 customProviderRow.style.display = 'flex';
+                customKeyRow.style.display = 'flex';
                 offlineInfo.style.display = 'none';
                 // Load provider dari localStorage
                 const savedProvider = localStorage.getItem('ai_provider') || 'gemini';
                 document.getElementById('aiProvider').value = savedProvider;
                 AI_CONFIG.provider = savedProvider;
             } else if (mode === 'offline') {
-                customKeyRow.style.display = 'none';
                 customProviderRow.style.display = 'none';
+                customKeyRow.style.display = 'none';
                 offlineInfo.style.display = 'block';
             } else { // auto
-                customKeyRow.style.display = 'none';
                 customProviderRow.style.display = 'none';
+                customKeyRow.style.display = 'none';
                 offlineInfo.style.display = 'none';
             }
 
@@ -3015,7 +3108,6 @@ AI telah menganalisis data sampel Anda.
             const provider = document.getElementById('aiProvider').value;
 
             if (!key) { alert('⚠️ Masukkan API Key.'); return; }
-            // Validasi sederhana
             if (provider === 'gemini' && !key.startsWith('AIza')) {
                 if (!confirm('API Key Gemini biasanya dimulai dengan "AIza". Lanjutkan?')) return;
             }
@@ -3031,7 +3123,7 @@ AI telah menganalisis data sampel Anda.
         }
 
         // ============================================================
-        // AI - FEATURES (SAMA)
+        // AI - FEATURES
         // ============================================================
 
         async function runAIAssistant() {
@@ -3413,5 +3505,6 @@ AI telah menganalisis data sampel Anda.
             }
         });
     </script>
+
 </body>
 </html>
