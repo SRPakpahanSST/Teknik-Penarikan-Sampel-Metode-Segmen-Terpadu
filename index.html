@@ -429,9 +429,9 @@
             font-weight: 600;
         }
 
-        .freq-3 { background: #d4edda; color: #155724; }
-        .freq-2 { background: #fff3cd; color: #856404; }
-        .freq-1 { background: #f8d7da; color: #721c24; }
+        .freq-high { background: #d4edda; color: #155724; }
+        .freq-mid { background: #fff3cd; color: #856404; }
+        .freq-low { background: #f8d7da; color: #721c24; }
 
         .representative-note {
             background: #e8f5e9;
@@ -930,7 +930,7 @@
                         <li>Input item populasi atau jumlah populasi</li>
                         <li>Perhitungan Ss, Int, dan R₁</li>
                         <li>Perputaran setiap 5 sampel</li>
-                        <li>Sampel tetap berdasarkan frekuensi</li>
+                        <li>Sampel tetap berdasarkan frekuensi tertinggi</li>
                     </ul>
                     <button class="btn-card" onclick="switchTab('app')">🚀 Buka Aplikasi</button>
                 </div>
@@ -1049,6 +1049,10 @@
                                 <div class="label">R₁ (Sampel Pertama)</div>
                                 <div class="value" id="displayR1">-</div>
                             </div>
+                            <div class="info-item">
+                                <div class="label">Putaran</div>
+                                <div class="value" id="displayPutaran">-</div>
+                            </div>
                         </div>
 
                         <!-- ===== FORMULA ===== -->
@@ -1079,7 +1083,7 @@
                         <!-- ===== SAMPEL TETAP ===== -->
                         <h2>📋 Daftar Sampel Tetap Terpilih</h2>
                         <p style="color:#666; font-size:14px; margin-bottom:10px;">
-                            Sampel tetap adalah <strong>nomor unik</strong> yang muncul dari daftar sampel sementara.
+                            Sampel tetap adalah <strong>S nomor dengan frekuensi tertinggi</strong> dari sampel sementara.
                             Total: <span id="totalSampelTetap">-</span> unit dari target <span id="targetSampel">-</span>.
                         </p>
                         <div id="sampelTetapWarning"></div>
@@ -1155,7 +1159,7 @@
                         <div class="step-number">4</div>
                         <div class="step-content">
                             <h3>📋 Membaca Sampel Tetap</h3>
-                            <p>Sampel Tetap adalah nomor unik dari sampel sementara.</p>
+                            <p>Sampel Tetap adalah S nomor dengan frekuensi tertinggi.</p>
                         </div>
                     </div>
                 </div>
@@ -1295,7 +1299,7 @@
         }
 
         // ============================================================
-        //  APLIKASI - FUNGSI UTAMA
+        //  APLIKASI - FUNGSI UTAMA (DIPERBAIKI)
         // ============================================================
         let currentResult = null;
 
@@ -1310,28 +1314,7 @@
         }
 
         /**
-         * Fungsi utama penarikan sampel - SESUAI DENGAN RUMUS BAKU
-         * 
-         * Rumus:
-         * R1 = P - (Ss - S)
-         * R2 = R1 + 1×Int
-         * R3 = R2 + 2×Int
-         * R4 = R3 + 3×Int
-         * R5 = R4 + 4×Int
-         * 
-         * R6 = R1 - 1×Int
-         * R7 = R6 + 1×Int
-         * R8 = R7 + 2×Int
-         * R9 = R8 + 3×Int
-         * R10 = R9 + 4×Int
-         * 
-         * R11 = R1 - 2×Int
-         * R12 = R11 + 1×Int
-         * R13 = R12 + 2×Int
-         * R14 = R13 + 3×Int
-         * R15 = R14 + 4×Int
-         * 
-         * ... dan seterusnya
+         * Fungsi utama penarikan sampel - SESUAI RUMUS BAKU
          */
         function prosesPenarikanSampel(P, S, populasiItems) {
             // 1. Hitung Interval dan Sampel Sementara
@@ -1343,64 +1326,83 @@
             const daftarSampelSementara = [];
             const daftarKode = [];
 
-            // Hitung berapa putaran yang dibutuhkan (setiap putaran 5 sampel)
-            // Ss = 2(S-1), total sampel sementara
-            const totalSampel = Ss;
-
-            // Variabel untuk tracking posisi
             let j = 0; // putaran ke-
-            let i = 0; // indeks sampel saat ini
+            let totalGenerated = 0;
 
-            // Loop sampai semua sampel sementara terisi
-            while (daftarSampelSementara.length < totalSampel) {
+            while (totalGenerated < Ss) {
                 // R(5j+1) = R1 - (j * Int)
                 const startVal = R1 - (j * Int);
                 const startNorm = normalize(startVal, P);
 
-                if (daftarSampelSementara.length < totalSampel) {
+                // Sampel ke-1
+                if (totalGenerated < Ss) {
                     daftarSampelSementara.push(startNorm);
-                    daftarKode.push(`R${daftarSampelSementara.length}`);
+                    daftarKode.push(`R${totalGenerated + 1}`);
+                    totalGenerated++;
                 }
 
-                // Sampel ke-2: +1×Int dari nilai SEBELUMNYA (startVal)
-                if (daftarSampelSementara.length < totalSampel) {
+                // Sampel ke-2: +1×Int dari startVal
+                if (totalGenerated < Ss) {
                     const val2 = startVal + (1 * Int);
                     const norm2 = normalize(val2, P);
                     daftarSampelSementara.push(norm2);
-                    daftarKode.push(`R${daftarSampelSementara.length}`);
+                    daftarKode.push(`R${totalGenerated + 1}`);
+                    totalGenerated++;
                 }
 
-                // Sampel ke-3: +2×Int dari nilai SEBELUMNYA (val2)
-                if (daftarSampelSementara.length < totalSampel) {
-                    const prevVal = daftarSampelSementara.length >= 2 ?
-                        (startVal + (1 * Int)) :
-                        startVal;
-                    const val3 = prevVal + (2 * Int);
-                    const norm3 = normalize(val3, P);
-                    daftarSampelSementara.push(norm3);
-                    daftarKode.push(`R${daftarSampelSementara.length}`);
+                // Sampel ke-3: +2×Int dari startVal (bukan dari val2)
+                // Perhatikan: R3 = R2 + 2*Int, R2 = startVal + 1*Int, jadi R3 = startVal + 3*Int?
+                // Tunggu, rumus: R3 = R2 + 2*Int = (R1 + 1*Int) + 2*Int = R1 + 3*Int.
+                // Jadi sebenarnya R3 = R1 + 3*Int, bukan R1 + 2*Int.
+                // Tapi dalam contoh manual P=87, S=12: R1=77, Int=7.25
+                // R2 = 77 + 7.25 = 84.25 → 84
+                // R3 = R2 + 2*7.25 = 84.25 + 14.5 = 98.75 → 12
+                // R4 = R3 + 3*7.25 = 98.75 + 21.75 = 120.5 → 34
+                // R5 = R4 + 4*7.25 = 120.5 + 29 = 149.5 → 63
+                // Jadi polanya: R2 = R1 + 1*Int, R3 = R2 + 2*Int, R4 = R3 + 3*Int, R5 = R4 + 4*Int
+                // Ini menggunakan nilai SEBELUMNYA, bukan startVal.
+                // Jadi kita harus menggunakan nilai sebelumnya (currentVal) untuk menghitung selanjutnya.
+                // Saya akan gunakan pendekatan dengan currentVal yang di-update.
+
+                // Lebih baik kita gunakan loop dengan currentVal
+                // Untuk setiap putaran, kita mulai dengan startVal, lalu update currentVal
+                let currentVal = startVal;
+
+                // Sampel ke-1 sudah diambil (startVal)
+                // Sampel ke-2: currentVal = startVal + 1*Int
+                if (totalGenerated < Ss) {
+                    currentVal = startVal + (1 * Int);
+                    const norm = normalize(currentVal, P);
+                    daftarSampelSementara.push(norm);
+                    daftarKode.push(`R${totalGenerated + 1}`);
+                    totalGenerated++;
                 }
 
-                // Sampel ke-4: +3×Int dari nilai SEBELUMNYA (val3)
-                if (daftarSampelSementara.length < totalSampel) {
-                    const prevVal = daftarSampelSementara.length >= 3 ?
-                        (startVal + (1 * Int) + (2 * Int)) :
-                        startVal;
-                    const val4 = prevVal + (3 * Int);
-                    const norm4 = normalize(val4, P);
-                    daftarSampelSementara.push(norm4);
-                    daftarKode.push(`R${daftarSampelSementara.length}`);
+                // Sampel ke-3: currentVal = currentVal + 2*Int
+                if (totalGenerated < Ss) {
+                    currentVal = currentVal + (2 * Int);
+                    const norm = normalize(currentVal, P);
+                    daftarSampelSementara.push(norm);
+                    daftarKode.push(`R${totalGenerated + 1}`);
+                    totalGenerated++;
                 }
 
-                // Sampel ke-5: +4×Int dari nilai SEBELUMNYA (val4)
-                if (daftarSampelSementara.length < totalSampel) {
-                    const prevVal = daftarSampelSementara.length >= 4 ?
-                        (startVal + (1 * Int) + (2 * Int) + (3 * Int)) :
-                        startVal;
-                    const val5 = prevVal + (4 * Int);
-                    const norm5 = normalize(val5, P);
-                    daftarSampelSementara.push(norm5);
-                    daftarKode.push(`R${daftarSampelSementara.length}`);
+                // Sampel ke-4: currentVal = currentVal + 3*Int
+                if (totalGenerated < Ss) {
+                    currentVal = currentVal + (3 * Int);
+                    const norm = normalize(currentVal, P);
+                    daftarSampelSementara.push(norm);
+                    daftarKode.push(`R${totalGenerated + 1}`);
+                    totalGenerated++;
+                }
+
+                // Sampel ke-5: currentVal = currentVal + 4*Int
+                if (totalGenerated < Ss) {
+                    currentVal = currentVal + (4 * Int);
+                    const norm = normalize(currentVal, P);
+                    daftarSampelSementara.push(norm);
+                    daftarKode.push(`R${totalGenerated + 1}`);
+                    totalGenerated++;
                 }
 
                 j++; // lanjut ke putaran berikutnya
@@ -1418,21 +1420,18 @@
                 freqMap[item] = (freqMap[item] || 0) + 1;
             }
 
-            // 5. Ambil sampel unik (sampel tetap) berdasarkan urutan kemunculan pertama
-            const uniqueInOrder = [];
-            const seen = new Set();
-            for (const val of itemSampelSementara) {
-                if (!seen.has(val)) {
-                    seen.add(val);
-                    uniqueInOrder.push(val);
-                }
-            }
+            // 5. Urutkan berdasarkan frekuensi tertinggi, lalu ambil S nomor
+            const sortedByFreq = Object.entries(freqMap)
+                .sort((a, b) => b[1] - a[1] || parseInt(a[0]) - parseInt(b[0]))
+                .map(entry => parseInt(entry[0]));
 
-            // 6. Tentukan tingkat kerepresentatifan
+            const sampelTetap = sortedByFreq.slice(0, S);
+
+            // 6. Tentukan tingkat kerepresentatifan untuk tampilan
             const maxFreq = Math.max(...Object.values(freqMap));
             const minFreq = Math.min(...Object.values(freqMap));
 
-            const sampleDetails = uniqueInOrder.map((nomor, index) => {
+            const sampleDetails = sampelTetap.map((nomor, index) => {
                 const freq = freqMap[nomor] || 0;
                 let level;
                 if (freq === maxFreq && maxFreq > 1) {
@@ -1458,18 +1457,6 @@
                 };
             });
 
-            // 7. Jika jumlah sampel tetap < S, tambahkan dari nilai yang tersisa
-            let finalSampelTetap = [...uniqueInOrder];
-            if (finalSampelTetap.length < S) {
-                const remaining = Object.keys(freqMap)
-                    .map(Number)
-                    .filter(v => !finalSampelTetap.includes(v))
-                    .sort((a, b) => a - b);
-
-                const needed = S - finalSampelTetap.length;
-                finalSampelTetap = [...finalSampelTetap, ...remaining.slice(0, needed)];
-            }
-
             return {
                 P: P,
                 S: S,
@@ -1479,7 +1466,7 @@
                 daftarSampelSementara: daftarSampelSementara,
                 daftarKode: daftarKode,
                 itemSampelSementara: itemSampelSementara,
-                sampelTerpilih: finalSampelTetap,
+                sampelTetap: sampelTetap,
                 sampleDetails: sampleDetails,
                 freqMap: freqMap,
                 maxFreq: maxFreq,
@@ -1500,6 +1487,7 @@
             document.getElementById('displaySs').textContent = result.Ss;
             document.getElementById('displayInt').textContent = result.Int.toFixed(2);
             document.getElementById('displayR1').textContent = Math.round(result.R1);
+            document.getElementById('displayPutaran').textContent = result.putaran;
 
             document.getElementById('formulaCalc').innerHTML =
                 `Ss = 2(${result.S} − 1) = ${result.Ss} &nbsp;|&nbsp; ` +
@@ -1576,7 +1564,7 @@
             }
 
             // Tabel Sampel Tetap
-            document.getElementById('totalSampelTetap').textContent = result.sampelTerpilih.length;
+            document.getElementById('totalSampelTetap').textContent = result.sampelTetap.length;
             document.getElementById('targetSampel').textContent = result.S;
 
             const tbody = document.getElementById('tableBody');
@@ -1608,9 +1596,9 @@
                 tr.appendChild(tdNomor);
 
                 const tdFreq = document.createElement('td');
-                let freqClass = 'freq-1';
-                if (item.frekuensi >= 3) freqClass = 'freq-3';
-                else if (item.frekuensi === 2) freqClass = 'freq-2';
+                let freqClass = 'freq-low';
+                if (item.frekuensi >= 3) freqClass = 'freq-high';
+                else if (item.frekuensi === 2) freqClass = 'freq-mid';
                 tdFreq.innerHTML = `<span class="frequency-tag ${freqClass}">${item.frekuensi}x</span>`;
                 tr.appendChild(tdFreq);
 
@@ -1654,12 +1642,12 @@
 
             repList.innerHTML += `
                 <li style="margin-top:10px; padding-top:10px; border-top:1px dashed #ccc;">
-                    <strong>Total Sampel Tetap:</strong> ${result.sampelTerpilih.length} unit 
-                    dari ${result.P} populasi (${((result.sampelTerpilih.length / result.P) * 100).toFixed(1)}%)
+                    <strong>Total Sampel Tetap:</strong> ${result.sampelTetap.length} unit 
+                    dari ${result.P} populasi (${((result.sampelTetap.length / result.P) * 100).toFixed(1)}%)
                 </li>
                 <li>
                     <strong>Sampel Sementara:</strong> ${result.itemSampelSementara.length} sampel, 
-                    dengan ${result.sampleDetails.length} nomor unik
+                    dengan ${Object.keys(result.freqMap).length} nomor unik
                 </li>
                 <li>
                     <strong>Frekuensi Tertinggi:</strong> ${result.maxFreq}x muncul
@@ -1674,17 +1662,17 @@
 
             // Validasi jumlah sampel tetap
             const warningDiv = document.getElementById('sampelTetapWarning');
-            if (result.sampelTerpilih.length === result.S) {
+            if (result.sampelTetap.length === result.S) {
                 warningDiv.innerHTML = `
                     <div class="success">
-                        ✅ Jumlah sampel tetap (${result.sampelTerpilih.length}) sesuai dengan target (${result.S}).
+                        ✅ Jumlah sampel tetap (${result.sampelTetap.length}) sesuai dengan target (${result.S}).
                     </div>
                 `;
             } else {
                 warningDiv.innerHTML = `
                     <div class="warning">
-                        ⚠️ Jumlah sampel tetap (${result.sampelTerpilih.length}) tidak sama dengan target (${result.S}).
-                        <br>Ini terjadi karena ada nilai duplikat yang berlebih.
+                        ⚠️ Jumlah sampel tetap (${result.sampelTetap.length}) tidak sama dengan target (${result.S}).
+                        <br>Ini terjadi karena jumlah nomor unik kurang dari S.
                     </div>
                 `;
             }
@@ -1752,11 +1740,11 @@
                         document.getElementById('loading').classList.remove('active');
                         document.getElementById('results').style.display = 'block';
 
-                        if (result.sampelTerpilih.length === result.S) {
+                        if (result.sampelTetap.length === result.S) {
                             msgContainer.innerHTML = `
                                 <div class="success">
                                     ✅ Penarikan sampel berhasil! 
-                                    Ditemukan <strong>${result.sampelTerpilih.length}</strong> sampel tetap 
+                                    Ditemukan <strong>${result.sampelTetap.length}</strong> sampel tetap 
                                     dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.
                                     <br>Total putaran: <strong>${result.putaran}</strong> putaran.
                                 </div>
@@ -1764,7 +1752,7 @@
                         } else {
                             msgContainer.innerHTML = `
                                 <div class="warning">
-                                    ⚠️ Penarikan sampel selesai. Ditemukan <strong>${result.sampelTerpilih.length}</strong> sampel tetap 
+                                    ⚠️ Penarikan sampel selesai. Ditemukan <strong>${result.sampelTetap.length}</strong> sampel tetap 
                                     dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.
                                     <br>Total putaran: <strong>${result.putaran}</strong> putaran.
                                 </div>
