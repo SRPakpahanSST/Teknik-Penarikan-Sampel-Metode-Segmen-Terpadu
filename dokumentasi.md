@@ -347,33 +347,7 @@ Maka orang-orang yang terpilih sebanyak 12 orang untuk mengikuti perlombaan bala
 - Sampel terpilih nomor urut **23, 90, 357, 257** dengan tingkat kerepresentatifan tingkat 2 adalah sampel-sampel terpilih yang representatif bila dibanding dengan sampel nomor urut 190, 57, 157, 123, 223
 - Sampel terpilih nomor urut **190, 57, 157, 123, 223** dengan tingkat kerepresentatifan tingkat 3 adalah sampel-sampel terpilih yang cukup representatif bila dibanding dengan nomor urut yang tidak terpilih sama sekali
 
-#### Contoh 2
-
-Dari Populasi (P) sebanyak 7 pohon akan dipilih 6 batang untuk ditanam di pekarangan rumah.
-
-Dari contoh 2, diperoleh:
-
-Jumlah Sampel Sementara
-Ss = 2(S - 1) = 2 (6-1) = 10
-
-Samoel terpilih pertama
-R1 = P-(Ss-S) = 7 - (10-6) = 3
-
-- Sampel terpilih R1 = nomor urut 3
-- Sampel terpilih R2 = R9 = nomor urut 16
-- Sampel terpilih R3 = R6 = R10 = nomor urut 36
-- Sampel terpilih R4 = nomor urut 23
-- Sampel terpilih R5 = R8 = nomor urut 29
-- Sampel terpilih R7 = nomor urut 9
-
-Maka pohon-pohon yang terpilih sebanyak 6 batang untuk ditanam di pekarangan rumah tersebut adalah dengan nomor urut: **3, 16, 36, 23, 29, dan 9**
-
-**Tingkat Kerepresentatifan (Contoh 2):**
-
-- Sampel terpilih nomor urut **36** terpilih 3 kali, yang menjadi sampel yang sangat representatif
-- Sampel terpilih nomor urut **16** dan **29** terpilih 2 kali
-- Sampel terpilih nomor urut **3, 23, dan 9** adalah masing-masing terpilih hanya satu kali
-
+#### 
 ---
 
 ## BAB V - PERSAMAAN DAN PERBEDAAN
