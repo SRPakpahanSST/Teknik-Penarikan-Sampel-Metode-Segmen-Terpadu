@@ -152,11 +152,31 @@ Contoh Kasus Koreksi:
 📁 Struktur File
 
 ```
-Teknik-Penarikan-Sampel/
+📁 Teknik-Penarikan-Sampel/
 │
-├── index.html                 # Halaman utama (aplikasi lengkap)
-├── dokumentasi.md             # Dokumentasi metode (harus ada)
-└── README.md                  # Dokumentasi proyek (file ini)
+├── 📄 index.html                 # Halaman utama (cover + aplikasi)
+│
+├── 📁 css/
+│   ├── 📄 style.css              # Style global (sudah ada)
+│   ├── 📄 landing.css            # Style beranda (sudah ada)
+│   ├── 📄 app.css                # Style aplikasi (sudah ada)
+│   ├── 📄 tutorial.css           # Style tutorial (sudah ada)
+│   └── 📄 ai.css                 # Style panel AI (BARU)
+│
+├── 📁 js/
+│   ├── 📄 tabs.js                # Tab switching (sudah ada)
+│   ├── 📄 app.js                 # Aplikasi utama (sudah ada)
+│   ├── 📄 tutorial.js            # Tutorial (sudah ada)
+│   ├── 📄 ai-core.js             # Core AI (API calls, mode, config)   BARU
+│   ├── 📄 ai-assistant.js        # AI Smart Assistant                  BARU
+│   ├── 📄 ai-predictive.js       # AI Predictive Sampling              BARU
+│   ├── 📄 ai-optimizer.js        # AI Smart Optimizer                  BARU
+│   ├── 📄 ai-report.js           # AI Report Generator                 BARU
+│   ├── 📄 ai-anomaly.js          # AI Anomaly Detector                 BARU
+│   └── 📄 ai-controller.js       # AI Orchestrator (controller)        BARU
+│
+├── 📄 dokumentasi.md             # Dokumentasi metode
+└── 📄 README.md                  # Dokumentasi proyek
 ```
 
 Catatan: Aplikasi ini menggunakan CDN untuk Marked.js (render Markdown). Pastikan koneksi internet aktif untuk memuat dokumentasi.
