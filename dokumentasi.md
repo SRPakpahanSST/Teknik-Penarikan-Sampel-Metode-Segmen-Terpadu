@@ -281,7 +281,7 @@ a. R1 dihitung menggunakan rumus R1 = P - (Ss - S)
 
 b. Untuk sampel berikutnya (misal R2 hingga R15), diterapkan rumus Ri dengan penambahan k yang berubah secara siklik (1, 2, 3, 4)
 
-c. Setiap kelipatan lima (R6, R11, R26, ... dst.), digunakan rumus R5j+1
+c. Setiap kelipatan lima (R6, R11, R16, ... dst.), digunakan rumus R5j+1
 
 ### Penerapan Hasil Penarikan Sampel
 
