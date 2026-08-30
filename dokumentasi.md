@@ -313,9 +313,16 @@ Dalam melakukan penarikan sampel, untuk mendapatkan sejumlah sampel tetap (S) ya
 
 ### Contoh Perhitungan
 
-#### Contoh 2
+#### Contoh 1:
+Dari Populasi (P) sebanyak 400 orang akan dipilih 12 orang untuk mengikuti perlombaan balap mobil.
 
-Dari contoh 2, diperoleh:
+Dari contoh 1, diperoleh:
+
+Jumlah Sampel Sementara
+Ss = 2(S - 1) = 2 (12-1) = 22
+
+Samoel terpilih pertama
+R1 = P-(Ss-S) = 400 - (22-12) = 390
 
 - Sampel terpilih R1 = R7 = R18 = nomor urut 390
 - Sampel terpilih R2 = R13 = nomor urut 23
@@ -334,15 +341,23 @@ Maka orang-orang yang terpilih sebanyak 12 orang untuk mengikuti perlombaan bala
 
 **390, 23, 90, 190, 323, 357, 57, 157, 290, 123, 257 dan 223**
 
-**Tingkat Kerepresentatifan (Contoh 2):**
+**Tingkat Kerepresentatifan (Contoh 1):**
 
 - Sampel terpilih nomor urut **390, 323, 290** dengan tingkat kerepresentatifan tingkat 1 adalah sampel-sampel terpilih yang sangat representatif bila dibanding dengan sampel nomor urut 23, 90, 357, 257, bahkan bila dibanding dengan nomor urut 190, 57, 157, 123, 223
 - Sampel terpilih nomor urut **23, 90, 357, 257** dengan tingkat kerepresentatifan tingkat 2 adalah sampel-sampel terpilih yang representatif bila dibanding dengan sampel nomor urut 190, 57, 157, 123, 223
 - Sampel terpilih nomor urut **190, 57, 157, 123, 223** dengan tingkat kerepresentatifan tingkat 3 adalah sampel-sampel terpilih yang cukup representatif bila dibanding dengan nomor urut yang tidak terpilih sama sekali
 
-#### Contoh 3
+#### Contoh 2
 
-Dari contoh 3, diperoleh:
+Dari Populasi (P) sebanyak 7 pohon akan dipilih 6 batang untuk ditanam di pekarangan rumah.
+
+Dari contoh 2, diperoleh:
+
+Jumlah Sampel Sementara
+Ss = 2(S - 1) = 2 (6-1) = 10
+
+Samoel terpilih pertama
+R1 = P-(Ss-S) = 7 - (10-6) = 3
 
 - Sampel terpilih R1 = nomor urut 3
 - Sampel terpilih R2 = R9 = nomor urut 16
@@ -353,7 +368,7 @@ Dari contoh 3, diperoleh:
 
 Maka pohon-pohon yang terpilih sebanyak 6 batang untuk ditanam di pekarangan rumah tersebut adalah dengan nomor urut: **3, 16, 36, 23, 29, dan 9**
 
-**Tingkat Kerepresentatifan (Contoh 3):**
+**Tingkat Kerepresentatifan (Contoh 2):**
 
 - Sampel terpilih nomor urut **36** terpilih 3 kali, yang menjadi sampel yang sangat representatif
 - Sampel terpilih nomor urut **16** dan **29** terpilih 2 kali
