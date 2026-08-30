@@ -26,7 +26,7 @@ Penarikan sampel metode baru ini hanya menggunakan instrumen perhitungan berupa 
 
 Pekerjaan bidang perstatistikan yang dibebankan Negara diembankan kepada Badan Pusat Statistik (BPS) sebagai instansi pemerintah pusat bersifat vertikal yang tugasnya menangani perstatistikan di Indonesia terasa semakin lama semakin berat seiring dengan berjalannya waktu dan berkembangnya zaman dan teknologi.
 
-Sebagaimana kita ketahui selama ini dalam teknik penarikan sampel model konvensional (model lama) yang mana prosedur pemilihan sampel terpilih dari suatu populasi dilakukan dengan menentukan angka random pertama (R1) untuk sampel terpilih pertama yang diambil dari Tabel Angka Random (TAR), kemudian angka R1 ini digunakan selanjutnya untuk mendapatkan angka R2 untuk sampel terpilih kedua dengan cara menambahkan besarnya interval dari R1 ke R2, selanjutnya mendapatkan R3, R4, R5 dan seterusnya sampai terpilih keseluruhan sampel terpilih.
+Sebagaimana kita ketahui selama ini dalam teknik penarikan sampel model konvensional (model lama) yang mana prosedur pemilihan sampel terpilih dari suatu populasi dilakukan dengan menentukan angka Random pertama (R1)  untuk sampel terpilih pertama yang diambil dari Tabel Angka Random (TAR), kemudian angka R1 ini digunakan selanjutnya untuk mendapatkan angka R2 untuk sampel terpilih kedua dengan cara menambahkan besarnya interval dari R1 ke R2, selanjutnya mendapatkan R3, R4, R5 dan seterusnya sampai terpilih keseluruhan sampel terpilih semuanya.
 
 ### Tabel Angka Random (TAR)
 
@@ -75,7 +75,7 @@ Rn = R1 + (n-1) Int
 
 ## BAB III - TINGKAT KEREPRESENTATIFAN SAMPEL YANG TERPILIH
 
-Sekarang yang menjadi pertanyaan adalah bagaimana cara mengatasi permasalahan tersebut agar KSK yang melakukan perbuatan menipu data sedemikian rupa tidak dapat berbuat curang lagi, sebab undang-undang perstatistikan yang berlaku yang ada sekarang ini rasanya kurang kuat untuk menegakkan cara memperoleh data dari responden yang baik dan benar, memang data harus diperoleh dari hasil wawancara yang jujur baik dari jawaban responden maupun dari isian petugas statistik (KSK) tersebut.
+Sekarang yang menjadi pertanyaan adalah bagaimana cara mengatasi permasalahan tersebut agar KSK yang melakukan perbuatan menipu data sedemikian rupa tidak dapat berbuat curang lagi, sebab undang-undang perstatistikan yang berlaku yang ada sekarang ini rasanya kurang kuat untuk menegakkan cara memperoleh data dari responden yang baik dan benar, memang data harus diperoleh dari hasil wawancara yang jujur baik dari jawaban responden maupun dari isian kuesioner oleh petugas statistik (KSK) tersebut.
 
 Pertanyaan yang timbul berikutnya adalah apakah sampel usaha/perusahaan/rumah tangga yang terpilih itu, bila di datangi petugas BPS apakah sudah benar-benar representatif yang dapat mewakili karakteristik populasinya, sebab sia-sia kalau petugas yang sudah capek mendatangi responden, tapi yang ia dapat tidak ada keterangan/data untuk indikator yang dimaksud kurang sesuai dengan tujuan pendataan.
 
@@ -83,7 +83,7 @@ Perlu dipertanyakan juga bagaimana sebenarnya urutan masing-masing nomor urut us
 
 ### Analisis Metode Konvensional
 
-Terfokus pada perihal tersebut di atas, bila di telaah penarikan sampel yang di pandang dari sudut kesalahan petugas (non sampling error) atau kesalahan teknik/metode (sampling error), dengan memakai konsep, definisi dan teknik penarikan sampel selama ini ternyata ada di temui kelemahan dan kekurangannya bila hanya menerapkan prosedur, tata cara teknik penarikan sampel dari suatu populasi wilayah sensus atau sub blok sensus terpilih yang memakai Tabel Angka Random (TAR), memang prosedur/tekniknya sudah baik dan benar nyata ada kebenarannya, ada angka interval/jarak antar rumah tangga terpilih dan teknik cara mendapatkan rumah tangga terpilih dapat dikatakan bersih (walaupun sebenarnya belum bersih), masih ada di temui "polutan data" akibat dari deviasi/penyimpangan penarikan sampel usaha/rumahtangga tersebut.
+Terfokus pada perihal tersebut di atas, bila di telaah penarikan sampel yang di pandang dari sudut kesalahan petugas (non sampling error) atau kesalahan teknik/metode (sampling error), dengan memakai konsep, definisi dan teknik penarikan sampel selama ini ternyata ada di temui kelemahan dan kekurangannya bila hanya menerapkan prosedur, tata cara teknik penarikan sampel dari suatu populasi wilayah sensus atau sub blok sensus terpilih yang memakai Tabel Angka Random (TAR), memang prosedur/tekniknya sudah baik dan benar nyata ada kebenarannya, ada angka interval/jarak antar rumah tangga terpilih dan teknik cara mendapatkan rumah tangga terpilih dapat dikatakan bersih (walaupun sebenarnya belum bersih), masih ada di temui "polutan data" akibat dari deviasi/penyimpangan penarikan sampel usaha/rumahtangga yang dilakukan tersebut.
 
 Usaha/perusahaan/rumahtangga-rumahtangga yang terpilih juga cara mendapatkannya cukup singkat, hanya dengan menambahkan angka interval (Int) saja pada nomor urut rumah tangga terpilih sebelumnya (Ri-1), namun frekuensi (keseringan terpilihnya suatu usaha/rumah tangga yang terpilih di antara keseluruhan sampel) tersebut hanya satu kali saja dalam satu kali putaran pemilihan.
 
@@ -93,37 +93,37 @@ Kurang representatif bila suatu rumah tangga terpilih hanya satu kali saja dalam
 
 Dengan demikian banyaknya frekuensi (keseringan terpilih) nya suatu usaha/rumah tangga dalam proses putaran pemilihan sampel menentukan tingkat kerepresentatifan rumah tangga tersebut sebagai sampel terpilih, meskipun terpilih lebih dari satu kali, usaha/rumah tangga tersebut tetap di data (di cacah) hanya satu kali saja.
 
-Selama ini prosedur teknik penarikan sampel yang dipakai hasilnya kurang memuat hasil yang bersih (masih dirasakan adanya polutan data), untuk itu perlu di buat solusi dengan menerapkan teknik penarikan sampel metode baru yang diusulkan penulis ini agar hasil penarikan sampel lebih baik dan lebih bersih, polutan datanya terhilang atau dengan kata lain metode baru ini berguna untuk memberi hasil penarikan sampel yang benar-benar bersih dan baru dan selalu baru akibat dari kemurnian perbuatan metode penarikan sampel tersebut, polutan datanya sudah tidak ada lagi.
+Selama ini prosedur teknik penarikan sampel yang dipakai hasilnya kurang memuat hasil yang bersih (masih dirasakan adanya polutan data), untuk itu perlu di buat solusi dengan menerapkan teknik penarikan sampel metode baru yang diusulkan penulis ini agar hasil penarikan sampel lebih baik dan lebih bersih, polutan datanya terhilang, atau dengan kata lain metode baru ini berguna untuk memberi hasil penarikan sampel yang benar-benar bersih, baru dan selalu baru akibat dari kemurnian perbuatan metode penarikan sampel tersebut, polutan datanya sudah tidak ada lagi.
 
 ### Penggantian Sampel
 
-Selanjutnya dalam penarikan sampel metode konvensional, ada hal penggantian sampel rumahtangga terpilih yang menggantikan rumah tangga terpilih utama di nomor urut sampel rumah tangga terpilih tersebut yang disebabkan oleh karena suatu alasan keadaan rumah tangga terpilih utama tersebut tidak dapat di data (non respon), perlakuan penggantian sampel sudah cukup baik dan benar yaitu dengan cara menggantikan rumah tangga terpilih utama tersebut dengan nomor urut rumah tangga berikutnya yang terdekat dengan nomor urut rumah tangga non respon tersebut yang ada di daftar hasil listing bangunan/rumah tangga sebagai rumah tangga pengganti terpilihnya dilakukan sebanyak satu, dua atau tiga nomor urut rumah tangga berikutnya (penggantian secara baris).
+Selanjutnya dalam penarikan sampel metode konvensional, ada hal penggantian sampel rumahtangga terpilih yang menggantikan rumah tangga terpilih utama di nomor urut sampel rumah tangga terpilih tersebut yang disebabkan oleh karena suatu alasan keadaan rumah tangga terpilih utama tersebut tidak dapat di data (non respon), perlakuan penggantian sampel sudah cukup baik dan benar yaitu dengan cara menggantikan rumah tangga terpilih utama tersebut dengan nomor urut rumah tangga berikutnya yang terdekat dengan nomor urut rumah tangga non respon tersebut yang ada di daftar hasil listing bangunan/rumah tangga sebagai rumah tangga pengganti terpilihnya dilakukan sebanyak satu, dua, atau tiga nomor urut rumah tangga berikutnya (penggantian secara baris).
 
-Hal demikian ini penggantian sampel juga di terapkan pada teknik penarikan sampel metode baru yang penulis usulkan ini, Cuma bedanya bahwa rumah tangga terpilih utama yang akan diganti bila nomor urutnya ganjil maka rumah tangga terpilih penggantinya adalah satu, dua atau tiga nomor ganjil di bawah nomor urut rumah tangga terpilih utama tersebut (penggantian secara deret), dan bila nomor urut rumah tangga terpilih utama yang akan diganti tersebut adalah bernomor genap, maka rumah tangga terpilih penggantinya adalah tiga nomor genap berikutnya yang di bawah nomor urut rumah tangga terpilih utama tersebut (penggantian secara deret) yang tertera di daftar listing.
+Hal demikian ini, penggantian sampel juga di terapkan pada teknik penarikan sampel metode baru yang penulis usulkan ini, Cuma bedanya bahwa rumah tangga terpilih utama yang akan diganti bila nomor urutnya ganjil maka rumah tangga terpilih penggantinya adalah satu, dua atau tiga nomor ganjil di bawah nomor urut rumah tangga terpilih utama tersebut (penggantian secara deret), dan bila nomor urut rumah tangga terpilih utama yang akan diganti tersebut adalah bernomor genap, maka rumah tangga terpilih penggantinya adalah tiga nomor genap berikutnya yang di bawah nomor urut rumah tangga terpilih utama tersebut (penggantian secara deret) yang tertera di daftar listing.
 
 ---
 
 ## BAB IV - TEKNIK PENARIKAN SAMPEL METODE SEGMEN TERPADU, SEMUA UNTUK SATU
 
-Masalah umum dalam penarikan sampel dengan metode konvensional atau metode apapun yang dipakai, masalahnya terletak pada penentuan besarnya angka sampel terpilih pertama (R1), demikian juga bila di terapkan pada teknik penarikan sampel metode segmen terintegrasi ini. Penentuan besarnya R1 (sampel pertama) haruslah benar-benar tepat, karena R1 ini adalah sebagai awal mendapat sampel berikutnya atau selanjutnya akan dilakukan penarikan sampel berikutnya untuk R2, R3, dan seterusnya dengan menambahkan Interval penghitungan terhadap sampel terpilih sebelumnya. Segala-galanya prosedur metode statistik apapun yang dilakukan dalam penarikan sampel harus berpusat pada nilai R1 ini.
+Masalah umum dalam penarikan sampel dengan metode konvensional atau metode apapun yang dipakai, masalahnya terletak pada penentuan besarnya angka sampel terpilih pertama (R1), demikian juga bila di terapkan pada teknik penarikan sampel metode segmen terpafu (terintegrasi) ini. Penentuan besarnya R1 (sampel pertama) haruslah benar-benar tepat, karena R1 ini adalah sebagai awal mendapat sampel berikutnya atau selanjutnya akan dilakukan penarikan sampel berikutnya untuk R2, R3, dan seterusnya dengan menambahkan Interval penghitungan terhadap sampel terpilih sebelumnya. Segala-galanya prosedur metode statistik apapun yang dilakukan dalam penarikan sampel harus berpusat pada nilai R1 ini.
 
-Masalah berikutnya yang ditemui dalam penarikan sampel adalah menentukan tingkat kerepresentatifan sampel yang terpilih, apakah responden yang sebagai sampel terpilih yang akan dikunjungi petugas BPS sudah benar-benar akan representatif yang akan dapat mewakili karakteristik seluruh populasi dan akan dapat memberi kepuasan bagi petugas atas jawaban yang diberinya.
+Masalah berikutnya yang ditemui dalam penarikan sampel adalah menentukan tingkat kerepresentatifan sampel yang terpilih, apakah responden yang sebagai sampel terpilih yang akan dikunjungi petugas BPS sudah benar-benar representatif yang akan dapat mewakili karakteristik seluruh populasi dan akan dapat memberi kepuasan bagi petugas atas jawaban yang diberi responden.
 
-Sampel terpilih yang diperoleh dari sejumlah populasi usaha/perusahaan/rumahtangga dalam suatu wilayah/blok sensus atau sentra wilayah sensus adalah sampel dari hasil listing pendaftaran usaha/rumahtangga dari suatu survey yang dipilih beberapa usaha/rumah tangga dengan memakai prosedur statistik dimana usaha/rumahtangga yang terpilih tersebut keberadaannya dapat mewakili karakteristik keseluruhan populasinya. Hasil penarikan sampel yang di peroleh diharapkan adalah sampel yang benar-benar representatif atau sangat representatif yang giliran berikutnya bila dilakukan pencacahan pada sampel terpilih tersebut, maka akan dapat mencapai tujuan pendataan yang dimaksud yaitu memperoleh nilai variabel-variabel data yang diinginkan.
+Sampel terpilih yang diperoleh dari sejumlah populasi usaha/perusahaan/rumahtangga dalam suatu wilayah/blok sensus atau sentra wilayah sensus adalah sampel dari hasil listing pendaftaran usaha/rumahtangga dari suatu survey yang dipilih beberapa usaha/rumah tangga dengan memakai prosedur statistik dimana usaha/rumahtangga yang terpilih tersebut keberadaannya dapat mewakili karakteristik keseluruhan populasinya. Hasil penarikan sampel yang diperoleh diharapkan adalah sampel yang benar-benar representatif atau bahkan sangat representatif yang giliran berikutnya bila dilakukan pencacahan pada sampel terpilih tersebut maka akan dapat mencapai tujuan pendataan yang dimaksud yaitu memperoleh nilai variabel-variabel data yang diinginkan.
 
 ### Perbandingan dengan Metode Konvensional
 
 Bila dengan memakai metode lama (konvensional) pada teknik penarikan sampel yang menggunakan tabel TAR (Tabel Angka Random) untuk pemilihan R1 (sampel pertama) dirasakan sudah membosankan, tidak sesuai lagi dengan perkembangan zaman dan teknologi sekarang ini, di samping cara konvensional tersebut masih memuat unsur keacakan seolah-olah ada unsur kesengajaan "sembarangan" memilih sampel pertama, meskipun nyatanya hasil yang di dapat melalui proses prosedur statistik yang baik dan benar yang telah memenuhi tata cara/teknik yang berlaku, juga dirasakan pada waktu pencacahan responden di lapangan akan timbul "rasa iri" di antara semua calon responden (sebab semua populasi masing-masing memiliki kesempatan yang sama terpilih sebagai responden/calon sampel terpilih) dalam suatu populasi usaha/perusahaan/rumahtangga di blok sensus yang tertera pada daftar hasil listing bangunan/rumahtangga.
 
-Tidak tertutup kemungkinan juga adanya kesalahan non sampling error atau kesalahan petugas yang mendata dengan memberi angka-angka sembarangan yang tidak benar sumbernya atau akibat dari berbuat jahat "menipu data" dalam arti petugas pendata (KSK) cenderung berbohong dengan memberi isian data yang tidak benar/bukan dari jawaban responden, apalagi sewaktu pekerjaan pendaftaran atau listing bangunan/rumahtangga, bila hasil listing sudah tidak benar dari responden di lapangan (segmen yang tidak benar di blok sensus) maka ini akan berpengaruh pada pekerjaan penarikan sampel, kemungkinan besar hasilnya adalah responden yang sebagai sampel terpilih tidak akan lagi sebagai sampel yang representatif di populasinya.
+Tidak tertutup kemungkinan juga adanya kesalahan non sampling error (kesalahan petugas) yang mendata dengan memberi angka-angka sembarangan yang tidak benar sumbernya atau akibat dari berbuat jahat "menipu data" dalam arti petugas pendata (KSK) cenderung berbohong dengan memberi isian data yang tidak benar/bukan dari jawaban responden, apalagi sewaktu pekerjaan pendaftaran atau listing bangunan/rumahtangga, bila hasil listing sudah tidak benar dari responden di lapangan (segmen yang tidak benar di blok sensus) maka ini akan berpengaruh pada pekerjaan penarikan sampel, kemungkinan besar hasilnya adalah responden yang sebagai sampel terpilih tidak akan lagi sebagai sampel yang representatif di populasinya.
 
-Untuk menghindari hal-hal seperti itu dan agar petugas pendata (KSK) berbuat jujur memberi isian data dengan yang sebenarnya mendapat data dari jawaban responden di lapangan, dan agar lebih mudah kegiatan mencacah pada suatu survey, sudah selayaknya teknik penarikan sampel perlu diterapkan dengan metode baru yang penulis usulkan ini, demi tercapainya sampel terpilih yang di dapat adalah benar-benar representatif bahkan sangat representatif mewakili keseluruhan populasinya.
+Untuk menghindari hal-hal seperti itu dan agar petugas pendata (KSK) berbuat jujur memberi isian data dengan yang sebenarnya mendapat data dari jawaban responden di lapangan, dan agar lebih mudah kegiatan mencacah pada suatu survey, sudah selayaknya teknik penarikan sampel perlu diterapkan dengan metode baru yang penulis usulkan ini, demi tercapainya sampel terpilih yang di dapat adalah benar-benar representatif bahkan sangat representatif mewakili keseluruhan karakteristik populasinya.
 
 ### Konsep Tingkat Representatif dalam Metode Baru
 
-Meskipun masing-masing unit populasi memiliki kesempatan terpilih yang sama, dari beberapa sampel yang terpilih dari populasinya, semua sampel tersebut tidak boleh dianggap sama-sama representatif, tidak boleh dianggap masing-masing memiliki tingkat mewakili rumahtangga yang lain adalah sama, tetapi pada masing-masing usaha/rumah tangga yang akan dipilih ada memiliki tingkat kerepresentatifan yang berbeda, rumah tangga si A yang terpilih tiga kali memiliki tingkat ke-representatifan yang lebih tinggi dari rumahtangga si B yang terpilih hanya satu kali, atau dari si C, atau dari rumah tangga lainnya yang tidak terpilih sama sekali dalam proses perputaran pemilihan. Tingkat kerepresentatifan sampel terpilih ini ditentukan dari keseringan (kerap kali) terpilihnya usaha/rumah tangga tersebut dalam proses perputaran penarikan sampel yang dilakukan pada populasi tersebut.
+Meskipun masing-masing unit populasi memiliki kesempatan terpilih yang sama, dari beberapa sampel yang terpilih dari populasinya, semua sampel tersebut tidak boleh dianggap sama-sama representatif, tidak boleh dianggap masing-masing memiliki tingkat mewakili rumahtangga yang lain adalah sama, tetapi pada masing-masing usaha/rumah tangga yang akan dipilih ada memiliki tingkat kerepresentatifan yang berbeda, rumah tangga si A yang terpilih tiga kali dapat memiliki tingkat ke-representatifan yang lebih tinggi dari rumahtangga si B yang terpilih hanya satu kali, atau dari si C, atau dari rumah tangga lainnya yang tidak terpilih sama sekali dalam proses perputaran pemilihan. Tingkat kerepresentatifan sampel terpilih ini ditentukan dari keseringan (kerap kali) terpilihnya usaha/rumah tangga tersebut dalam proses perputaran penarikan sampel yang dilakukan pada populasi tersebut.
 
-Dapat kita bayangkan bagaimana cara kita agar dapat menentukan usaha/rumahtangga-rumahtangga yang mana yang akan kita pilih dari keseluruhan populasi mereka adalah sampel yang benar-benar sangat representatif, sudahkah menurut kita bahwa sampel yang terpilih menurut teknik penarikan sampel metode konvensional itu adalah benar-benar representatif, bukankah sampel itu hanya terpilih lewat keacakan (kerandoman) saja, bukankah lebih baik dengan memakai metode segmen terpadu? Seandainya kita sama seperti Tuhan, sudah pasti kita akan dapat menunjuk yang mana-mana saja rumah tangga yang benar-benar sangat representatif agar segera untuk kita cacah. Hanya Tuhanlah yang Maha Tahu untuk memilih rumahtangga-rumahtangga yang benar-benar sangat representatif sebagai sampel terpilih utama kita.
+Dapat kita bayangkan bagaimana cara kita agar dapat menentukan usaha/rumahtangga-rumahtangga yang mana yang akan kita pilih dari keseluruhan populasi, mereka adalah sampel yang akan benar-benar sangat representatif, sudahkah menurut kita bahwa sampel yang terpilih menurut teknik penarikan sampel metode konvensional itu adalah benar-benar representatif, bukankah sampel itu hanya terpilih lewat keacakan (kerandoman) saja, bukankah lebih baik dengan memakai metode segmen terpadu? Seandainya kita sama seperti Tuhan, sudah pasti kita akan mendapat petunjuk yang mana-mana saja rumah tangga yang benar-benar sangat representatif agar segera untuk kita cacah. Hanya Tuhanlah yang Maha Tahu untuk memilih rumahtangga-rumahtangga yang benar-benar sangat representatif sebagai sampel terpilih utama kita.
 
 Untuk mendekati kebenaran menurut yang Tuhan berikan, maka penulis memberi metode baru dalam teknik penarikan sampel ini yang penulis beri nama **"Teknik Penarikan Sampel Metode Segmen Terpadu"** bagi para pembaca.
 
@@ -133,7 +133,7 @@ Perbedaan yang nyata metode baru ini dengan metode konvensional terletak pada be
 
 ### Prosedur Statistik Metode Segmen Terpadu
 
-Bila dimisalkan dalam suatu wilayah/blok sensus/sentra wilayah pendataan yang terdiri dari muatan usaha/perusahaan/rumah tangga sebanyak P populasi, jika diambil beberapa sampel terpilih dari populasi tersebut sebanyak S sampel, maka prosedur statistik yang diperlukan dalam teknik penarikan sampel metode segmen terpadu adalah mengikuti tata cara teknik penarikan sampel pada suatu wilayah/blok Sensus, sub blok sensus, atau pada populasi rumah tangga terpilih dalam suatu survey dengan menggunakan metode baru ini yang digunakan adalah:
+Bila dimisalkan dalam suatu wilayah/blok sensus/sentra wilayah pendataan yang terdiri dari muatan usaha/perusahaan/rumah tangga ada sebanyak P populasi, jika diambil beberapa sampel terpilih dari populasi tersebut sebanyak S sampel, maka prosedur statistik yang diperlukan dalam teknik penarikan sampel metode segmen terpadu adalah mengikuti tata cara teknik penarikan sampel pada suatu wilayah/blok Sensus, sub blok sensus, atau pada populasi rumah tangga terpilih dalam suatu survey dengan menggunakan metode baru ini yang digunakan adalah:
 
 1. Melakukan pendaftaran/listing usaha/rumahtangga di wilayah blok sensus pendataan dengan cara mendaftar seluruh usaha/rumahtangga di masing-masing segmen yang ada di wilayah blok sensus tersebut secara **TERPADU**, tersusun rapi dan benar-benar sistematis.
 
@@ -143,7 +143,7 @@ Bila dimisalkan dalam suatu wilayah/blok sensus/sentra wilayah pendataan yang te
 
 Berikut ini sistem penarikan sampelnya, yaitu:
 
-a. Untuk penarikan sampel, dihitung terlebih dahulu Interval (Int) sama dengan jumlah populasi usaha/rumahtangga pada daftar hasil listing dibagi dengan jumlah sampel yang ada, hasil pembagian dibuat dalam angka desimal 2 angka di belakang koma. Ditetapkan nilai Interval sebagai:
+a. Untuk penarikan sampel, dihitung terlebih dahulu Interval (Int) sama dengan jumlah populasi usaha/rumahtangga pada daftar hasil listing dibagi dengan jumlah sampel yang ditentukan, hasil pembagian dibuat dalam angka desimal 2 angka di belakang koma. Ditetapkan rumus  nilai Interval sebagai:
 
 Int = P / S
 
@@ -155,15 +155,7 @@ Ditetapkan rumus jumlah sampel sementara sebagai:
 
 Ss = 2(S - 1)
 
-b. Dari sejumlah populasi ditentukan sebagai P, dan jumlah sampel (sampel tetap) ditentukan sebagai S, Kemudian dihitung Sampel sementara (Ss) dari sampel tetap (S) untuk menentukan angka Sampel terpilih pertama (R1) yang nilainya berdasarkan rumus.
-
-Dari beberapa unit populasi (P), bila di ambil sampel sebanyak sampel tetap (S), maka terlebih dulu melalui pengambilan sampel sementara, dengan rumus sebagai berikut:
-
-Ditetapkan rumus jumlah sampel sementara sebagai:
-
-Ss = 2(S - 1)
-
-c. Didapatkan nilai sampel terpilih pertama:
+c. Didapatkan nilai sampel terpilih pertama, dengan rumus:
 
 R1 = P - (Ss - S)
 
@@ -229,7 +221,7 @@ sampel terpilih kelima belas:
 
 R15 = R14 + 4 Int
 
-g. Untuk putaran penarikan sampel berikut dan berikutnya untuk R16 dan seterusnya adalah sama dengan tingkatan penarikan sampel dari perputaran sebelumnya.
+g. Untuk putaran penarikan sampel berikut dan selanjutnya untuk R16 dan seterusnya adalah sama dengan tingkatan penarikan sampel dari perputaran sebelumnya.
 
 ### Rumus Baku Penarikan Sampel
 
@@ -237,11 +229,13 @@ Secara umum di tentukan rumus penarikan sampel metode segmen terpadu semua untuk
 
 R1 = P - (Ss - S)
 
-R6, 11, 16, ... = R1 - I (Int), dimana i = 1, 2, 3, ... dst.
+R6, R11, R16, ... = R1 - (i × Int), dimana i = 1, 2, 3, ... dst.
 
-Rj = Rj-1 + k (Int)
+Rj = Rj-1 + (k * Int)
 dimana j = 2, 3, 4, 5, 7, 8, 9, 10, ...
 dan k = 1, 2, 3, 4 sesuai dengan urutan perputaran pemilihan.
+
+Dari uraian di atas, R1 = P - (Ss - S)
 
 Selanjutnya:
 
@@ -258,28 +252,36 @@ R8 = R7 + 2 Int
 R9 = R8 + 3 Int
 R10 = R9 + 4 Int
 
-Dan seterusnya, hingga perputaran pemilihan sampel berikutnya yaitu R11 s/d R15, dan seterusnya hingga selesai.
+Dan seterusnya, hingga perputaran pemilihan sampel berikutnya yaitu R11 s/d R15, 
+aran
+R11 = R1 - (2 * Int)
+R12 = R11 + Int
+R13 = R12 + 2 Int
+R14 = R13 + 3 Int
+R15 = R14 + 4 Int
+
+dan seterusnya hingga selesai.
 
 **Rumus Baku Penarikan Sampel:**
 
-Rs1 = P - (Ss - S)
+R1 = P - (Ss - S)
 
-Rsi = Rsi-1 + (k * Int)
+Ri = Ri-1 + (k * Int)
 untuk i = 2, 3, 4, 5, ...
-dan k = 1, 2, 3, 4 sesuai urutan
+dan k = 1, 2, 3, 4 sesuai urutan perputaran
 
-Rs5j+1 = Rs1 - (j * Int)
+R5j+1 = R1 - (j * Int)
 untuk j = 1, 2, 3, ...
 
-**Pola perguliran sampel** mengikuti urutan setiap 5 sampel, dengan Rs5j+1 dimulai dari Rs1, lalu dikurangi kelipatan interval setiap putaran.
+**Pola perguliran sampel** mengikuti urutan setiap 5 sampel, dengan R5j+1 dimulai dari R1, lalu dikurangi kelipatan interval setiap putaran.
 
 **Penjelasan:**
 
-a. Rs1 dihitung menggunakan rumus Rs1 = P - (Ss - S)
+a. R1 dihitung menggunakan rumus R1 = P - (Ss - S)
 
-b. Untuk sampel berikutnya (Rs2 hingga Rs15), diterapkan rumus Rsi dengan penambahan k yang berubah secara siklik (1, 2, 3, 4)
+b. Untuk sampel berikutnya (misal R2 hingga R15), diterapkan rumus Ri dengan penambahan k yang berubah secara siklik (1, 2, 3, 4)
 
-c. Setiap kelipatan lima (Rs6, Rs11, dst.), digunakan rumus Rs5j+1
+c. Setiap kelipatan lima (R6, R11, R26, ... dst.), digunakan rumus R5j+1
 
 ### Penerapan Hasil Penarikan Sampel
 
@@ -303,11 +305,11 @@ Bila prosedur statistik dalam pendaftaran dan penarikan sampel metode segmen ter
 
 2. Sebagai penanda satu kesatuan seluruh unit usaha/rumah tangga itu sudah terpadu, akan diberi tandanya pada sampel terpilih pertama R1 yang terpilih nantinya di saat dilakukan penarikan sampel. Di saat mendapatkan R1, maka seluruh unit usaha/rumah tangga di katakan sudah terpadu dalam satu kesatuan indikator statistik.
 
-3. Keterpaduan satu kesatuan seluruh unit usaha/rumah tangga inilah yang akan dibuat menjadi dasar atau landasan untuk penarikan sampel, dengan syarat jika pendaftaran belum mencapai keterpaduan satu kesatuan, maka pengambilan sampel belum bisa di lakukan. Jika seluruh unit usaha/rumah tangga yang di daftar dirasakan masih berserak atau belum bersatu dalam satu kesatuan, maka dasar/landasan untuk penarikan sampel belum ada di dapat.
+3. Keterpaduan satu kesatuan seluruh unit usaha/rumah tangga inilah yang akan dibuat menjadi dasar atau landasan untuk penarikan sampel, dengan syarat jika pendaftaran belum mencapai keterpaduan satu kesatuan, maka pengambilan sampel belum bisa di lakukan. Jika seluruh unit usaha/rumah tangga yang di daftar dirasakan masih berserak atau belum bersatu dalam satu kesatuan, maka dasar/landasan untuk penarikan sampel belum dapat dilakukan.
 
 ### Konsep Frekuensi dan Representatif
 
-Dalam melakukan penarikan sampel, untuk mendapatkan sejumlah sampel tetap (S) yang terpilih dari beberapa sampel sementara (Ss), dimana pada sampel sementara yang terpilih itu ada terdapat beberapa usaha/rumah tangga yang terpilih beberapa kali (frekuensi terpilih lebih dari 1 kali). Unit usaha/rumah tangga yang terpilih beberapa kali ini mengandung arti bahwa sampel tetap yang telah di peroleh adalah sampel yang benar-benar representatif bahkan sangat representatif bila di banding dengan unit usaha/rumah tangga yang hanya terpilih satu kali saja, atau bahkan dari unit yang tidak terpilih sama sekali. Sampel-sampel yang terpilih dari populasinya yang dapat terpilih beberapa kali dalam beberapa putaran pemilihan sampel, hanya tergantung kepada jumlah populasi dan jumlah sampel yang di perlukan dan juga tergantung kepada prosedur statistik atau rumus penarikan sampel yang di berikan.
+Dalam melakukan penarikan sampel, untuk mendapatkan sejumlah sampel tetap (S) yang terpilih dari beberapa sampel sementara (Ss), dimana pada sampel sementara yang terpilih itu ada terdapat beberapa usaha/rumah tangga yang terpilih beberapa kali (frekuensi terpilih lebih dari 1 kali). Unit usaha/rumah tangga yang terpilih beberapa kali ini mengandung arti bahwa sampel tetap yang telah di peroleh adalah sampel yang benar-benar representatif bahkan sangat representatif bila di banding dengan unit usaha/rumah tangga yang hanya terpilih satu kali saja, atau bahkan dari unit yang tidak terpilih sama sekali. Sampel-sampel yang terpilih dari populasinya yang dapat terpilih beberapa kali dalam beberapa putaran pemilihan sampel, hanya tergantung kepada jumlah populasi dan jumlah sampel yang ditentukan, dan juga tergantung kepada prosedur statistik atau rumus penarikan sampel yang di berikan.
 
 ### Contoh Perhitungan
 
