@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teknik Penarikan Sampel - Metode Segmen Terpadu</title>
+    <!-- Marked.js untuk render Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
+        /* ================================================================
+           STYLE - Sama seperti sebelumnya, ditambah perbaikan untuk tingkat
+           ================================================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -104,6 +108,12 @@
             box-shadow: 0 0 0 3px rgba(26,58,107,0.15);
         }
         .input-item textarea { resize: vertical; min-height: 80px; font-size: 14px; }
+        /* Placeholder style */
+        .input-item input::placeholder, .input-item textarea::placeholder {
+            color: #aaa;
+            font-style: italic;
+            font-weight: 300;
+        }
         .metode-input {
             display: flex;
             gap: 16px;
@@ -609,7 +619,7 @@
                     <li>Perhitungan Ss, Int, dan R₁</li>
                     <li>Perputaran setiap 5 sampel</li>
                     <li>Sampel tetap berdasarkan frekuensi tertinggi</li>
-                    <li>Validasi otomatis jika sampel kurang 1 (kor</li>
+                    <li>Validasi otomatis jika sampel kurang 1 (koreksi)</li>
                 </ul>
                 <button class="btn-card" onclick="switchTab('app')">🚀 Buka Aplikasi</button>
             </div>
@@ -662,13 +672,13 @@
                     </div>
                     <div class="input-item" id="jumlahPopulasiGroup">
                         <label for="jumlahPopulasi">🔢 Jumlah Populasi (P)</label>
-                        <input type="number" id="jumlahPopulasi" value="200" min="2" step="1">
-                        <div style="font-size:12px; color:#888; margin-top:4px;">Masukkan jumlah total populasi</div>
+                        <input type="number" id="jumlahPopulasi" placeholder="..." value="" min="2" step="1">
+                        <div style="font-size:12px; color:#888; margin-top:4px;">Contoh: 87, 200, 1000</div>
                     </div>
                     <div class="input-item">
                         <label for="sampel">Jumlah Sampel Tetap (S)</label>
-                        <input type="number" id="sampel" value="120" min="2" step="1">
-                        <div style="font-size:12px; color:#888; margin-top:4px;">Jumlah sampel yang diinginkan</div>
+                        <input type="number" id="sampel" placeholder="..." value="" min="2" step="1">
+                        <div style="font-size:12px; color:#888; margin-top:4px;">Contoh: 12, 120, 50</div>
                     </div>
                     <div class="input-item" style="flex:0 0 auto;">
                         <button class="btn" onclick="prosesPenarikan()">🚀 Proses</button>
@@ -783,7 +793,12 @@
         if (tabId === 'app') {
             const results = document.getElementById('results');
             if (results.style.display === 'none') {
-                prosesPenarikan();
+                // Jika input kosong, jangan auto-run; biarkan pengguna mengisi dulu
+                const P = document.getElementById('jumlahPopulasi').value;
+                const S = document.getElementById('sampel').value;
+                if (P && S) {
+                    prosesPenarikan();
+                }
             }
         }
         if (tabId === 'tutorial') resetTutorial();
@@ -930,19 +945,15 @@
 
         // VALIDASI: Jika sampel tetap kurang 1 dari target
         if (sampelTetap.length === S - 1) {
-            // Ambil sampel sementara terakhir, kurangi 1, normalisasi
             const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
             let newVal = lastSementara - 1;
             if (newVal < 1) newVal = 1;
-            // Normalisasi ke rentang [1, P]
             newVal = normalize(newVal, P);
-            // Pastikan tidak duplikat dengan yang sudah ada
             if (!sampelTetap.includes(newVal)) {
                 correctedValue = newVal;
                 sampelTetap.push(newVal);
                 correctionUsed = true;
             } else {
-                // Jika duplikat, cari nilai unik terdekat
                 let tryVal = newVal;
                 let counter = 0;
                 while (sampelTetap.includes(tryVal) && counter < P) {
@@ -955,7 +966,6 @@
                 correctionUsed = true;
             }
         }
-        // Jika masih kurang (misal karena duplikat), tambahkan dari sortedByFreq
         if (sampelTetap.length < S) {
             const needed = S - sampelTetap.length;
             let tambahan = [];
@@ -1280,8 +1290,8 @@
 
     function resetForm() {
         document.getElementById('itemPopulasi').value = '1,2,3,4,5,6,7,8,9,10';
-        document.getElementById('jumlahPopulasi').value = '200';
-        document.getElementById('sampel').value = '120';
+        document.getElementById('jumlahPopulasi').value = '';
+        document.getElementById('sampel').value = '';
         document.getElementById('results').style.display = 'none';
         document.getElementById('loading').classList.remove('active');
         document.getElementById('messageContainer').innerHTML = '';
@@ -1316,10 +1326,11 @@
         loadDocumentation();
         toggleMetodePopulasi();
         document.querySelector('input[name="metodePopulasi"][value="jumlah"]').checked = true;
-        document.getElementById('jumlahPopulasi').value = '200';
-        document.getElementById('sampel').value = '120';
+        // Kosongkan nilai default
+        document.getElementById('jumlahPopulasi').value = '';
+        document.getElementById('sampel').value = '';
         toggleMetodePopulasi();
-        setTimeout(prosesPenarikan, 300);
+        // Tidak auto-run, biarkan pengguna mengisi dulu
     });
 
     document.addEventListener('keydown', function(e) {
