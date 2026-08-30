@@ -8,6 +8,11 @@ AI-Powered Application for APINDO Innovation Challenge 2026
 
 Aplikasi web ini merupakan implementasi dari Teknik Penarikan Sampel Metode Segmen Terpadu, Semua Untuk Satu yang dikembangkan oleh SR. Pakpahan, SST. Aplikasi ini telah ditingkatkan dengan 5 fitur Kecerdasan Buatan (AI) untuk memberikan analisis yang lebih mendalam, rekomendasi cerdas, dan kemudahan dalam pengambilan keputusan statistik.
 
+---
+URL Link Aplikasi: 
+https://srpakpahansst.github.io/Teknik-Penarikan-Sampel-Metode-Segmen-Terpadu/
+---
+
 Dirancang khusus untuk memenuhi kriteria kompetisi APINDO Innovation Challenge 2026 dengan tema "Teman Cerdas, Solusi Tuntas", aplikasi ini menggabungkan metode statistik ilmiah dengan teknologi AI mutakhir.
 
 ---
