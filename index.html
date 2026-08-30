@@ -172,7 +172,6 @@
             font-size: 14px;
         }
 
-        /* ===== METODE INPUT POPULASI ===== */
         .metode-input {
             display: flex;
             gap: 16px;
@@ -246,23 +245,6 @@
 
         .btn-secondary:hover {
             background: #4a5a6a;
-        }
-
-        .btn-success {
-            background: #28a745;
-        }
-
-        .btn-success:hover {
-            background: #1e7e34;
-        }
-
-        .btn-warning {
-            background: #f0c040;
-            color: #1a3a6b;
-        }
-
-        .btn-warning:hover {
-            background: #d4a830;
         }
 
         .btn-group {
@@ -401,12 +383,6 @@
             border: 2px solid #28a745;
         }
 
-        .sample-sementara-item .nilai.fixed {
-            background: #dc3545;
-            color: white;
-            border: 2px solid #dc3545;
-        }
-
         .sample-sementara-item .freq {
             font-size: 11px;
             color: #888;
@@ -445,11 +421,6 @@
             border-bottom: 2px solid #f0c040;
         }
 
-        .sample-table .fixed-row td {
-            background: #f8d7da;
-            border-bottom: 2px solid #dc3545;
-        }
-
         .frequency-tag {
             display: inline-block;
             padding: 2px 12px;
@@ -461,7 +432,6 @@
         .freq-3 { background: #d4edda; color: #155724; }
         .freq-2 { background: #fff3cd; color: #856404; }
         .freq-1 { background: #f8d7da; color: #721c24; }
-        .freq-fixed { background: #dc3545; color: white; }
 
         .representative-note {
             background: #e8f5e9;
@@ -955,12 +925,12 @@
                 <div class="landing-card">
                     <div class="icon">📊</div>
                     <h3>Aplikasi Penarikan Sampel</h3>
-                    <p>Hitung sampel dengan metode segmen terpadu secara otomatis. Dua metode input populasi.</p>
+                    <p>Hitung sampel dengan metode segmen terpadu secara otomatis.</p>
                     <ul class="feature-list">
-                        <li>Input item populasi (list angka)</li>
-                        <li>Input langsung jumlah populasi (P)</li>
+                        <li>Input item populasi atau jumlah populasi</li>
                         <li>Perhitungan Ss, Int, dan R₁</li>
                         <li>Perputaran setiap 5 sampel</li>
+                        <li>Sampel tetap berdasarkan frekuensi</li>
                     </ul>
                     <button class="btn-card" onclick="switchTab('app')">🚀 Buka Aplikasi</button>
                 </div>
@@ -968,28 +938,28 @@
                 <div class="landing-card">
                     <div class="icon">🎓</div>
                     <h3>Tutorial Penggunaan</h3>
-                    <p>Panduan langkah-demi-langkah menggunakan aplikasi penarikan sampel metode segmen terpadu.</p>
+                    <p>Panduan langkah-demi-langkah menggunakan aplikasi.</p>
                     <button class="btn-card" onclick="switchTab('tutorial')">📖 Lihat Tutorial</button>
                 </div>
 
                 <div class="landing-card">
                     <div class="icon">📖</div>
                     <h3>Dokumentasi Metode</h3>
-                    <p>Pelajari teori dan rumus lengkap Teknik Penarikan Sampel Metode Segmen Terpadu.</p>
+                    <p>Pelajari teori dan rumus lengkap metode segmen terpadu.</p>
                     <button class="btn-card" onclick="switchTab('docs')">📖 Baca Dokumentasi</button>
                 </div>
             </div>
 
             <div class="info-box">
-                <h3>📌 Tentang Metode Ini</h3>
-                <p>
-                    <strong>Teknik Penarikan Sampel Metode Segmen Terpadu, Semua Untuk Satu</strong>
-                    adalah metode baru yang dikembangkan oleh <strong>SR. Pakpahan, SST</strong>.
-                </p>
+                <h3>📌 Rumus Baku</h3>
                 <div class="formula-highlight">
                     <strong>Rumus Dasar:</strong><br>
-                    Ss = 2(S−1) &nbsp;|&nbsp; Int = P / S &nbsp;|&nbsp; Rs₁ = P − (Ss − S)<br>
-                    <strong>Pola Perputaran:</strong> Setiap 5 sampel, Rs₅ⱼ₊₁ = Rs₁ − (j × Int)
+                    Ss = 2(S−1) &nbsp;|&nbsp; Int = P / S &nbsp;|&nbsp; R₁ = P − (Ss − S)<br><br>
+                    <strong>Pola Perputaran:</strong><br>
+                    R₁ = R₁<br>
+                    R₂ = R₁ + 1×Int &nbsp;|&nbsp; R₃ = R₂ + 2×Int &nbsp;|&nbsp; R₄ = R₃ + 3×Int &nbsp;|&nbsp; R₅ = R₄ + 4×Int<br>
+                    R₆ = R₁ − 1×Int &nbsp;|&nbsp; R₇ = R₆ + 1×Int &nbsp;|&nbsp; R₈ = R₇ + 2×Int &nbsp;|&nbsp; R₉ = R₈ + 3×Int &nbsp;|&nbsp; R₁₀ = R₉ + 4×Int<br>
+                    R₁₁ = R₁ − 2×Int &nbsp;|&nbsp; ... dan seterusnya
                 </div>
             </div>
         </div>
@@ -1003,26 +973,24 @@
                     <div class="metode-input">
                         <span style="font-weight:600; color:#1a3a6b; font-size:14px;">📋 Metode Input Populasi:</span>
                         <label class="radio-label">
-                            <input type="radio" name="metodePopulasi" value="item" checked onchange="toggleMetodePopulasi()">
+                            <input type="radio" name="metodePopulasi" value="item" onchange="toggleMetodePopulasi()">
                             <span class="icon">📝</span> Item Populasi (pisahkan koma)
                         </label>
                         <label class="radio-label">
-                            <input type="radio" name="metodePopulasi" value="jumlah" onchange="toggleMetodePopulasi()">
+                            <input type="radio" name="metodePopulasi" value="jumlah" checked onchange="toggleMetodePopulasi()">
                             <span class="icon">🔢</span> Jumlah Populasi (P)
                         </label>
                     </div>
 
                     <!-- Input Row -->
                     <div class="input-row">
-                        <!-- Metode Item Populasi -->
-                        <div class="input-item" id="itemPopulasiGroup" style="flex: 2 1 300px;">
+                        <div class="input-item hidden" id="itemPopulasiGroup" style="flex: 2 1 300px;">
                             <label for="itemPopulasi">📋 Item Populasi (pisahkan dengan koma)</label>
                             <textarea id="itemPopulasi" rows="3" placeholder="Contoh: 1,2,3,4,5,6,7,8,9,10">1,2,3,4,5,6,7,8,9,10</textarea>
                             <div style="font-size:12px; color:#888; margin-top:4px;">Masukkan angka-angka populasi, dipisahkan koma</div>
                         </div>
 
-                        <!-- Metode Jumlah Populasi -->
-                        <div class="input-item hidden" id="jumlahPopulasiGroup">
+                        <div class="input-item" id="jumlahPopulasiGroup">
                             <label for="jumlahPopulasi">🔢 Jumlah Populasi (P)</label>
                             <input type="number" id="jumlahPopulasi" value="87" min="2" step="1">
                             <div style="font-size:12px; color:#888; margin-top:4px;">Masukkan jumlah total populasi</div>
@@ -1086,9 +1054,9 @@
                         <!-- ===== FORMULA ===== -->
                         <div class="formula-box" id="formulaBox">
                             <div class="formula-title">📐 Rumus Baku Penarikan Sampel</div>
-                            <div class="formula-line"><strong>Rs₁</strong> = P − (Ss − S)</div>
-                            <div class="formula-line"><strong>Rsᵢ</strong> = Rsᵢ₋₁ + (k × Int) &nbsp; untuk i = 2,3,4,5,... dan k = 1,2,3,4 sesuai urutan</div>
-                            <div class="formula-line"><strong>Rs₅ⱼ₊₁</strong> = Rs₁ − (j × Int) &nbsp; untuk j = 1,2,3,...</div>
+                            <div class="formula-line"><strong>R₁</strong> = P − (Ss − S)</div>
+                            <div class="formula-line"><strong>Rᵢ</strong> = Rᵢ₋₁ + (k × Int) &nbsp; untuk i = 2,3,4,5,... dan k = 1,2,3,4 sesuai urutan</div>
+                            <div class="formula-line"><strong>R₅ⱼ₊₁</strong> = R₁ − (j × Int) &nbsp; untuk j = 1,2,3,...</div>
                             <div class="formula-detail" id="formulaDetail">
                                 <strong>Perhitungan:</strong> <span id="formulaCalc">-</span>
                             </div>
@@ -1147,13 +1115,13 @@
             <div class="tutorial-container">
                 <h2 style="color:#1a3a6b; margin-bottom:15px;">🎓 Tutorial Penggunaan Aplikasi</h2>
                 <p style="color:#666; margin-bottom:20px; font-size:14px;">
-                    Panduan langkah-demi-langkah menggunakan aplikasi <strong>Teknik Penarikan Sampel Metode Segmen Terpadu</strong>.
+                    Panduan langkah-demi-langkah menggunakan aplikasi.
                 </p>
 
                 <div class="tutorial-progress">
-                    <span id="tutorialProgressText">Langkah 1 dari 5</span>
+                    <span id="tutorialProgressText">Langkah 1 dari 4</span>
                     <div class="progress-bar">
-                        <div class="progress-fill" id="tutorialProgressFill" style="width: 20%;"></div>
+                        <div class="progress-fill" id="tutorialProgressFill" style="width: 25%;"></div>
                     </div>
                 </div>
 
@@ -1161,49 +1129,40 @@
                     <div class="tutorial-step" data-step="1">
                         <div class="step-number">1</div>
                         <div class="step-content">
-                            <h3>📥 Memilih Metode Input Populasi</h3>
-                            <p>Pilih salah satu metode input populasi.</p>
-                            <div class="tip-box"><strong>💡 Tips:</strong> Untuk contoh P=87, S=12, gunakan metode "Jumlah Populasi".</div>
+                            <h3>📥 Memasukkan Data</h3>
+                            <p>Pilih metode input populasi dan masukkan data.</p>
+                            <div class="code-example">Contoh: P = 87, S = 12</div>
                         </div>
                     </div>
 
                     <div class="tutorial-step" data-step="2">
                         <div class="step-number">2</div>
                         <div class="step-content">
-                            <h3>📊 Memasukkan Data</h3>
-                            <p>Masukkan data sesuai metode yang dipilih dan jumlah sampel (S).</p>
-                            <div class="code-example">P = 87, S = 12</div>
+                            <h3>🚀 Menjalankan Proses</h3>
+                            <p>Klik tombol <strong>"🚀 Proses"</strong>.</p>
                         </div>
                     </div>
 
                     <div class="tutorial-step" data-step="3">
                         <div class="step-number">3</div>
                         <div class="step-content">
-                            <h3>🚀 Menjalankan Proses</h3>
-                            <p>Klik tombol <strong>"🚀 Proses"</strong> untuk menjalankan penarikan sampel.</p>
+                            <h3>📌 Membaca Sampel Sementara</h3>
+                            <p>Sampel Sementara (Ss) = 2(S−1). Setiap 5 sampel adalah satu putaran.</p>
                         </div>
                     </div>
 
                     <div class="tutorial-step" data-step="4">
                         <div class="step-number">4</div>
                         <div class="step-content">
-                            <h3>📌 Membaca Daftar Sampel Sementara</h3>
-                            <p>Sampel Sementara (Ss) = 2(S−1). Setiap 5 sampel adalah satu putaran.</p>
-                        </div>
-                    </div>
-
-                    <div class="tutorial-step" data-step="5">
-                        <div class="step-number">5</div>
-                        <div class="step-content">
-                            <h3>📋 Membaca Daftar Sampel Tetap</h3>
-                            <p>Sampel Tetap adalah nomor unik dari sampel sementara. Jumlahnya harus = S.</p>
+                            <h3>📋 Membaca Sampel Tetap</h3>
+                            <p>Sampel Tetap adalah nomor unik dari sampel sementara.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="tutorial-nav">
                     <button class="btn-nav" id="tutorialPrev" onclick="tutorialPrev()">⬅ Sebelumnya</button>
-                    <span id="tutorialStepIndicator" style="display:flex; align-items:center; color:#888; font-size:14px;">1 / 5</span>
+                    <span id="tutorialStepIndicator" style="display:flex; align-items:center; color:#888; font-size:14px;">1 / 4</span>
                     <button class="btn-nav" id="tutorialNext" onclick="tutorialNext()">Selanjutnya ➡</button>
                 </div>
 
@@ -1263,7 +1222,7 @@
         //  TUTORIAL NAVIGATION
         // ============================================================
         let currentStep = 1;
-        const totalSteps = 5;
+        const totalSteps = 4;
 
         function updateTutorial() {
             document.querySelectorAll('.tutorial-step').forEach(el => {
@@ -1336,7 +1295,7 @@
         }
 
         // ============================================================
-        //  APLIKASI - FUNGSI UTAMA (DIPERBAIKI)
+        //  APLIKASI - FUNGSI UTAMA
         // ============================================================
         let currentResult = null;
 
@@ -1351,22 +1310,27 @@
         }
 
         /**
-         * Fungsi utama penarikan sampel - sesuai contoh manual P=87, S=12
+         * Fungsi utama penarikan sampel - SESUAI DENGAN RUMUS BAKU
          * 
-         * Pola Perputaran yang BENAR:
-         * Putaran ke-0 (j=0): R₁ = Rs₁
-         * R₂ = R₁ + 1×Int
-         * R₃ = R₂ + 2×Int
-         * R₄ = R₃ + 3×Int
-         * R₅ = R₄ + 4×Int
+         * Rumus:
+         * R1 = P - (Ss - S)
+         * R2 = R1 + 1×Int
+         * R3 = R2 + 2×Int
+         * R4 = R3 + 3×Int
+         * R5 = R4 + 4×Int
          * 
-         * Putaran ke-1 (j=1): R₆ = Rs₁ - 1×Int
-         * R₇ = R₆ + 1×Int
-         * R₈ = R₇ + 2×Int
-         * R₉ = R₈ + 3×Int
-         * R₁₀ = R₉ + 4×Int
+         * R6 = R1 - 1×Int
+         * R7 = R6 + 1×Int
+         * R8 = R7 + 2×Int
+         * R9 = R8 + 3×Int
+         * R10 = R9 + 4×Int
          * 
-         * Putaran ke-2 (j=2): R₁₁ = Rs₁ - 2×Int
+         * R11 = R1 - 2×Int
+         * R12 = R11 + 1×Int
+         * R13 = R12 + 2×Int
+         * R14 = R13 + 3×Int
+         * R15 = R14 + 4×Int
+         * 
          * ... dan seterusnya
          */
         function prosesPenarikanSampel(P, S, populasiItems) {
@@ -1380,59 +1344,66 @@
             const daftarKode = [];
 
             // Hitung berapa putaran yang dibutuhkan (setiap putaran 5 sampel)
-            const maxJ = Math.ceil(Ss / 5);
+            // Ss = 2(S-1), total sampel sementara
+            const totalSampel = Ss;
 
-            for (let j = 0; j < maxJ; j++) {
-                // Rs(5j+1) = R1 - (j * Int)
-                let currentVal = R1 - (j * Int);
+            // Variabel untuk tracking posisi
+            let j = 0; // putaran ke-
+            let i = 0; // indeks sampel saat ini
 
-                // Sampel ke-1 dari putaran ini (Rs(5j+1))
-                if (daftarSampelSementara.length < Ss) {
-                    const norm = normalize(currentVal, P);
-                    daftarSampelSementara.push(norm);
+            // Loop sampai semua sampel sementara terisi
+            while (daftarSampelSementara.length < totalSampel) {
+                // R(5j+1) = R1 - (j * Int)
+                const startVal = R1 - (j * Int);
+                const startNorm = normalize(startVal, P);
+
+                if (daftarSampelSementara.length < totalSampel) {
+                    daftarSampelSementara.push(startNorm);
                     daftarKode.push(`R${daftarSampelSementara.length}`);
                 }
 
-                // Sampel ke-2: Rs(5j+2) = Rs(5j+1) + 1*Int
-                if (daftarSampelSementara.length < Ss) {
-                    const nextVal = currentVal + (1 * Int);
-                    const norm = normalize(nextVal, P);
-                    daftarSampelSementara.push(norm);
-                    daftarKode.push(`R${daftarSampelSementara.length}`);
-                    currentVal = nextVal; // Update untuk perhitungan selanjutnya
-                }
-
-                // Sampel ke-3: Rs(5j+3) = Rs(5j+2) + 2*Int
-                if (daftarSampelSementara.length < Ss) {
-                    const nextVal = currentVal + (2 * Int);
-                    const norm = normalize(nextVal, P);
-                    daftarSampelSementara.push(norm);
-                    daftarKode.push(`R${daftarSampelSementara.length}`);
-                    currentVal = nextVal;
-                }
-
-                // Sampel ke-4: Rs(5j+4) = Rs(5j+3) + 3*Int
-                if (daftarSampelSementara.length < Ss) {
-                    const nextVal = currentVal + (3 * Int);
-                    const norm = normalize(nextVal, P);
-                    daftarSampelSementara.push(norm);
-                    daftarKode.push(`R${daftarSampelSementara.length}`);
-                    currentVal = nextVal;
-                }
-
-                // Sampel ke-5: Rs(5j+5) = Rs(5j+4) + 4*Int
-                if (daftarSampelSementara.length < Ss) {
-                    const nextVal = currentVal + (4 * Int);
-                    const norm = normalize(nextVal, P);
-                    daftarSampelSementara.push(norm);
+                // Sampel ke-2: +1×Int dari nilai SEBELUMNYA (startVal)
+                if (daftarSampelSementara.length < totalSampel) {
+                    const val2 = startVal + (1 * Int);
+                    const norm2 = normalize(val2, P);
+                    daftarSampelSementara.push(norm2);
                     daftarKode.push(`R${daftarSampelSementara.length}`);
                 }
-            }
 
-            // Potong jika kelebihan (harus persis Ss)
-            while (daftarSampelSementara.length > Ss) {
-                daftarSampelSementara.pop();
-                daftarKode.pop();
+                // Sampel ke-3: +2×Int dari nilai SEBELUMNYA (val2)
+                if (daftarSampelSementara.length < totalSampel) {
+                    const prevVal = daftarSampelSementara.length >= 2 ?
+                        (startVal + (1 * Int)) :
+                        startVal;
+                    const val3 = prevVal + (2 * Int);
+                    const norm3 = normalize(val3, P);
+                    daftarSampelSementara.push(norm3);
+                    daftarKode.push(`R${daftarSampelSementara.length}`);
+                }
+
+                // Sampel ke-4: +3×Int dari nilai SEBELUMNYA (val3)
+                if (daftarSampelSementara.length < totalSampel) {
+                    const prevVal = daftarSampelSementara.length >= 3 ?
+                        (startVal + (1 * Int) + (2 * Int)) :
+                        startVal;
+                    const val4 = prevVal + (3 * Int);
+                    const norm4 = normalize(val4, P);
+                    daftarSampelSementara.push(norm4);
+                    daftarKode.push(`R${daftarSampelSementara.length}`);
+                }
+
+                // Sampel ke-5: +4×Int dari nilai SEBELUMNYA (val4)
+                if (daftarSampelSementara.length < totalSampel) {
+                    const prevVal = daftarSampelSementara.length >= 4 ?
+                        (startVal + (1 * Int) + (2 * Int) + (3 * Int)) :
+                        startVal;
+                    const val5 = prevVal + (4 * Int);
+                    const norm5 = normalize(val5, P);
+                    daftarSampelSementara.push(norm5);
+                    daftarKode.push(`R${daftarSampelSementara.length}`);
+                }
+
+                j++; // lanjut ke putaran berikutnya
             }
 
             // 3. Ambil item sampel sementara dari populasi
@@ -1487,20 +1458,33 @@
                 };
             });
 
+            // 7. Jika jumlah sampel tetap < S, tambahkan dari nilai yang tersisa
+            let finalSampelTetap = [...uniqueInOrder];
+            if (finalSampelTetap.length < S) {
+                const remaining = Object.keys(freqMap)
+                    .map(Number)
+                    .filter(v => !finalSampelTetap.includes(v))
+                    .sort((a, b) => a - b);
+
+                const needed = S - finalSampelTetap.length;
+                finalSampelTetap = [...finalSampelTetap, ...remaining.slice(0, needed)];
+            }
+
             return {
                 P: P,
                 S: S,
                 Ss: Ss,
                 Int: Int,
                 R1: R1,
-                sampelSementaraIndices: daftarSampelSementara,
+                daftarSampelSementara: daftarSampelSementara,
                 daftarKode: daftarKode,
                 itemSampelSementara: itemSampelSementara,
-                sampelTerpilih: uniqueInOrder,
+                sampelTerpilih: finalSampelTetap,
                 sampleDetails: sampleDetails,
                 freqMap: freqMap,
                 maxFreq: maxFreq,
-                minFreq: minFreq
+                minFreq: minFreq,
+                putaran: j
             };
         }
 
@@ -1520,7 +1504,8 @@
             document.getElementById('formulaCalc').innerHTML =
                 `Ss = 2(${result.S} − 1) = ${result.Ss} &nbsp;|&nbsp; ` +
                 `Int = ${result.P} / ${result.S} = ${result.Int.toFixed(2)} &nbsp;|&nbsp; ` +
-                `Rs₁ = ${result.P} − (${result.Ss} − ${result.S}) = ${Math.round(result.R1)}`;
+                `R₁ = ${result.P} − (${result.Ss} − ${result.S}) = ${Math.round(result.R1)} &nbsp;|&nbsp; ` +
+                `Putaran = ${result.putaran}`;
 
             // Sampel Sementara
             document.getElementById('ssValue').textContent = result.Ss;
@@ -1542,13 +1527,22 @@
             }
 
             // Tampilkan sampel sementara dengan kode warna
-            result.itemSampelSementara.forEach((val, index) => {
+            const displayLimit = 100;
+            const totalItems = result.itemSampelSementara.length;
+            const displayItems = totalItems > displayLimit ?
+                result.itemSampelSementara.slice(0, displayLimit) :
+                result.itemSampelSementara;
+            const displayKode = totalItems > displayLimit ?
+                result.daftarKode.slice(0, displayLimit) :
+                result.daftarKode;
+
+            displayItems.forEach((val, index) => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'sample-sementara-item';
 
                 const kodeSpan = document.createElement('span');
                 kodeSpan.className = 'kode';
-                kodeSpan.textContent = result.daftarKode[index];
+                kodeSpan.textContent = displayKode[index];
 
                 const valSpan = document.createElement('span');
                 valSpan.className = 'nilai';
@@ -1573,6 +1567,13 @@
                 itemDiv.appendChild(freqSpan);
                 grid.appendChild(itemDiv);
             });
+
+            if (totalItems > displayLimit) {
+                const infoDiv = document.createElement('div');
+                infoDiv.style.cssText = 'grid-column: 1 / -1; text-align:center; color:#888; font-size:13px; padding:8px;';
+                infoDiv.textContent = `... dan ${totalItems - displayLimit} sampel lainnya (total ${totalItems} sampel)`;
+                grid.appendChild(infoDiv);
+            }
 
             // Tabel Sampel Tetap
             document.getElementById('totalSampelTetap').textContent = result.sampelTerpilih.length;
@@ -1667,7 +1668,7 @@
                     <strong>Frekuensi Terendah:</strong> ${result.minFreq}x muncul
                 </li>
                 <li>
-                    <strong>Putaran:</strong> ${Math.ceil(result.Ss / 5)} putaran
+                    <strong>Jumlah Putaran:</strong> ${result.putaran} putaran
                 </li>
             `;
 
@@ -1688,7 +1689,7 @@
                 `;
             }
 
-            document.getElementById('stepIndicator').textContent = `Langkah: Penarikan Sampel (${Math.ceil(result.Ss / 5)} putaran)`;
+            document.getElementById('stepIndicator').textContent = `Langkah: Penarikan Sampel (${result.putaran} putaran)`;
         }
 
         /**
@@ -1757,6 +1758,7 @@
                                     ✅ Penarikan sampel berhasil! 
                                     Ditemukan <strong>${result.sampelTerpilih.length}</strong> sampel tetap 
                                     dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.
+                                    <br>Total putaran: <strong>${result.putaran}</strong> putaran.
                                 </div>
                             `;
                         } else {
@@ -1764,6 +1766,7 @@
                                 <div class="warning">
                                     ⚠️ Penarikan sampel selesai. Ditemukan <strong>${result.sampelTerpilih.length}</strong> sampel tetap 
                                     dari <strong>${result.itemSampelSementara.length}</strong> sampel sementara.
+                                    <br>Total putaran: <strong>${result.putaran}</strong> putaran.
                                 </div>
                             `;
                         }
