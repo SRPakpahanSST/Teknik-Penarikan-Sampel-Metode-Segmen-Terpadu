@@ -395,18 +395,5 @@ Bila ada penggantian sampel oleh karena suatu alasan dari usaha/rumah tangga tid
 
 ---
 
-## LAMPIRAN
-
-### Daftar Lampiran
-
-- Lampiran 1: Contoh 1 (Metode Konvensional)
-- Lampiran 2: Contoh 2 (Metode Segmen Terpadu - Balap Mobil)
-- Lampiran 3: Contoh 3 (Metode Segmen Terpadu - Pohon)
-- Lampiran 4: Contoh 4
-- Lampiran 5: Contoh 5 (Perbandingan Metode)
-- Lampiran 6: Tabel Angka Random (TAR)
-
----
-
 *Dokumentasi ini dibuat berdasarkan karya ilmiah asli dari SR. Pakpahan, SST*
 
