@@ -2307,46 +2307,53 @@
     }
 
     // ================================================================
-    // URUTKAN BERDASARKAN FREKUENSI TERTINGGI
+    // PERBAIKIAN: Urutkan berdasarkan frekuensi tertinggi
     // ================================================================
     const sortedByFreq = Object.entries(freqMap)
         .sort((a, b) => b[1] - a[1] || parseInt(a[0]) - parseInt(b[0]))
         .map(entry => parseInt(entry[0]));
 
     // ================================================================
-    // AMBIL SEMUA NILAI UNIK (58 NILAI)
+    // 1. Ambil Sampel Tetap Pertama: semua nilai unik (58 nilai)
     // ================================================================
     let sampelTetap = [...sortedByFreq];
+
+    // ================================================================
+    // 2. TAMBAHKAN SAMPEL SATU PER SATU DARI NILAI UNIK
+    //    Sesuai urutan peringkat frekuensi
+    // ================================================================
     let addedFromDuplicates = [];
+    let correctedValue = null;
+    let correctionUsed = false;
 
-    // ================================================================
-    // TAMBAHKAN SAMPEL TAMBAHAN SATU PER SATU DARI NILAI UNIK
-    // ================================================================
+    // Butuh tambahan = S - jumlah nilai unik
     const needed = S - sortedByFreq.length;
-    let index = 0;
 
+    // Ambil tambahan satu per satu dari daftar nilai unik
+    // Urutan: nilai dengan frekuensi tertinggi mendapat prioritas
+    let index = 0;
     while (addedFromDuplicates.length < needed) {
         const val = sortedByFreq[index % sortedByFreq.length];
+        // Hitung berapa kali nilai ini sudah diambil sebagai tambahan
         const sudahDiambil = addedFromDuplicates.filter(x => x === val).length;
-        const maxTambahan = (freqMap[val] || 0) - 1; // 1 sudah dipakai sebagai unik
+        // Total kemunculan di sampel sementara = freqMap[val]
+        // 1 sudah dipakai sebagai unik, jadi sisa maksimal = freqMap[val] - 1
+        const maxTambahan = (freqMap[val] || 0) - 1;
         if (sudahDiambil < maxTambahan) {
             addedFromDuplicates.push(val);
         }
         index++;
+        // Safety: jika sudah looping terlalu banyak
         if (index > sortedByFreq.length * 100) break;
     }
 
-    // ================================================================
-    // GABUNGKAN
-    // ================================================================
+    // Gabungkan
     sampelTetap = [...sampelTetap, ...addedFromDuplicates];
 
     // ================================================================
-    // KOREKSI JIKA MASIH KURANG 1 (S - 1)
+    // 3. KOREKSI JIKA MASIH KURANG 1 (S - 1)
+    //    Fungsi koreksi ini TIDAK DIUBAH (sama seperti sebelumnya)
     // ================================================================
-    let correctedValue = null;
-    let correctionUsed = false;
-
     if (sampelTetap.length === S - 1) {
         const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
         let newVal = lastSementara - 1;
@@ -2409,7 +2416,6 @@
         correctedValue: correctedValue
     };
 }
-
 
         function tampilkanHasil(result) {
             currentResult = result;
