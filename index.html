@@ -2246,151 +2246,215 @@
         }
 
         function prosesPenarikanSampel(P, S, populasiItems) {
-            const Int = P / S;
-            const Ss = 2 * (S - 1);
-            const R1 = P - (Ss - S);
+    const Int = P / S;
+    const Ss = 2 * (S - 1);
+    const R1 = P - (Ss - S);
 
-            const daftarSampelSementara = [];
-            const daftarKode = [];
-            let j = 0;
-            let totalGenerated = 0;
+    const daftarSampelSementara = [];
+    const daftarKode = [];
+    let j = 0;
+    let totalGenerated = 0;
 
-            while (totalGenerated < Ss) {
-                const startVal = R1 - (j * Int);
-                let currentVal = startVal;
+    while (totalGenerated < Ss) {
+        const startVal = R1 - (j * Int);
+        let currentVal = startVal;
 
-                if (totalGenerated < Ss) {
-                    const norm = normalize(currentVal, P);
-                    daftarSampelSementara.push(norm);
-                    daftarKode.push(`R${totalGenerated + 1}`);
-                    totalGenerated++;
-                }
-                if (totalGenerated < Ss) {
-                    currentVal = currentVal + (1 * Int);
-                    const norm = normalize(currentVal, P);
-                    daftarSampelSementara.push(norm);
-                    daftarKode.push(`R${totalGenerated + 1}`);
-                    totalGenerated++;
-                }
-                if (totalGenerated < Ss) {
-                    currentVal = currentVal + (2 * Int);
-                    const norm = normalize(currentVal, P);
-                    daftarSampelSementara.push(norm);
-                    daftarKode.push(`R${totalGenerated + 1}`);
-                    totalGenerated++;
-                }
-                if (totalGenerated < Ss) {
-                    currentVal = currentVal + (3 * Int);
-                    const norm = normalize(currentVal, P);
-                    daftarSampelSementara.push(norm);
-                    daftarKode.push(`R${totalGenerated + 1}`);
-                    totalGenerated++;
-                }
-                if (totalGenerated < Ss) {
-                    currentVal = currentVal + (4 * Int);
-                    const norm = normalize(currentVal, P);
-                    daftarSampelSementara.push(norm);
-                    daftarKode.push(`R${totalGenerated + 1}`);
-                    totalGenerated++;
-                }
-                j++;
-            }
-
-            const itemSampelSementara = daftarSampelSementara.map(idx => {
-                const index = (idx - 1) % P;
-                return populasiItems[index >= 0 ? index : index + P];
-            });
-
-            const freqMap = {};
-            for (const item of itemSampelSementara) {
-                freqMap[item] = (freqMap[item] || 0) + 1;
-            }
-
-            const sortedByFreq = Object.entries(freqMap)
-                .sort((a, b) => b[1] - a[1] || parseInt(a[0]) - parseInt(b[0]))
-                .map(entry => parseInt(entry[0]));
-
-            let sampelTetap = sortedByFreq.slice(0, S);
-            let addedFromDuplicates = [];
-            let correctedValue = null;
-            let correctionUsed = false;
-
-            if (sampelTetap.length === S - 1) {
-                const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
-                let newVal = lastSementara - 1;
-                if (newVal < 1) newVal = 1;
-                newVal = normalize(newVal, P);
-                if (!sampelTetap.includes(newVal)) {
-                    correctedValue = newVal;
-                    sampelTetap.push(newVal);
-                    correctionUsed = true;
-                } else {
-                    let tryVal = newVal;
-                    let counter = 0;
-                    while (sampelTetap.includes(tryVal) && counter < P) {
-                        tryVal = tryVal - 1;
-                        if (tryVal < 1) tryVal = P;
-                        counter++;
-                    }
-                    correctedValue = tryVal;
-                    sampelTetap.push(tryVal);
-                    correctionUsed = true;
-                }
-            }
-            if (sampelTetap.length < S) {
-                const needed = S - sampelTetap.length;
-                let tambahan = [];
-                let i = 0;
-                while (tambahan.length < needed && i < sortedByFreq.length * 3) {
-                    const val = sortedByFreq[i % sortedByFreq.length];
-                    if (!sampelTetap.includes(val) && !tambahan.includes(val)) {
-                        tambahan.push(val);
-                    }
-                    i++;
-                }
-                addedFromDuplicates = tambahan.slice(0, needed);
-                sampelTetap = [...sampelTetap, ...addedFromDuplicates];
-            }
-
-            const maxFreq = Math.max(...Object.values(freqMap));
-            const minFreq = Math.min(...Object.values(freqMap));
-
-            const sampleDetails = sampelTetap.map((nomor, index) => {
-                const freq = freqMap[nomor] || 0;
-                const isAdded = addedFromDuplicates.includes(nomor);
-                const isCorrected = correctionUsed && nomor === correctedValue && !isAdded;
-                const tingkat = getTingkatRepresentatif(freq);
-                return {
-                    urutan: index + 1,
-                    nomor,
-                    frekuensi: freq,
-                    tingkat: tingkat,
-                    isAdded: isAdded,
-                    isCorrected: isCorrected
-                };
-            });
-
-            return {
-                P,
-                S,
-                Ss,
-                Int,
-                R1,
-                daftarSampelSementara,
-                daftarKode,
-                itemSampelSementara,
-                sampelTetap,
-                sampleDetails,
-                freqMap,
-                maxFreq,
-                minFreq,
-                putaran: j,
-                uniqueCount: Object.keys(freqMap).length,
-                addedFromDuplicates: addedFromDuplicates,
-                correctionUsed: correctionUsed,
-                correctedValue: correctedValue
-            };
+        if (totalGenerated < Ss) {
+            const norm = normalize(currentVal, P);
+            daftarSampelSementara.push(norm);
+            daftarKode.push(`R${totalGenerated + 1}`);
+            totalGenerated++;
         }
+        if (totalGenerated < Ss) {
+            currentVal = currentVal + (1 * Int);
+            const norm = normalize(currentVal, P);
+            daftarSampelSementara.push(norm);
+            daftarKode.push(`R${totalGenerated + 1}`);
+            totalGenerated++;
+        }
+        if (totalGenerated < Ss) {
+            currentVal = currentVal + (2 * Int);
+            const norm = normalize(currentVal, P);
+            daftarSampelSementara.push(norm);
+            daftarKode.push(`R${totalGenerated + 1}`);
+            totalGenerated++;
+        }
+        if (totalGenerated < Ss) {
+            currentVal = currentVal + (3 * Int);
+            const norm = normalize(currentVal, P);
+            daftarSampelSementara.push(norm);
+            daftarKode.push(`R${totalGenerated + 1}`);
+            totalGenerated++;
+        }
+        if (totalGenerated < Ss) {
+            currentVal = currentVal + (4 * Int);
+            const norm = normalize(currentVal, P);
+            daftarSampelSementara.push(norm);
+            daftarKode.push(`R${totalGenerated + 1}`);
+            totalGenerated++;
+        }
+        j++;
+    }
+
+    const itemSampelSementara = daftarSampelSementara.map(idx => {
+        const index = (idx - 1) % P;
+        return populasiItems[index >= 0 ? index : index + P];
+    });
+
+    const freqMap = {};
+    for (const item of itemSampelSementara) {
+        freqMap[item] = (freqMap[item] || 0) + 1;
+    }
+
+    // ================================================================
+    // PERBAIKAN: Urutkan berdasarkan frekuensi tertinggi
+    // ================================================================
+    const sortedByFreq = Object.entries(freqMap)
+        .sort((a, b) => b[1] - a[1] || parseInt(a[0]) - parseInt(b[0]))
+        .map(entry => parseInt(entry[0]));
+
+    // ================================================================
+    // 1. Ambil Sampel Tetap Pertama: semua nilai unik (58 nilai)
+    // ================================================================
+    let sampelTetap = [...sortedByFreq];
+
+    // ================================================================
+    // 2. Jika jumlah sampel tetap < S, tambahkan dari duplikat
+    //    dengan urutan frekuensi tertinggi (sesuai peringkat)
+    // ================================================================
+    let addedFromDuplicates = [];
+    let correctedValue = null;
+    let correctionUsed = false;
+
+    if (sampelTetap.length < S) {
+        const needed = S - sampelTetap.length;
+
+        // Buat daftar tambahan dengan urutan peringkat frekuensi
+        // Untuk setiap nilai dalam sortedByFreq (urutan peringkat),
+        // ambil sisanya (frekuensi - 1) karena 1 sudah dipakai sebagai unik
+        let tambahan = [];
+        for (const val of sortedByFreq) {
+            const freq = freqMap[val] || 0;
+            // Sisa yang bisa diambil = frekuensi - 1 (karena 1 sudah dipakai unik)
+            const sisa = freq - 1;
+            for (let i = 0; i < sisa; i++) {
+                if (tambahan.length < needed) {
+                    tambahan.push(val);
+                } else {
+                    break;
+                }
+            }
+            if (tambahan.length >= needed) break;
+        }
+
+        // Jika masih kurang (karena frekuensi tidak mencukupi), ambil dari awal lagi
+        let i = 0;
+        while (tambahan.length < needed && i < sortedByFreq.length * 10) {
+            const val = sortedByFreq[i % sortedByFreq.length];
+            // Tambahkan nilai yang sudah ada di tambahan jika perlu
+            // Tapi lebih baik tambahkan dari nilai dengan frekuensi tertinggi lagi
+            // Cari nilai dengan frekuensi tertinggi yang masih bisa ditambah
+            let found = false;
+            for (const v of sortedByFreq) {
+                if (tambahan.length >= needed) break;
+                // Hitung berapa kali nilai ini sudah diambil
+                const alreadyTaken = tambahan.filter(x => x === v).length;
+                const maxAllowed = freqMap[v] || 0;
+                if (alreadyTaken < maxAllowed) {
+                    tambahan.push(v);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) break;
+            i++;
+        }
+
+        addedFromDuplicates = tambahan.slice(0, needed);
+        sampelTetap = [...sampelTetap, ...addedFromDuplicates];
+    }
+
+    // ================================================================
+    // 3. Koreksi jika sampel tetap = S - 1 (masih ada kasus khusus)
+    // ================================================================
+    if (sampelTetap.length === S - 1) {
+        const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
+        let newVal = lastSementara - 1;
+        if (newVal < 1) newVal = 1;
+        newVal = normalize(newVal, P);
+        if (!sampelTetap.includes(newVal)) {
+            correctedValue = newVal;
+            sampelTetap.push(newVal);
+            correctionUsed = true;
+        } else {
+            let tryVal = newVal;
+            let counter = 0;
+            while (sampelTetap.includes(tryVal) && counter < P) {
+                tryVal = tryVal - 1;
+                if (tryVal < 1) tryVal = P;
+                counter++;
+            }
+            correctedValue = tryVal;
+            sampelTetap.push(tryVal);
+            correctionUsed = true;
+        }
+    }
+
+    // Jika masih kurang (misal karena duplikat), tambahkan dari sortedByFreq
+    if (sampelTetap.length < S) {
+        const needed = S - sampelTetap.length;
+        let tambahan = [];
+        let i = 0;
+        while (tambahan.length < needed && i < sortedByFreq.length * 3) {
+            const val = sortedByFreq[i % sortedByFreq.length];
+            if (!sampelTetap.includes(val) && !tambahan.includes(val)) {
+                tambahan.push(val);
+            }
+            i++;
+        }
+        addedFromDuplicates = [...addedFromDuplicates, ...tambahan.slice(0, needed)];
+        sampelTetap = [...sampelTetap, ...tambahan.slice(0, needed)];
+    }
+
+    const maxFreq = Math.max(...Object.values(freqMap));
+    const minFreq = Math.min(...Object.values(freqMap));
+
+    const sampleDetails = sampelTetap.map((nomor, index) => {
+        const freq = freqMap[nomor] || 0;
+        const isAdded = addedFromDuplicates.includes(nomor) && index >= sortedByFreq.length;
+        const isCorrected = correctionUsed && nomor === correctedValue && !isAdded;
+        const tingkat = getTingkatRepresentatif(freq);
+        return {
+            urutan: index + 1,
+            nomor,
+            frekuensi: freq,
+            tingkat: tingkat,
+            isAdded: isAdded,
+            isCorrected: isCorrected
+        };
+    });
+
+    return {
+        P,
+        S,
+        Ss,
+        Int,
+        R1,
+        daftarSampelSementara,
+        daftarKode,
+        itemSampelSementara,
+        sampelTetap,
+        sampleDetails,
+        freqMap,
+        maxFreq,
+        minFreq,
+        putaran: j,
+        uniqueCount: Object.keys(freqMap).length,
+        addedFromDuplicates: addedFromDuplicates,
+        correctionUsed: correctionUsed,
+        correctedValue: correctedValue
+    };
+}
 
         function tampilkanHasil(result) {
             currentResult = result;
