@@ -2200,18 +2200,26 @@
     sampelTetap = [...sampelTetap, ...addedFromDuplicates];
 
     // ================================================================
-    // 3. KOREKSI (TETAP SAMA SEPERTI CONTOH KODE ANDA)
+    // 3. KOREKSI: Jika jumlah sampel tetap = S - 1
+    //    Ambil sampel sementara terakhir, kurangi 1, normalisasi,
+    //    lalu tambahkan ke sampel tetap
     // ================================================================
     if (sampelTetap.length === S - 1) {
+        // Ambil sampel sementara terakhir (itemSampelSementara)
         const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
+        // Kurangi dengan 1
         let newVal = lastSementara - 1;
+        // Pastikan tidak kurang dari 1
         if (newVal < 1) newVal = 1;
+        // Normalisasi ke rentang [1, P]
         newVal = normalize(newVal, P);
+        // Cek apakah nilai sudah ada di sampel tetap
         if (!sampelTetap.includes(newVal)) {
             correctedValue = newVal;
             sampelTetap.push(newVal);
             correctionUsed = true;
         } else {
+            // Jika sudah ada, cari nilai unik terdekat
             let tryVal = newVal;
             let counter = 0;
             while (sampelTetap.includes(tryVal) && counter < P) {
@@ -2225,6 +2233,9 @@
         }
     }
 
+    // ================================================================
+    // 4. Jika masih kurang (antisipasi)
+    // ================================================================
     if (sampelTetap.length < S) {
         const needed2 = S - sampelTetap.length;
         let tambahan = [];
@@ -2244,18 +2255,17 @@
     const minFreq = Math.min(...Object.values(freqMap));
 
     // ================================================================
-    // 4. sampleDetails: frekuensi yang ditampilkan adalah dari freqMap
-    //    (frekuensi di sampel sementara, BUKAN di sampel tetap)
+    // 5. sampleDetails: frekuensi yang ditampilkan adalah dari freqMap
     // ================================================================
     const sampleDetails = sampelTetap.map((nomor, index) => {
-        const freq = freqMap[nomor] || 0; // <-- FREKUENSI DARI SAMPEL SEMENTARA
+        const freq = freqMap[nomor] || 0;
         const isAdded = addedFromDuplicates.includes(nomor) && index >= sortedByFreq.length;
         const isCorrected = correctionUsed && nomor === correctedValue && !isAdded;
         const tingkat = getTingkatRepresentatif(freq);
         return {
             urutan: index + 1,
             nomor,
-            frekuensi: freq, // <-- FREKUENSI ASLI DARI SAMPEL SEMENTARA
+            frekuensi: freq,
             tingkat: tingkat,
             isAdded: isAdded,
             isCorrected: isCorrected
