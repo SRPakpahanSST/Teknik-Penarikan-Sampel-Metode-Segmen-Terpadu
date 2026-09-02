@@ -2307,76 +2307,56 @@
     }
 
     // ================================================================
-    // PERBAIKAN: Urutkan berdasarkan frekuensi tertinggi
+    // 1. Urutkan berdasarkan frekuensi tertinggi
     // ================================================================
     const sortedByFreq = Object.entries(freqMap)
         .sort((a, b) => b[1] - a[1] || parseInt(a[0]) - parseInt(b[0]))
         .map(entry => parseInt(entry[0]));
 
     // ================================================================
-    // 1. Ambil Sampel Tetap Pertama: semua nilai unik (58 nilai)
+    // 2. Ambil Semua Nilai Unik sebagai sampel tetap awal
     // ================================================================
-    let sampelTetap = [...sortedByFreq];
+    let sampelTetap = [...sortedByFreq]; // 58 nilai unik
 
     // ================================================================
-    // 2. Jika jumlah sampel tetap < S, tambahkan dari duplikat
-    //    dengan urutan frekuensi tertinggi (sesuai peringkat)
+    // 3. LOGIKA BARU: Tambahkan satu per satu dari daftar nilai unik
+    //    sampai mencapai target S
     // ================================================================
     let addedFromDuplicates = [];
-    let correctedValue = null;
-    let correctionUsed = false;
+    let i = 0;
 
-    if (sampelTetap.length < S) {
-        const needed = S - sampelTetap.length;
-
-        // Buat daftar tambahan dengan urutan peringkat frekuensi
-        // Untuk setiap nilai dalam sortedByFreq (urutan peringkat),
-        // ambil sisanya (frekuensi - 1) karena 1 sudah dipakai sebagai unik
-        let tambahan = [];
-        for (const val of sortedByFreq) {
-            const freq = freqMap[val] || 0;
-            // Sisa yang bisa diambil = frekuensi - 1 (karena 1 sudah dipakai unik)
-            const sisa = freq - 1;
-            for (let i = 0; i < sisa; i++) {
-                if (tambahan.length < needed) {
-                    tambahan.push(val);
-                } else {
-                    break;
-                }
+    while (sampelTetap.length < S) {
+        // Ambil nilai dari sortedByFreq secara bergiliran
+        const val = sortedByFreq[i % sortedByFreq.length];
+        // Hitung berapa kali nilai ini sudah ditambahkan
+        const sudahDitambahkan = addedFromDuplicates.filter(x => x === val).length;
+        // Hitung berapa kali nilai ini muncul di freqMap
+        const maxAllowed = freqMap[val] || 0;
+        // Jika sudah ditambahkan kurang dari maxAllowed, tambahkan lagi
+        if (sudahDitambahkan < maxAllowed) {
+            // Tapi jangan tambahkan jika sudah melebihi batas
+            // 1 sudah dipakai sebagai unik, jadi sisa = maxAllowed - 1
+            // TAPI logika baru: kita bisa tambahkan sampai maxAllowed
+            // Karena kita ingin mengambil satu per satu dari daftar nilai unik
+            // Kita batasi agar tidak mengambil melebihi frekuensi yang tersedia
+            const sudahAdaDiUnik = sampelTetap.filter(x => x === val).length;
+            // total yang boleh diambil = maxAllowed
+            if (sudahAdaDiUnik + sudahDitambahkan < maxAllowed) {
+                sampelTetap.push(val);
+                addedFromDuplicates.push(val);
             }
-            if (tambahan.length >= needed) break;
         }
-
-        // Jika masih kurang (karena frekuensi tidak mencukupi), ambil dari awal lagi
-        let i = 0;
-        while (tambahan.length < needed && i < sortedByFreq.length * 10) {
-            const val = sortedByFreq[i % sortedByFreq.length];
-            // Tambahkan nilai yang sudah ada di tambahan jika perlu
-            // Tapi lebih baik tambahkan dari nilai dengan frekuensi tertinggi lagi
-            // Cari nilai dengan frekuensi tertinggi yang masih bisa ditambah
-            let found = false;
-            for (const v of sortedByFreq) {
-                if (tambahan.length >= needed) break;
-                // Hitung berapa kali nilai ini sudah diambil
-                const alreadyTaken = tambahan.filter(x => x === v).length;
-                const maxAllowed = freqMap[v] || 0;
-                if (alreadyTaken < maxAllowed) {
-                    tambahan.push(v);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) break;
-            i++;
-        }
-
-        addedFromDuplicates = tambahan.slice(0, needed);
-        sampelTetap = [...sampelTetap, ...addedFromDuplicates];
+        i++;
+        // Safety: jika sudah looping terlalu banyak, berhenti
+        if (i > sortedByFreq.length * 100) break;
     }
 
     // ================================================================
-    // 3. Koreksi jika sampel tetap = S - 1 (masih ada kasus khusus)
+    // 4. Koreksi jika masih kurang 1 (S - 1)
     // ================================================================
+    let correctedValue = null;
+    let correctionUsed = false;
+
     if (sampelTetap.length === S - 1) {
         const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
         let newVal = lastSementara - 1;
@@ -2398,22 +2378,6 @@
             sampelTetap.push(tryVal);
             correctionUsed = true;
         }
-    }
-
-    // Jika masih kurang (misal karena duplikat), tambahkan dari sortedByFreq
-    if (sampelTetap.length < S) {
-        const needed = S - sampelTetap.length;
-        let tambahan = [];
-        let i = 0;
-        while (tambahan.length < needed && i < sortedByFreq.length * 3) {
-            const val = sortedByFreq[i % sortedByFreq.length];
-            if (!sampelTetap.includes(val) && !tambahan.includes(val)) {
-                tambahan.push(val);
-            }
-            i++;
-        }
-        addedFromDuplicates = [...addedFromDuplicates, ...tambahan.slice(0, needed)];
-        sampelTetap = [...sampelTetap, ...tambahan.slice(0, needed)];
     }
 
     const maxFreq = Math.max(...Object.values(freqMap));
