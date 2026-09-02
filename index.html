@@ -2306,41 +2306,44 @@
         freqMap[item] = (freqMap[item] || 0) + 1;
     }
 
-    // Urutkan berdasarkan frekuensi tertinggi
+    // ================================================================
+    // URUTKAN BERDASARKAN FREKUENSI TERTINGGI
+    // ================================================================
     const sortedByFreq = Object.entries(freqMap)
         .sort((a, b) => b[1] - a[1] || parseInt(a[0]) - parseInt(b[0]))
         .map(entry => parseInt(entry[0]));
 
     // ================================================================
-    // LOGIKA BARU: Ambil sampel tambahan satu per satu dari nilai unik
+    // AMBIL SEMUA NILAI UNIK (58 NILAI)
     // ================================================================
-    let sampelTetap = [...sortedByFreq]; // 58 nilai unik
+    let sampelTetap = [...sortedByFreq];
     let addedFromDuplicates = [];
 
-    // Butuh tambahan = S - jumlah nilai unik
+    // ================================================================
+    // TAMBAHKAN SAMPEL TAMBAHAN SATU PER SATU DARI NILAI UNIK
+    // ================================================================
     const needed = S - sortedByFreq.length;
-
-    // Ambil tambahan satu per satu dari daftar nilai unik
     let index = 0;
+
     while (addedFromDuplicates.length < needed) {
         const val = sortedByFreq[index % sortedByFreq.length];
-        // Hitung berapa kali nilai ini sudah diambil sebagai tambahan
         const sudahDiambil = addedFromDuplicates.filter(x => x === val).length;
-        // Total kemunculan di sampel sementara = freqMap[val]
-        // 1 sudah dipakai sebagai unik, jadi sisa maksimal = freqMap[val] - 1
-        const maxTambahan = (freqMap[val] || 0) - 1;
+        const maxTambahan = (freqMap[val] || 0) - 1; // 1 sudah dipakai sebagai unik
         if (sudahDiambil < maxTambahan) {
             addedFromDuplicates.push(val);
         }
         index++;
-        // Safety: jika sudah looping terlalu banyak
         if (index > sortedByFreq.length * 100) break;
     }
 
-    // Gabungkan
+    // ================================================================
+    // GABUNGKAN
+    // ================================================================
     sampelTetap = [...sampelTetap, ...addedFromDuplicates];
 
-    // Koreksi jika masih kurang 1 (S - 1)
+    // ================================================================
+    // KOREKSI JIKA MASIH KURANG 1 (S - 1)
+    // ================================================================
     let correctedValue = null;
     let correctionUsed = false;
 
