@@ -275,7 +275,7 @@ untuk j = 1, 2, 3, ...
 
 **Pola perguliran sampel** mengikuti urutan setiap 5 sampel, dengan R5j+1 dimulai dari R1, lalu dikurangi kelipatan interval setiap putaran.
 
-**Validasi**
+**Validasi:**
 Kadang kala jumlah item Sampel tetap (S) yang diperoleh mengalami kekurangan 1 sampel, maka solusinya dengan Faktor Koreksi mengambil (menambahkan) sampel sementara terakhir dan menguranginya dengan 1.
 
 **Penjelasan:**
