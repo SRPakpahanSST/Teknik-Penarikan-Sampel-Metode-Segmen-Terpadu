@@ -2159,6 +2159,7 @@
         return populasiItems[index >= 0 ? index : index + P];
     });
 
+    // Hitung frekuensi setiap nilai
     const freqMap = {};
     for (const item of itemSampelSementara) {
         freqMap[item] = (freqMap[item] || 0) + 1;
@@ -2172,31 +2173,56 @@
         .map(entry => parseInt(entry[0]));
 
     // ================================================================
-    // 1. Ambil Semua Nilai Unik
+    // AMBIL S SAMPEL DENGAN FREKUENSI TERTINGGI
     // ================================================================
-    let sampelTetap = [...sortedByFreq];
+    let sampelTetap = [];
     let addedFromDuplicates = [];
     let correctedValue = null;
     let correctionUsed = false;
 
+    // Ambil sebanyak mungkin dari nilai unik (prioritas frekuensi tertinggi)
+    const maxFreq = Math.max(...Object.values(freqMap));
+    const minFreq = Math.min(...Object.values(freqMap));
+    
+    // Kelompokkan berdasarkan frekuensi
+    const freqGroups = {};
+    for (const [val, freq] of Object.entries(freqMap)) {
+        if (!freqGroups[freq]) freqGroups[freq] = [];
+        freqGroups[freq].push(parseInt(val));
+    }
+    
+    // Urutkan frekuensi dari tertinggi ke terendah
+    const sortedFreqs = Object.keys(freqGroups).sort((a, b) => b - a);
+    
+    // Ambil sampel dari frekuensi tertinggi ke terendah sampai mencapai S
+    for (const freq of sortedFreqs) {
+        const values = freqGroups[freq].sort((a, b) => a - b);
+        for (const val of values) {
+            if (sampelTetap.length < S) {
+                sampelTetap.push(val);
+            } else {
+                break;
+            }
+        }
+        if (sampelTetap.length >= S) break;
+    }
+
     // ================================================================
-    // 2. Jika jumlah sampel tetap = S - 1, lakukan KOREKSI
-    //    Ambil dari Nilai Unik terakhir atau Sampel Sementara terakhir - 1
+    // FAKTOR KOREKSI: Jika jumlah sampel tetap = S - 1
+    // Ambil dari Sampel Sementara terakhir - 1
     // ================================================================
     if (sampelTetap.length === S - 1) {
-        // Ambil nilai terakhir dari sampel sementara
         const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
         let newVal = lastSementara - 1;
         if (newVal < 1) newVal = 1;
         newVal = normalize(newVal, P);
         
-        // Cek apakah nilai sudah ada di sampel tetap
         if (!sampelTetap.includes(newVal)) {
             correctedValue = newVal;
             sampelTetap.push(newVal);
             correctionUsed = true;
         } else {
-            // Jika sudah ada, cari nilai unik terdekat
+            // Cari nilai terdekat yang belum terpakai
             let tryVal = newVal;
             let counter = 0;
             while (sampelTetap.includes(tryVal) && counter < P) {
@@ -2211,7 +2237,7 @@
     }
 
     // ================================================================
-    // 3. Jika masih kurang (antisipasi), tambahkan dari Nilai Unik terakhir
+    // ANTISIPASI: Jika masih kurang, tambahkan dari nilai dengan frekuensi tertinggi
     // ================================================================
     if (sampelTetap.length < S) {
         const needed = S - sampelTetap.length;
@@ -2228,9 +2254,7 @@
         sampelTetap = [...sampelTetap, ...addedFromDuplicates];
     }
 
-    const maxFreq = Math.max(...Object.values(freqMap));
-    const minFreq = Math.min(...Object.values(freqMap));
-
+    // Buat detail sampel dengan informasi status
     const sampleDetails = sampelTetap.map((nomor, index) => {
         const freq = freqMap[nomor] || 0;
         const isAdded = addedFromDuplicates.includes(nomor) && index >= sortedByFreq.length;
