@@ -2173,46 +2173,34 @@
         .map(entry => parseInt(entry[0]));
 
     // ================================================================
-    // AMBIL S SAMPEL DENGAN FREKUENSI TERTINGGI
-    // Dilakukan berulang dari awal sampai akhir nilai unik
+    // INISIALISASI
     // ================================================================
     let sampelTetap = [];
     let addedFromDuplicates = [];
     let correctedValue = null;
     let correctionUsed = false;
 
-    // Ambil semua nilai unik terlebih dahulu (prioritas frekuensi tertinggi)
+    // ================================================================
+    // PRIORITAS 1: FAKTOR KOREKSI (DICEK PERTAMA)
+    // Jika jumlah sampel tetap = S - 1, ambil dari sampel sementara terakhir - 1
+    // INI TETAP UTUH, JANGAN DIRUBAH!
+    // ================================================================
+    
+    // Ambil semua nilai unik terlebih dahulu
     let semuaNilaiUnik = [...sortedByFreq];
     
-    // Jika jumlah nilai unik >= S, ambil S pertama
-    if (semuaNilaiUnik.length >= S) {
-        sampelTetap = semuaNilaiUnik.slice(0, S);
-    } else {
-        // Jika nilai unik kurang dari S, ambil semua nilai unik
-        sampelTetap = [...semuaNilaiUnik];
-        
-        // Lakukan penambahan berulang dari awal sampai akhir nilai unik
-        let index = 0;
-        while (sampelTetap.length < S) {
-            const val = semuaNilaiUnik[index % semuaNilaiUnik.length];
-            if (!sampelTetap.includes(val)) {
-                sampelTetap.push(val);
-                addedFromDuplicates.push(val);
-            }
-            index++;
-        }
-    }
-
-    // ================================================================
-    // FAKTOR KOREKSI: Jika jumlah sampel tetap = S - 1
-    // Ambil dari Sampel Sementara terakhir - 1 (INI TETAP UTUH, JANGAN DIRUBAH)
-    // ================================================================
-    if (sampelTetap.length === S - 1) {
+    // Cek apakah perlu koreksi (jumlah nilai unik = S - 1)
+    if (semuaNilaiUnik.length === S - 1) {
+        // Ambil dari sampel sementara terakhir - 1
         const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
         let newVal = lastSementara - 1;
         if (newVal < 1) newVal = 1;
         newVal = normalize(newVal, P);
         
+        // Ambil semua nilai unik sebagai sampel tetap
+        sampelTetap = [...semuaNilaiUnik];
+        
+        // Tambahkan nilai koreksi jika belum ada
         if (!sampelTetap.includes(newVal)) {
             correctedValue = newVal;
             sampelTetap.push(newVal);
@@ -2230,11 +2218,35 @@
             sampelTetap.push(tryVal);
             correctionUsed = true;
         }
+    } 
+    // ================================================================
+    // PRIORITAS 2: PENAMBAHAN SAMPEL (JIKA TIDAK PERLU KOREKSI)
+    // Ambil S sampel dengan frekuensi tertinggi
+    // Jika kurang, lakukan penambahan berulang dari nilai unik
+    // ================================================================
+    else {
+        // Ambil dari nilai unik sebanyak S
+        if (semuaNilaiUnik.length >= S) {
+            sampelTetap = semuaNilaiUnik.slice(0, S);
+        } else {
+            // Ambil semua nilai unik
+            sampelTetap = [...semuaNilaiUnik];
+            
+            // Lakukan penambahan berulang dari awal sampai akhir nilai unik
+            let index = 0;
+            while (sampelTetap.length < S) {
+                const val = semuaNilaiUnik[index % semuaNilaiUnik.length];
+                if (!sampelTetap.includes(val)) {
+                    sampelTetap.push(val);
+                    addedFromDuplicates.push(val);
+                }
+                index++;
+            }
+        }
     }
 
     // ================================================================
-    // ANTISIPASI: Jika masih kurang dari S (setelah koreksi)
-    // Lakukan penambahan berulang dari nilai unik
+    // ANTISIPASI: Jika masih kurang dari S (setelah semua proses)
     // ================================================================
     if (sampelTetap.length < S) {
         const needed = S - sampelTetap.length;
