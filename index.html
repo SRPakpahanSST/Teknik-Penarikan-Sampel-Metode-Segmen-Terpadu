@@ -2172,7 +2172,7 @@
         .map(entry => parseInt(entry[0]));
 
     // ================================================================
-    // 1. Ambil Semua Nilai Unik
+    // 1. Ambil Semua Nilai Unik (sampel tetap awal)
     // ================================================================
     let sampelTetap = [...sortedByFreq];
     let addedFromDuplicates = [];
@@ -2180,23 +2180,60 @@
     let correctionUsed = false;
 
     // ================================================================
-    // 2. Jika jumlah sampel tetap = S - 1, lakukan KOREKSI
-    //    Ambil dari Nilai Unik terakhir atau Sampel Sementara terakhir - 1
+    // 2. Jika jumlah sampel tetap < S, lakukan pengambilan berulang
+    //    dari Nilai Unik awal hingga akhir, sampai target tercapai
+    // ================================================================
+    if (sampelTetap.length < S) {
+        const needed = S - sampelTetap.length;
+        let tambahan = [];
+        let index = 0;
+        
+        // Loop terus sampai tambahan mencapai needed
+        while (tambahan.length < needed) {
+            const val = sortedByFreq[index % sortedByFreq.length];
+            
+            // Hitung berapa kali nilai ini sudah diambil sebagai tambahan
+            const sudahDiambil = tambahan.filter(x => x === val).length;
+            
+            // Total maksimal yang bisa diambil = frekuensi di sampel sementara
+            // TAPI kita tidak boleh mengambil melebihi frekuensi yang tersedia
+            const maxTambahan = freqMap[val] || 0;
+            
+            // Jika masih ada sisa frekuensi, ambil
+            if (sudahDiambil < maxTambahan) {
+                tambahan.push(val);
+            }
+            
+            index++;
+            
+            // Safety: jika sudah looping terlalu banyak (semua frekuensi habis)
+            // maka kita ambil dari nilai yang sudah ada (duplikat) walaupun melebihi frekuensi
+            if (index > sortedByFreq.length * 100) {
+                // Ambil dari nilai yang paling sering muncul
+                const mostFrequent = sortedByFreq[0];
+                tambahan.push(mostFrequent);
+            }
+        }
+        
+        addedFromDuplicates = tambahan.slice(0, needed);
+        sampelTetap = [...sampelTetap, ...addedFromDuplicates];
+    }
+
+    // ================================================================
+    // 3. KOREKSI KHUSUS: Jika jumlah sampel tetap = S - 1
+    //    (kasus di mana pengambilan berulang tidak cukup)
     // ================================================================
     if (sampelTetap.length === S - 1) {
-        // Ambil nilai terakhir dari sampel sementara
         const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
         let newVal = lastSementara - 1;
         if (newVal < 1) newVal = 1;
         newVal = normalize(newVal, P);
         
-        // Cek apakah nilai sudah ada di sampel tetap
         if (!sampelTetap.includes(newVal)) {
             correctedValue = newVal;
             sampelTetap.push(newVal);
             correctionUsed = true;
         } else {
-            // Jika sudah ada, cari nilai unik terdekat
             let tryVal = newVal;
             let counter = 0;
             while (sampelTetap.includes(tryVal) && counter < P) {
@@ -2208,24 +2245,6 @@
             sampelTetap.push(tryVal);
             correctionUsed = true;
         }
-    }
-
-    // ================================================================
-    // 3. Jika masih kurang (antisipasi), tambahkan dari Nilai Unik terakhir
-    // ================================================================
-    if (sampelTetap.length < S) {
-        const needed = S - sampelTetap.length;
-        let tambahan = [];
-        let i = 0;
-        while (tambahan.length < needed && i < sortedByFreq.length * 3) {
-            const val = sortedByFreq[i % sortedByFreq.length];
-            if (!sampelTetap.includes(val) && !tambahan.includes(val)) {
-                tambahan.push(val);
-            }
-            i++;
-        }
-        addedFromDuplicates = tambahan.slice(0, needed);
-        sampelTetap = [...sampelTetap, ...addedFromDuplicates];
     }
 
     const maxFreq = Math.max(...Object.values(freqMap));
