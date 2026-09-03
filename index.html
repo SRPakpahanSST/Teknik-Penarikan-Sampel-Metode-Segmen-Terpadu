@@ -2187,8 +2187,10 @@
     // Contoh: P=10, S=7 → nilai unik = 6 (S-1) → koreksi
     // ================================================================
     let semuaNilaiUnik = [...sortedByFreq];
+    let uniqueCount = semuaNilaiUnik.length;
     
-    if (semuaNilaiUnik.length === S - 1) {
+    // CEK FAKTOR KOREKSI
+    if (uniqueCount === S - 1) {
         // Ambil dari sampel sementara terakhir - 1
         const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
         let newVal = lastSementara - 1;
@@ -2219,19 +2221,16 @@
     } 
     // ================================================================
     // PRIORITAS 2: PENAMBAHAN SAMPEL (JIKA TIDAK PERLU KOREKSI)
-    // Ambil S sampel dengan frekuensi tertinggi
-    // Jika kurang, lakukan penambahan berulang dari nilai unik
+    // Ambil SEMUA nilai unik terlebih dahulu
+    // Jika kurang dari S, lakukan penambahan berulang dari nilai unik
     // Contoh: P=200, S=120 → nilai unik = 58 → tambah 62 sampel
     // ================================================================
     else {
-        // Ambil dari nilai unik sebanyak S
-        if (semuaNilaiUnik.length >= S) {
-            sampelTetap = semuaNilaiUnik.slice(0, S);
-        } else {
-            // Ambil semua nilai unik
-            sampelTetap = [...semuaNilaiUnik];
-            
-            // Lakukan penambahan berulang dari awal sampai akhir nilai unik
+        // Ambil SEMUA nilai unik (bukan hanya S pertama)
+        sampelTetap = [...semuaNilaiUnik];
+        
+        // Jika jumlah nilai unik < S, lakukan penambahan berulang
+        if (sampelTetap.length < S) {
             let index = 0;
             while (sampelTetap.length < S) {
                 const val = semuaNilaiUnik[index % semuaNilaiUnik.length];
@@ -2241,6 +2240,10 @@
                 }
                 index++;
             }
+        }
+        // Jika nilai unik >= S, ambil S pertama (tidak perlu penambahan)
+        else if (sampelTetap.length > S) {
+            sampelTetap = sampelTetap.slice(0, S);
         }
     }
 
@@ -2305,7 +2308,7 @@
         maxFreq: maxFreq,
         minFreq: minFreq,
         putaran: j,
-        uniqueCount: Object.keys(freqMap).length,
+        uniqueCount: uniqueCount,
         addedFromDuplicates: addedFromDuplicates,
         correctionUsed: correctionUsed,
         correctedValue: correctedValue
