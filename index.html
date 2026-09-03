@@ -2219,21 +2219,24 @@
         sampelTetap = [...sampelTetap, ...addedFromDuplicates];
     }
 
-    // ================================================================
-    // 3. KOREKSI KHUSUS: Jika jumlah sampel tetap = S - 1
-    //    (kasus di mana pengambilan berulang tidak cukup)
+    / ================================================================
+    // 2. Jika jumlah sampel tetap = S - 1, lakukan KOREKSI
+    //    Ambil dari Nilai Unik terakhir atau Sampel Sementara terakhir - 1
     // ================================================================
     if (sampelTetap.length === S - 1) {
+        // Ambil nilai terakhir dari sampel sementara
         const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
         let newVal = lastSementara - 1;
         if (newVal < 1) newVal = 1;
         newVal = normalize(newVal, P);
         
+        // Cek apakah nilai sudah ada di sampel tetap
         if (!sampelTetap.includes(newVal)) {
             correctedValue = newVal;
             sampelTetap.push(newVal);
             correctionUsed = true;
         } else {
+            // Jika sudah ada, cari nilai unik terdekat
             let tryVal = newVal;
             let counter = 0;
             while (sampelTetap.includes(tryVal) && counter < P) {
