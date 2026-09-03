@@ -2182,14 +2182,12 @@
 
     // ================================================================
     // PRIORITAS 1: FAKTOR KOREKSI (DICEK PERTAMA)
-    // Jika jumlah sampel tetap = S - 1, ambil dari sampel sementara terakhir - 1
+    // Jika jumlah nilai unik = S - 1, ambil dari sampel sementara terakhir - 1
     // INI TETAP UTUH, JANGAN DIRUBAH!
+    // Contoh: P=10, S=7 → nilai unik = 6 (S-1) → koreksi
     // ================================================================
-    
-    // Ambil semua nilai unik terlebih dahulu
     let semuaNilaiUnik = [...sortedByFreq];
     
-    // Cek apakah perlu koreksi (jumlah nilai unik = S - 1)
     if (semuaNilaiUnik.length === S - 1) {
         // Ambil dari sampel sementara terakhir - 1
         const lastSementara = itemSampelSementara[itemSampelSementara.length - 1];
@@ -2223,6 +2221,7 @@
     // PRIORITAS 2: PENAMBAHAN SAMPEL (JIKA TIDAK PERLU KOREKSI)
     // Ambil S sampel dengan frekuensi tertinggi
     // Jika kurang, lakukan penambahan berulang dari nilai unik
+    // Contoh: P=200, S=120 → nilai unik = 58 → tambah 62 sampel
     // ================================================================
     else {
         // Ambil dari nilai unik sebanyak S
@@ -2266,35 +2265,45 @@
     const maxFreq = Math.max(...Object.values(freqMap));
     const minFreq = Math.min(...Object.values(freqMap));
 
+    // Tentukan label tingkat untuk setiap sampel
     const sampleDetails = sampelTetap.map((nomor, index) => {
         const freq = freqMap[nomor] || 0;
         const isAdded = addedFromDuplicates.includes(nomor);
         const isCorrected = correctionUsed && nomor === correctedValue && !isAdded;
-        const tingkat = getTingkatRepresentatif(freq);
+        
+        // Tentukan label tingkat
+        let labelTingkat = '';
+        if (freq >= 5) labelTingkat = 'Sangat Representatif';
+        else if (freq === 4) labelTingkat = 'Representatif';
+        else if (freq === 3) labelTingkat = 'Cukup Representatif';
+        else if (freq === 2) labelTingkat = 'Kurang Representatif';
+        else labelTingkat = 'Minim Representatif';
+        
         return {
             urutan: index + 1,
-            nomor,
+            nomor: nomor,
             frekuensi: freq,
-            tingkat: tingkat,
+            labelTingkat: labelTingkat,
+            tingkat: getTingkatRepresentatif(freq),
             isAdded: isAdded,
             isCorrected: isCorrected
         };
     });
 
     return {
-        P,
-        S,
-        Ss,
-        Int,
-        R1,
-        daftarSampelSementara,
-        daftarKode,
-        itemSampelSementara,
-        sampelTetap,
-        sampleDetails,
-        freqMap,
-        maxFreq,
-        minFreq,
+        P: P,
+        S: S,
+        Ss: Ss,
+        Int: Int,
+        R1: R1,
+        daftarSampelSementara: daftarSampelSementara,
+        daftarKode: daftarKode,
+        itemSampelSementara: itemSampelSementara,
+        sampelTetap: sampelTetap,
+        sampleDetails: sampleDetails,
+        freqMap: freqMap,
+        maxFreq: maxFreq,
+        minFreq: minFreq,
         putaran: j,
         uniqueCount: Object.keys(freqMap).length,
         addedFromDuplicates: addedFromDuplicates,
@@ -2302,7 +2311,6 @@
         correctedValue: correctedValue
     };
 }
-
 
         function tampilkanHasil(result) {
             currentResult = result;
